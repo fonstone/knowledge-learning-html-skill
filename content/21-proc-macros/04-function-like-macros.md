@@ -1,15 +1,10 @@
-﻿# 类函数宏
-
-高级 ⏱ 30 分钟 类函数宏proc\_macroDSLTokenStream编译时解析
-
-
 # 类函数宏的形式
 
 ## 三种宏的外观对比
 
 你现在认识了三种宏，它们看起来是：
 
-```
+```rust
 // 1. 声明宏（macro_rules!）
 vec![1, 2, 3]
 println!("hello")
@@ -31,47 +26,21 @@ html! { <div class="main">Hello</div> }
 
 `sql!(SELECT * FROM users)` 这行代码括号里的内容是 SQL，不是 Rust。声明宏和普通函数都做不到接受这样的输入——类函数过程宏可以。
 
-## 与 macro\_rules! 的区别
+## 与 macro_rules! 的区别
 
-`macro_rules!`
-
-类函数过程宏
-
-实现方式
-
-模式匹配规则
-
-任意 Rust 代码逻辑
-
-能力
-
-受限于模式匹配
-
-可以做任意分析和生成
-
-错误信息
-
-有时难以理解
-
-可以自定义精确错误位置
-
-调试
-
-难调试
-
-是正常的 Rust 函数，可以 println! 调试
-
-适用场景
-
-简单重复模式
-
-复杂解析、编译时验证、DSL
+|  | `macro_rules!` | 类函数过程宏 |
+| --- | --- | --- |
+| 实现方式 | 模式匹配规则 | 任意 Rust 代码逻辑 |
+| 能力 | 受限于模式匹配 | 可以做任意分析和生成 |
+| 错误信息 | 有时难以理解 | 可以自定义精确错误位置 |
+| 调试 | 难调试 | 是正常的 Rust 函数，可以 println! 调试 |
+| 适用场景 | 简单重复模式 | 复杂解析、编译时验证、DSL |
 
 ## 函数签名
 
 类函数宏只接收一个 `TokenStream`：
 
-```
+```rust
 #[proc_macro]
 pub fn my_macro(input: TokenStream) -> TokenStream {
     // input 是括号里的所有 token
@@ -88,7 +57,7 @@ pub fn my_macro(input: TokenStream) -> TokenStream {
 
 实现一个简单的 `html!` 宏，把类似 HTML 的语法转换为字符串拼接代码：
 
-```
+```rust
 let output = html!(div "container" { "Hello, " strong { "World" } "!" });
 // 生成：<div class="container">Hello, <strong>World</strong>!</div>
 ```
@@ -99,7 +68,7 @@ let output = html!(div "container" { "Hello, " strong { "World" } "!" });
 
 先从更简单的例子开始——一个 `assert_positive!` 宏，在编译时检查字面量是否为正数：
 
-```
+```rust
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, LitInt};
@@ -129,7 +98,7 @@ pub fn assert_positive(input: TokenStream) -> TokenStream {
 
 使用时：
 
-```
+```rust
 use my_macros::assert_positive;
 
 fn main() {
@@ -142,11 +111,11 @@ fn main() {
 
 这个宏虽然简单，但演示了核心能力：**在编译时验证数据的合法性**，违法时给出清晰错误，比运行时的 `assert!` 更早发现问题。
 
-## 实现一个格式验证宏（checked\_parse）
+## 实现一个格式验证宏（checked_parse）
 
 下面实现一个更实用的宏：在编译时验证字符串是否是合法的格式：
 
-```
+```rust
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, LitStr};
@@ -179,7 +148,7 @@ pub fn ip(input: TokenStream) -> TokenStream {
 
 使用时：
 
-```
+```rust
 use my_macros::ip;
 
 fn main() {
@@ -197,7 +166,7 @@ fn main() {
 
 真实框架中 `sqlx` 的 `query!` 宏会在编译时连接数据库验证 SQL。这里实现一个简化版，只验证 SQL 语法关键字：
 
-```
+```rust
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, LitStr};
@@ -228,7 +197,7 @@ pub fn sql(input: TokenStream) -> TokenStream {
 
 使用时：
 
-```
+```rust
 use my_macros::sql;
 
 fn main() {
@@ -247,7 +216,7 @@ fn main() {
 
 加载题目中…
 
-```
+```rust
 #[proc_macro]
 pub fn double(input: TokenStream) -> TokenStream {
     let lit = parse_macro_input!(input as LitInt);
@@ -260,27 +229,3 @@ pub fn double(input: TokenStream) -> TokenStream {
 加载题目中…
 
 加载题目中…
-
-[← 上一节 类属性宏](/RustCourse/chapters/21-proc-macros/03-attribute-macros)
-
-[下一节 → syn 与 quote](/RustCourse/chapters/21-proc-macros/05-syn-and-quote)
-
-目录
-
--   [类函数宏的形式](#类函数宏的形式)
--   [三种宏的外观对比](#三种宏的外观对比)
--   [与 macro\_rules! 的区别](#与-macro_rules-的区别)
--   [函数签名](#函数签名)
--   [实现一个 HTML 生成宏](#实现一个-html-生成宏)
--   [目标](#目标)
--   [简化版实现：编译时验证数学表达式](#简化版实现编译时验证数学表达式)
--   [实现一个格式验证宏（checked\_parse）](#实现一个格式验证宏checked_parse)
--   [实现一个 SQL 模板宏（简化版）](#实现一个-sql-模板宏简化版)
--   [练习题](#练习题)
--   [类函数宏测验](#类函数宏测验)
-
-RUST 互动教程
-
- ![雪云飞星](/RustCourse/images/logo.svg) 作者：雪云飞星
-
-© 2026 fuhaowen. 保留所有权利.

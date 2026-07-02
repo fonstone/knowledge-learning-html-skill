@@ -1,8 +1,3 @@
-﻿# 类属性宏
-
-高级 ⏱ 30 分钟 类属性宏proc\_macro\_attribute属性路由宏框架
-
-
 # 属性宏的特点
 
 ## 与 derive 宏的对比
@@ -11,37 +6,16 @@
 
 两者的关键区别：
 
-derive 宏
-
-类属性宏
-
-语法
-
-`#[derive(MyMacro)]`
-
-`#[my_macro]` 或 `#[my_macro(args)]`
-
-只能用于
-
-结构体和枚举
-
-**任意代码项**（函数、结构体、枚举、impl 块……）
-
-对原始代码
-
-**保留**原始定义，额外添加代码
-
-**可以完全替换**原始代码项
-
-接收参数
-
-无法直接传参（只能用辅助属性）
-
-可以通过 `#[macro(key = value)]` 传任意参数
+|  | derive 宏 | 类属性宏 |
+| --- | --- | --- |
+| 语法 | `#[derive(MyMacro)]` | `#[my_macro]` 或 `#[my_macro(args)]` |
+| 只能用于 | 结构体和枚举 | **任意代码项**（函数、结构体、枚举、impl 块……） |
+| 对原始代码 | **保留**原始定义，额外添加代码 | **可以完全替换**原始代码项 |
+| 接收参数 | 无法直接传参（只能用辅助属性） | 可以通过 `#[macro(key = value)]` 传任意参数 |
 
 以下都是类属性宏的真实例子：
 
-```
+```rust
 // web 框架中标注路由
 #[get("/users")]
 async fn list_users() -> Vec<User> { ... }
@@ -59,7 +33,7 @@ async fn test_database_connection() { ... }
 
 属性宏函数接收**两个** `TokenStream`：
 
-```
+```rust
 #[proc_macro_attribute]
 pub fn my_attr(
     attr: TokenStream,  // #[my_attr(这里的内容)] ← 属性括号里的参数
@@ -69,9 +43,9 @@ pub fn my_attr(
 }
 ```
 
--   `attr`：属性括号里的参数，如 `#[route(GET, "/")]` 中的 `GET, "/"` 部分
--   `item`：被标注的整个代码项（如函数的完整定义）
--   返回值：**替换** `item` 的新代码（注意：不是追加，而是替换！）
+- attr ：属性括号里的参数，如 #[route(GET, "/")] 中的 GET, "/" 部分
+- item ：被标注的整个代码项（如函数的完整定义）
+- 返回值： 替换 item 的新代码（注意：不是追加，而是替换！）
 
 # 实现一个计时属性宏
 
@@ -79,7 +53,7 @@ pub fn my_attr(
 
 你希望写这样的代码：
 
-```
+```rust
 #[timed]
 fn slow_computation(n: u64) -> u64 {
     // 模拟耗时计算
@@ -89,7 +63,7 @@ fn slow_computation(n: u64) -> u64 {
 
 调用 `slow_computation(1000000)` 时，自动打印：
 
-```
+```text
 slow_computation 执行耗时：5.2ms
 ```
 
@@ -99,7 +73,7 @@ slow_computation 执行耗时：5.2ms
 
 属性宏的关键是：接收原始函数，生成一个包含计时逻辑的新函数。
 
-```
+```rust
 // my-macros/src/lib.rs
 use proc_macro::TokenStream;
 use quote::quote;
@@ -135,7 +109,7 @@ pub fn timed(
 
 使用时：
 
-```
+```rust
 use my_macros::timed;
 
 #[timed]
@@ -154,7 +128,7 @@ fn main() {
 
 展开后，宏生成的代码相当于：
 
-```
+```rust
 fn compute_sum(n: u64) -> u64 {
     let __start = std::time::Instant::now();
     let __result = (|| {
@@ -174,7 +148,7 @@ fn compute_sum(n: u64) -> u64 {
 
 下面实现一个 `#[retry(n)]` 宏——自动在函数失败时重试 n 次：
 
-```
+```rust
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, ItemFn, LitInt};
@@ -218,7 +192,7 @@ pub fn retry(
 
 使用时：
 
-```
+```rust
 use my_macros::retry;
 
 #[retry(3)]  // 最多重试 3 次
@@ -248,7 +222,7 @@ fn main() {
 
 加载题目中…
 
-```
+```rust
 // 假设宏实现如下：
 #[proc_macro_attribute]
 pub fn log_call(_attr: TokenStream, item: TokenStream) -> TokenStream {
@@ -269,26 +243,3 @@ pub fn log_call(_attr: TokenStream, item: TokenStream) -> TokenStream {
 加载题目中…
 
 加载题目中…
-
-[← 上一节 自定义 derive 宏](/RustCourse/chapters/21-proc-macros/02-derive-macros)
-
-[下一节 → 类函数宏](/RustCourse/chapters/21-proc-macros/04-function-like-macros)
-
-目录
-
--   [属性宏的特点](#属性宏的特点)
--   [与 derive 宏的对比](#与-derive-宏的对比)
--   [属性宏的函数签名](#属性宏的函数签名)
--   [实现一个计时属性宏](#实现一个计时属性宏)
--   [需求：自动统计函数执行时间](#需求自动统计函数执行时间)
--   [实现](#实现)
--   [带参数的属性宏](#带参数的属性宏)
--   [接收和解析参数](#接收和解析参数)
--   [练习题](#练习题)
--   [类属性宏测验](#类属性宏测验)
-
-RUST 互动教程
-
- ![雪云飞星](/RustCourse/images/logo.svg) 作者：雪云飞星
-
-© 2026 fuhaowen. 保留所有权利.

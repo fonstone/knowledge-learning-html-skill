@@ -1,45 +1,38 @@
-﻿# 自定义 derive 宏
-
-高级 ⏱ 40 分钟 derive宏proc\_macro\_derivesynquote自动实现trait
-
-
 # 从需求出发
 
 ## 一个需要手动重复的 trait
 
 假设你有一个日志 trait，要求每种类型都能描述自己的名字：
 
-```rust
-trait Describe {
-    fn describe(&self) -> String;
-}
-
-struct Point { x: f64, y: f64 }
-struct Circle { x: f64, y: f64, radius: f64 }
-struct Rectangle { width: f64, height: f64 }
-
-// 为每个类型手动实现——代码完全雷同
-impl Describe for Point {
-    fn describe(&self) -> String { "Point".to_string() }
-}
-impl Describe for Circle {
-    fn describe(&self) -> String { "Circle".to_string() }
-}
-impl Describe for Rectangle {
-    fn describe(&self) -> String { "Rectangle".to_string() }
-}
-
-fn main() {
-    println!("{}", Point { x: 0.0, y: 0.0 }.describe()); // Point
-    println!("{}", Circle { x: 0.0, y: 0.0, radius: 1.0 }.describe()); // Circle
-}
-```
+<div class="code-runner" data-full-code="trait%20Describe%20%7B%0A%20%20%20%20fn%20describe(%26self)%20-%3E%20String%3B%0A%7D%0A%0Astruct%20Point%20%7B%20x%3A%20f64%2C%20y%3A%20f64%20%7D%0Astruct%20Circle%20%7B%20x%3A%20f64%2C%20y%3A%20f64%2C%20radius%3A%20f64%20%7D%0Astruct%20Rectangle%20%7B%20width%3A%20f64%2C%20height%3A%20f64%20%7D%0A%0A%2F%2F%20%E4%B8%BA%E6%AF%8F%E4%B8%AA%E7%B1%BB%E5%9E%8B%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E2%80%94%E2%80%94%E4%BB%A3%E7%A0%81%E5%AE%8C%E5%85%A8%E9%9B%B7%E5%90%8C%0Aimpl%20Describe%20for%20Point%20%7B%0A%20%20%20%20fn%20describe(%26self)%20-%3E%20String%20%7B%20%22Point%22.to_string()%20%7D%0A%7D%0Aimpl%20Describe%20for%20Circle%20%7B%0A%20%20%20%20fn%20describe(%26self)%20-%3E%20String%20%7B%20%22Circle%22.to_string()%20%7D%0A%7D%0Aimpl%20Describe%20for%20Rectangle%20%7B%0A%20%20%20%20fn%20describe(%26self)%20-%3E%20String%20%7B%20%22Rectangle%22.to_string()%20%7D%0A%7D%0A%0Afn%20main()%20%7B%0A%20%20%20%20println!(%22%7B%7D%22%2C%20Point%20%7B%20x%3A%200.0%2C%20y%3A%200.0%20%7D.describe())%3B%20%2F%2F%20Point%0A%20%20%20%20println!(%22%7B%7D%22%2C%20Circle%20%7B%20x%3A%200.0%2C%20y%3A%200.0%2C%20radius%3A%201.0%20%7D.describe())%3B%20%2F%2F%20Circle%0A%7D" data-mode="run"><pre class="code-runner-pre"><code class="language-rust"><span class="line"><span style="color:#F97583">trait</span><span style="color:#B392F0"> Describe</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    fn</span><span style="color:#B392F0"> describe</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&amp;</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">-&gt;</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">struct</span><span style="color:#B392F0"> Point</span><span style="color:#E1E4E8"> { x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> f64</span><span style="color:#E1E4E8">, y</span><span style="color:#F97583">:</span><span style="color:#B392F0"> f64</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#F97583">struct</span><span style="color:#B392F0"> Circle</span><span style="color:#E1E4E8"> { x</span><span style="color:#F97583">:</span><span style="color:#B392F0"> f64</span><span style="color:#E1E4E8">, y</span><span style="color:#F97583">:</span><span style="color:#B392F0"> f64</span><span style="color:#E1E4E8">, radius</span><span style="color:#F97583">:</span><span style="color:#B392F0"> f64</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"><span style="color:#F97583">struct</span><span style="color:#B392F0"> Rectangle</span><span style="color:#E1E4E8"> { width</span><span style="color:#F97583">:</span><span style="color:#B392F0"> f64</span><span style="color:#E1E4E8">, height</span><span style="color:#F97583">:</span><span style="color:#B392F0"> f64</span><span style="color:#E1E4E8"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 为每个类型手动实现——代码完全雷同</span></span>
+<span class="line"><span style="color:#F97583">impl</span><span style="color:#B392F0"> Describe</span><span style="color:#F97583"> for</span><span style="color:#B392F0"> Point</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    fn</span><span style="color:#B392F0"> describe</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&amp;</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">-&gt;</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8"> { </span><span style="color:#9ECBFF">"Point"</span><span style="color:#F97583">.</span><span style="color:#B392F0">to_string</span><span style="color:#E1E4E8">() }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">impl</span><span style="color:#B392F0"> Describe</span><span style="color:#F97583"> for</span><span style="color:#B392F0"> Circle</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    fn</span><span style="color:#B392F0"> describe</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&amp;</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">-&gt;</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8"> { </span><span style="color:#9ECBFF">"Circle"</span><span style="color:#F97583">.</span><span style="color:#B392F0">to_string</span><span style="color:#E1E4E8">() }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">impl</span><span style="color:#B392F0"> Describe</span><span style="color:#F97583"> for</span><span style="color:#B392F0"> Rectangle</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    fn</span><span style="color:#B392F0"> describe</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&amp;</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">-&gt;</span><span style="color:#B392F0"> String</span><span style="color:#E1E4E8"> { </span><span style="color:#9ECBFF">"Rectangle"</span><span style="color:#F97583">.</span><span style="color:#B392F0">to_string</span><span style="color:#E1E4E8">() }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">fn</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#B392F0">    println!</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"{}"</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">Point</span><span style="color:#E1E4E8"> { x</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> 0.0</span><span style="color:#E1E4E8">, y</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> 0.0</span><span style="color:#E1E4E8"> }</span><span style="color:#F97583">.</span><span style="color:#B392F0">describe</span><span style="color:#E1E4E8">()); </span><span style="color:#6A737D">// Point</span></span>
+<span class="line"><span style="color:#B392F0">    println!</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"{}"</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">Circle</span><span style="color:#E1E4E8"> { x</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> 0.0</span><span style="color:#E1E4E8">, y</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> 0.0</span><span style="color:#E1E4E8">, radius</span><span style="color:#F97583">:</span><span style="color:#79B8FF"> 1.0</span><span style="color:#E1E4E8"> }</span><span style="color:#F97583">.</span><span style="color:#B392F0">describe</span><span style="color:#E1E4E8">()); </span><span style="color:#6A737D">// Circle</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre></div>
 
 这三个实现**逻辑完全相同**：返回类型名字符串。但你不得不为每个类型都写一遍。
 
 如果用自定义 derive 宏，使用时只需写：
 
-```
+```rust
 #[derive(Describe)]
 struct Point { x: f64, y: f64 }
 
@@ -53,10 +46,10 @@ struct Point { x: f64, y: f64 }
 
 derive 宏在编译时：
 
-1.  接收结构体的 `TokenStream`（包含类型名、字段等信息）
-2.  从中提取**类型名**（`Point`、`Circle`……）
-3.  **生成代码**：`impl Describe for 类型名 { ... }`
-4.  把生成的代码注入到编译结果中
+1. 接收结构体的 TokenStream （包含类型名、字段等信息）
+1. 从中提取 类型名 （ Point 、 Circle ……）
+1. 生成代码 ： impl Describe for 类型名 { ... }
+1. 把生成的代码注入到编译结果中
 
 # 实现步骤
 
@@ -66,7 +59,7 @@ derive 宏在编译时：
 
 在 `my-macros/Cargo.toml` 中：
 
-```
+```toml
 [package]
 name = "my-macros"
 version = "0.1.0"
@@ -80,8 +73,8 @@ syn = { version = "2", features = ["full"] }
 quote = "1"
 ```
 
--   **`syn`**：解析 `TokenStream` 为 Rust 语法树（AST），让你能方便地提取"类型名"等信息
--   **`quote`**：用模板语法生成新的 `TokenStream`，比手动拼接 token 简单得多
+- `syn` ：解析 TokenStream 为 Rust 语法树（AST），让你能方便地提取”类型名”等信息
+- `quote` ：用模板语法生成新的 TokenStream ，比手动拼接 token 简单得多
 
 有了这两个工具，实现 Describe 宏的思路就清晰了：用 syn 把输入解析成语法树、从中读出类型名，再用 quote 拼出 impl 块返回给编译器。
 
@@ -89,7 +82,7 @@ quote = "1"
 
 目标：`#[derive(Describe)]` 为类型自动生成 `Describe::describe()` 返回类型名。
 
-```
+```rust
 // my-macros/src/lib.rs
 use proc_macro::TokenStream;
 use quote::quote;
@@ -124,7 +117,7 @@ pub fn describe_derive(input: TokenStream) -> TokenStream {
 
 ## 在主项目中使用
 
-```
+```rust
 // src/main.rs
 use my_macros::Describe;
 
@@ -156,7 +149,7 @@ fn main() {
 
 `#[derive(Describe)]` 在 `Point` 上展开后，编译器相当于看到了：
 
-```
+```rust
 struct Point { x: f64, y: f64 }
 
 // 宏自动生成的代码（invisible to user）：
@@ -175,12 +168,12 @@ impl Describe for Point {
 
 仅仅输出类型名还不够。更多场景需要遍历字段，比如：
 
--   `#[derive(Debug)]` 需要打印每个字段的名字和值
--   `#[derive(Serialize)]` 需要把每个字段序列化为 JSON
+- #[derive(Debug)] 需要打印每个字段的名字和值
+- #[derive(Serialize)] 需要把每个字段序列化为 JSON
 
 下面演示如何遍历结构体的字段：
 
-```
+```rust
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, DeriveInput, Data, Fields};
@@ -225,7 +218,7 @@ pub fn field_names_derive(input: TokenStream) -> TokenStream {
 
 用法：
 
-```
+```rust
 #[derive(FieldNames)]
 struct User {
     name: String,
@@ -242,7 +235,7 @@ fn main() {
 
 下面是一个更实用的例子——自动为只有一个字段的 newtype 结构体生成 `Display`：
 
-```
+```rust
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, DeriveInput, Data, Fields};
@@ -288,7 +281,7 @@ pub fn newtype_display_derive(input: TokenStream) -> TokenStream {
 
 加载题目中…
 
-```
+```rust
 // 过程宏代码（在 proc-macro crate 中）
 #[proc_macro_derive(MyDerive)]
 pub fn my_derive(input: TokenStream) -> TokenStream {
@@ -305,29 +298,3 @@ pub fn my_derive(input: TokenStream) -> TokenStream {
 加载题目中…
 
 加载题目中…
-
-[← 上一节 过程宏基础](/RustCourse/chapters/21-proc-macros/01-proc-macro-basics)
-
-[下一节 → 类属性宏](/RustCourse/chapters/21-proc-macros/03-attribute-macros)
-
-目录
-
--   [从需求出发](#从需求出发)
--   [一个需要手动重复的 trait](#一个需要手动重复的-trait)
--   [derive 宏做的事：读取结构体名字，生成实现代码](#derive-宏做的事读取结构体名字生成实现代码)
--   [实现步骤](#实现步骤)
--   [项目准备](#项目准备)
--   [写最简单的 derive 宏](#写最简单的-derive-宏)
--   [在主项目中使用](#在主项目中使用)
--   [展开后的代码是什么样的](#展开后的代码是什么样的)
--   [提取字段信息](#提取字段信息)
--   [访问字段列表](#访问字段列表)
--   [完整示例：自动生成 Display](#完整示例自动生成-display)
--   [练习题](#练习题)
--   [derive 宏原理测验](#derive-宏原理测验)
-
-RUST 互动教程
-
- ![雪云飞星](/RustCourse/images/logo.svg) 作者：雪云飞星
-
-© 2026 fuhaowen. 保留所有权利.

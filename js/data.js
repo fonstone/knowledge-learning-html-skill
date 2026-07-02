@@ -285,13 +285,16 @@ const courseData = [
   },
   {
     id: '23-projects', number: '23', title: '综合项目', level: '入门', duration: '5 分钟',
-    description: '通过完整项目实战，将所有 Rust 知识融会贯通：数据建模、持久化、命令实现、测试打磨。',
+    description: '通过完整项目实战，将所有 Rust 知识融会贯通：从命令行参数解析到数据模型，从命令分发到数据持久化。',
     lessons: [
-      { id: '00-index', number: '', title: '综合项目', level: '入门', duration: '5 分钟', tags: ['项目实战', '数据建模', '持久化', '命令实现', '测试'] },
-      { id: '01-data-modeling', number: '23.1', title: '数据建模', level: '进阶', duration: '35 分钟', tags: ['数据建模', 'domain model', '类型设计', '业务逻辑'] },
-      { id: '02-persistence', number: '23.2', title: '数据持久化', level: '进阶', duration: '40 分钟', tags: ['持久化', '数据库', 'serde', 'JSON', 'SQLite'] },
-      { id: '03-commands', number: '23.3', title: '实现命令', level: '进阶', duration: '45 分钟', tags: ['CLI', '命令行', 'clap', '子命令', '交互设计'] },
-      { id: '04-tests-and-polish', number: '23.4', title: '输出与测试', level: '进阶', duration: '40 分钟', tags: ['测试', '集成测试', '代码打磨', '发布准备'] }
+      { id: '00-index', number: '', title: '综合项目', level: '入门', duration: '5 分钟', tags: ['项目实战', 'CLI', 'Todo', '命令行', 'Rust 综合'] },
+      { id: '01-project-design', number: '23.1', title: '项目架构', level: '进阶', duration: '15 分钟', tags: ['项目架构', 'workspace', 'lib crate', 'bin crate', '设计思路', '分层'] },
+      { id: '02-parsing', number: '23.2', title: '解析命令行参数', level: '进阶', duration: '25 分钟', tags: ['命令行参数', '枚举', '模式匹配', 'args', 'Result', 'lib.rs'] },
+      { id: '03-data-modeling', number: '23.3', title: '数据建模', level: '进阶', duration: '30 分钟', tags: ['数据建模', '结构体', 'Vec', 'TDD', '方法签名', 'impl'] },
+      { id: '04-implementing', number: '23.4', title: '实现 TodoList', level: '进阶', duration: '35 分钟', tags: ['TDD', '测试驱动', 'impl', '迭代器', '命令分发', 'run函数'] },
+      { id: '05-connecting', number: '23.5', title: '接入 run 函数', level: '进阶', duration: '20 分钟', tags: ['命令分发', 'run函数', 'execute', 'TDD', 'cargo run'] },
+      { id: '06-persistence', number: '23.6', title: '数据持久化', level: '进阶', duration: '30 分钟', tags: ['持久化', 'serde_json', '文件读写', 'JSON', '错误处理', 'PathBuf'] },
+      { id: '07-polish', number: '23.7', title: '体验优化', level: '进阶', duration: '30 分钟', tags: ['体验优化', '错误信息', 'format', '对齐', 'Display', 'crossterm', '彩色输出'] }
     ]
   }
 ];

@@ -1,25 +1,21 @@
-# syn 与 quote
-
-高级 ⏱ 50 分钟 synquoteDeriveInput语法树代码生成TokenStream2
-
 # 为什么需要 syn 和 quote
 
 ## 手动操作 TokenStream 的痛苦
 
 理论上，你可以直接操作 `TokenStream`——遍历 token、手动判断每个 token 是什么、手动拼接新的 token 序列。
 
-但 `TokenStream` 是很低层的数据结构：每个 token 只是一个字符串片段加上位置信息，没有任何结构。判断"这是不是一个结构体定义"需要写大量繁琐的匹配逻辑。
+但 `TokenStream` 是很低层的数据结构：每个 token 只是一个字符串片段加上位置信息，没有任何结构。判断”这是不是一个结构体定义”需要写大量繁琐的匹配逻辑。
 
 实际上，Rust 源码的语法规则比你想象的复杂得多：结构体可以有泛型参数、where 子句、可见性修饰符、属性……手动处理这些几乎是不可能完成的任务。
 
 **`syn` 和 `quote` 是为了解决这个问题而生的：**
 
--   **`syn`**：把 token 序列解析为**结构化的语法树**，让你可以方便地访问"第一个字段的名字"、"有几个泛型参数"这类信息
--   **`quote`**：让你用接近普通 Rust 代码的**模板语法**来生成 token 序列，不用手动拼接
+- `syn` ：把 token 序列解析为 结构化的语法树 ，让你可以方便地访问”第一个字段的名字”、“有几个泛型参数”这类信息
+- `quote` ：让你用接近普通 Rust 代码的 模板语法 来生成 token 序列，不用手动拼接
 
 ## 安装
 
-```
+```toml
 [dependencies]
 syn = { version = "2", features = ["full"] }
 quote = "1"
@@ -36,49 +32,21 @@ proc-macro2 = "1"  # syn 和 quote 内部使用的增强版 TokenStream
 
 `syn` 可以把 `TokenStream` 解析成各种 Rust 语法结构：
 
-syn 类型
-
-对应的 Rust 语法
-
-`DeriveInput`
-
-derive 宏的输入（结构体/枚举/联合体）
-
-`ItemFn`
-
-函数定义
-
-`ItemStruct`
-
-结构体定义
-
-`ItemEnum`
-
-枚举定义
-
-`Expr`
-
-任意表达式
-
-`Type`
-
-类型（如 `Vec<i32>`）
-
-`LitStr`
-
-字符串字面量
-
-`LitInt`
-
-整数字面量
-
-`Path`
-
-路径（如 `std::fmt::Debug`）
+| syn 类型 | 对应的 Rust 语法 |
+| --- | --- |
+| `DeriveInput` | derive 宏的输入（结构体/枚举/联合体） |
+| `ItemFn` | 函数定义 |
+| `ItemStruct` | 结构体定义 |
+| `ItemEnum` | 枚举定义 |
+| `Expr` | 任意表达式 |
+| `Type` | 类型（如 `Vec<i32>`） |
+| `LitStr` | 字符串字面量 |
+| `LitInt` | 整数字面量 |
+| `Path` | 路径（如 `std::fmt::Debug`） |
 
 使用 `parse_macro_input!` 宏触发解析：
 
-```
+```rust
 use syn::{parse_macro_input, DeriveInput};
 
 #[proc_macro_derive(MyDerive)]
@@ -94,7 +62,7 @@ pub fn my_derive(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 
 `DeriveInput` 是 derive 宏的核心类型，包含了被标注类型的所有信息：
 
-```
+```rust
 // DeriveInput 的简化结构（参考 syn 文档）
 pub struct DeriveInput {
     pub attrs: Vec<Attribute>,   // 属性，如 #[serde(rename = "foo")]
@@ -115,7 +83,7 @@ pub enum Data {
 
 下面是一个完整示例，演示如何遍历结构体的字段，包括字段名和字段类型：
 
-```
+```rust
 use proc_macro::TokenStream;
 use quote::quote;
 use syn::{parse_macro_input, DeriveInput, Data, Fields, Type};
@@ -164,7 +132,7 @@ pub fn type_info_derive(input: TokenStream) -> TokenStream {
 
 使用时：
 
-```
+```rust
 #[derive(TypeInfo)]
 struct User {
     name: String,
@@ -185,7 +153,7 @@ fn main() {
 
 如果被 derive 的类型有泛型参数，生成的 `impl` 必须也带上这些泛型参数，否则无法通过编译：
 
-```
+```rust
 // 错误：Point<T> 的 impl 缺少 <T>
 impl Describe for Point<T> { ... }  // ❌ T 未声明
 
@@ -195,7 +163,7 @@ impl<T> Describe for Point<T> { ... }  // ✅
 
 从 `DeriveInput` 取得泛型信息的标准写法：
 
-```
+```rust
 use syn::{parse_macro_input, DeriveInput};
 use quote::quote;
 
@@ -229,13 +197,13 @@ pub fn describe_derive(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
 
 # quote 深入
 
-有了 syn 负责"读"，quote 负责"写"——它提供一套模板语法，让你用接近普通 Rust 代码的写法生成 `TokenStream`，不需要手动拼接 token。
+有了 syn 负责”读”，quote 负责”写”——它提供一套模板语法，让你用接近普通 Rust 代码的写法生成 `TokenStream`，不需要手动拼接 token。
 
 ## quote! 的基本插值
 
 `quote!` 宏让你写出接近 Rust 代码的模板，用 `#变量名` 插入值：
 
-```
+```rust
 let name = quote::format_ident!("MyStruct"); // Ident 类型
 let field_count = 3usize;
 let method_name = quote::format_ident!("get_field_count");
@@ -257,47 +225,19 @@ let code = quote::quote! {
 
 **可插值的类型：**
 
-类型
-
-插值方式
-
-生成结果
-
-`Ident`
-
-`#name`
-
-标识符（如 `Point`）
-
-`TokenStream2`
-
-`#tokens`
-
-原样展开
-
-`&str` / `String`
-
-`#s`
-
-字符串字面量（`"..."` 格式）
-
-数字（`u32` 等）
-
-`#n`
-
-数字字面量
-
-`syn` 的任意 AST 节点
-
-`#node`
-
-对应的代码
+| 类型 | 插值方式 | 生成结果 |
+| --- | --- | --- |
+| `Ident` | `#name` | 标识符（如 `Point`） |
+| `TokenStream2` | `#tokens` | 原样展开 |
+| `&str` / `String` | `#s` | 字符串字面量（`"..."` 格式） |
+| 数字（`u32` 等） | `#n` | 数字字面量 |
+| `syn` 的任意 AST 节点 | `#node` | 对应的代码 |
 
 ## 重复语法：`#(#item)*`
 
 这是 `quote!` 最强大的功能之一：把一个集合里的每个元素都展开：
 
-```
+```rust
 let fields = vec![
     quote::format_ident!("x"),
     quote::format_ident!("y"),
@@ -321,7 +261,7 @@ let print_all = quote::quote! {
 
 Builder 模式是过程宏的典型应用——手动写非常繁琐，宏帮你自动生成：
 
-```
+```rust
 // 目标：
 // #[derive(Builder)]
 // struct Config { host: String, port: u16, debug: bool }
@@ -334,7 +274,7 @@ Builder 模式是过程宏的典型应用——手动写非常繁琐，宏帮你
 //     .build();
 ```
 
-```
+```rust
 use proc_macro::TokenStream;
 use proc_macro2::TokenStream as TokenStream2;
 use quote::{quote, format_ident};
@@ -416,7 +356,7 @@ pub fn builder_derive(input: TokenStream) -> TokenStream {
 
 使用时，只需一行 `#[derive(Builder)]`：
 
-```
+```rust
 #[derive(Builder)]
 struct Config {
     host: String,

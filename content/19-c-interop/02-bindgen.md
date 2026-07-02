@@ -1,7 +1,3 @@
-# 自动生成绑定：bindgen
-
-入门 ⏱ 20 分钟 bindgenFFIbuild.rs自动化C-headers
-
 # 自动化绑定
 
 手动为成百上千个 C 函数编写 `extern "C"` 声明不仅枯燥，而且极易出错。如果 C 语言库更新了头文件，手动维护这些绑定简直是噩梦。
@@ -12,13 +8,13 @@
 
 你可以先安装命令行工具来快速测试：
 
-```
+```bash
 cargo install bindgen-cli
 ```
 
 假设你有一个名为 `input.h` 的文件：
 
-```
+```c
 typedef struct {
     int x;
     int y;
@@ -29,13 +25,13 @@ void print_point(Point p);
 
 运行以下命令：
 
-```
+```bash
 bindgen input.h -o bindings.rs
 ```
 
 生成的 `bindings.rs` 会包含：
 
-```
+```rust
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct Point {
@@ -54,16 +50,16 @@ extern "C" {
 
 ## 配置步骤
 
-1.  在 `Cargo.toml` 中添加依赖：
+1. 在 Cargo.toml 中添加依赖：
 
-```
+```toml
 [build-dependencies]
 bindgen = "0.69"
 ```
 
-2.  编写 `build.rs`：
+1. 编写 build.rs ：
 
-```
+```rust
 use std::env;
 use std::path::PathBuf;
 
@@ -85,9 +81,9 @@ fn main() {
 }
 ```
 
-3.  在 Rust 代码中引入生成的内容：
+1. 在 Rust 代码中引入生成的内容：
 
-```
+```rust
 // 引入自动生成的代码
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
@@ -103,12 +99,26 @@ fn main() {
 
 在上面的 `build.rs` 示例中，你可能注意到我们并没有把生成的 `bindings.rs` 放在 `src/` 目录下。这是 Rust 构建脚本的标准实践：
 
-1.  **避免源码污染**：自动生成的代码会随 C 头文件的变化而变动，不应该作为「手写源码」提交到 Git 仓库。
-2.  **`OUT_DIR` 环境变量**：这是 Cargo 为构建脚本专门准备的临时存放目录（通常在 `target/debug/build/...` 路径下）。
-3.  **`include!` 宏**：它是 Rust 内置的宏，可以将指定文件的内容「原封不动」地粘贴到当前位置，从而让我们在 Rust 源码中直接使用那些自动生成的结构体定义。
+1. 避免源码污染 ：自动生成的代码会随 C 头文件的变化而变动，不应该作为「手写源码」提交到 Git 仓库。
+1. `OUT_DIR` 环境变量 ：这是 Cargo 为构建脚本专门准备的临时存放目录（通常在 target/debug/build/... 路径下）。
+1. `include!` 宏 ：它是 Rust 内置的宏，可以将指定文件的内容「原封不动」地粘贴到当前位置，从而让我们在 Rust 源码中直接使用那些自动生成的结构体定义。
 
 ## 处理复杂情况
 
--   **宏定义**：bindgen 会尝试将 C 中的 `#define` 转换为 Rust 的常量。
--   **不透明类型**：对于不想在 Rust 中直接访问成员的结构体，可以使用 `.opaque_type("MyStruct")`。
--   **白名单机制**：如果你只想为特定函数生成绑定，可以使用 `.allowlist_function("my_func_.*")`。
+- 宏定义 ：bindgen 会尝试将 C 中的 #define 转换为 Rust 的常量。
+- 不透明类型 ：对于不想在 Rust 中直接访问成员的结构体，可以使用 .opaque_type("MyStruct") 。
+- 白名单机制 ：如果你只想为特定函数生成绑定，可以使用 .allowlist_function("my_func_.*") 。
+
+# 练习题
+
+## 概念测验
+
+加载题目中…
+
+加载题目中…
+
+加载题目中…
+
+加载题目中…
+
+加载题目中…

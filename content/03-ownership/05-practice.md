@@ -1,13 +1,8 @@
-﻿# 综合练习
-
-进阶 ⏱ 30 分钟 所有权移动借用引用切片CopyClone
-
-
 # 所有权与移动
 
 ## 赋值后的 String
 
-```
+```rust
 fn main() {
     let s1 = String::from("hello");
     let s2 = s1;
@@ -23,7 +18,7 @@ fn main() {
 
 ## clone() 做了什么
 
-```
+```rust
 fn main() {
     let s1 = String::from("hello");
     let s2 = s1.clone();
@@ -35,7 +30,7 @@ fn main() {
 
 ## 函数消耗所有权
 
-```
+```rust
 fn consume(s: String) -> usize {
     s.len()
 }
@@ -51,7 +46,7 @@ fn main() {
 
 ## 变量何时被释放
 
-```
+```rust
 fn main() {
     let x = 5;
     {
@@ -68,7 +63,7 @@ fn main() {
 
 ## NLL 与借用范围
 
-```
+```rust
 fn main() {
     let mut s = String::from("hello");
 
@@ -86,7 +81,7 @@ fn main() {
 
 ## 不可变与可变引用共存
 
-```
+```rust
 fn main() {
     let mut s = String::from("hello");
     let r1 = &s;
@@ -99,7 +94,7 @@ fn main() {
 
 ## 返回局部变量的引用
 
-```
+```rust
 fn make_greeting() -> &String {
     let s = String::from("hello");
     &s
@@ -110,7 +105,7 @@ fn make_greeting() -> &String {
 
 ## 切片的类型
 
-```
+```rust
 fn main() {
     let s = String::from("hello world");
     let word = &s[6..11];

@@ -1,13 +1,8 @@
-﻿# 综合练习
-
-进阶 ⏱ 35 分钟 结构体枚举Optionmatch综合
-
-
 # 代码判断题
 
 ## 题目 1：结构体与所有权
 
-```
+```rust
 struct Person {
     name: String,
     age: u32,
@@ -32,7 +27,7 @@ fn main() {
 
 ## 题目 2：枚举与模式匹配
 
-```
+```rust
 enum Result {
     Ok(i32),
     Err(String),
@@ -53,7 +48,7 @@ fn main() {
 
 ## 题目 3：Option 与 if let
 
-```
+```rust
 fn main() {
     let x: Option<i32> = None;
     let y = if let Some(val) = x { val + 1 } else { 0 };
@@ -71,14 +66,14 @@ fn main() {
 
 **任务：**
 
--   定义 `Book` 结构体，包含 `title`（String）、`author`（String）、`pages`（u32）
--   实现 `new()` 方法创建新书
--   实现 `summary()` 方法返回书籍摘要
+- 定义 Book 结构体，包含 title （String）、 author （String）、 pages （u32）
+- 实现 new() 方法创建新书
+- 实现 summary() 方法返回书籍摘要
 
 **格式要求：**
 
--   `summary()` 返回格式：`"{title}" by {author}（{pages} 页）`
--   例如：`"Rust 圣经" by 张汉东（652 页）`
+- summary() 返回格式： "{title}" by {author}（{pages} 页）
+- 例如： "Rust 圣经" by 张汉东（652 页）
 
 ```rust
 struct Book {
@@ -107,14 +102,14 @@ fn main() {
 
 **任务：**
 
--   定义 `LightColor` 枚举，包含三个成员：`Red`、`Green`、`Blue`
--   实现 `describe()` 函数，接收 `LightColor`，用 `match` 返回对应的中文描述
+- 定义 LightColor 枚举，包含三个成员： Red 、 Green 、 Blue
+- 实现 describe() 函数，接收 LightColor ，用 match 返回对应的中文描述
 
 **格式要求：**
 
--   红灯返回：`"红灯：停止"`
--   绿灯返回：`"绿灯：通行"`
--   蓝灯返回：`"蓝灯：准备"`
+- 红灯返回： "红灯：停止"
+- 绿灯返回： "绿灯：通行"
+- 蓝灯返回： "蓝灯：准备"
 
 ```rust
 enum LightColor {
@@ -138,19 +133,19 @@ fn main() {
 
 **任务：**
 
--   实现 `find_number()` 函数，在数组中查找指定数字
--   如果找到，返回 `Some(位置)`；如果没找到，返回 `None`
--   在 `main` 中使用 `if let` 处理结果，并打印查找信息
+- 实现 find_number() 函数，在数组中查找指定数字
+- 如果找到，返回 Some(位置) ；如果没找到，返回 None
+- 在 main 中使用 if let 处理结果，并打印查找信息
 
 **格式要求：**
 
--   找到时：`"{number} 在位置 {index}"`（例如：`30 在位置 2`）
--   未找到时：`"{number} 未找到"`（例如：`99 未找到`）
+- 找到时： "{number} 在位置 {index}" （例如： 30 在位置 2 ）
+- 未找到时： "{number} 未找到" （例如： 99 未找到 ）
 
 **提示：**
 
--   可以用 `for` 循环配合 `enumerate()` 遍历数组
--   或使用 `numbers.iter().position(|&x| x == target)`
+- 可以用 for 循环配合 enumerate() 遍历数组
+- 或使用 numbers.iter().position(|&x| x == target)
 
 ```rust
 fn find_number(numbers: &[i32], target: i32) -> Option<usize> {

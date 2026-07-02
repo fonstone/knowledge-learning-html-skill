@@ -1,7 +1,3 @@
-# 裸机开发基础：no\_std 环境
-
-高级 ⏱ 25 分钟 no\_stdpanic\_handlerentry裸机嵌入式基础
-
 # 裸机开发基础
 
 在传统的软件开发中，我们习惯于有操作系统（OS）的支持。操作系统为我们提供了文件系统、网络协议栈、内存管理（堆分配）以及标准库（`std`）。
@@ -12,7 +8,7 @@
 
 默认情况下，Rust 程序会链接标准库 `std`。`std` 内部依赖于操作系统的系统调用（如 `read`, `write`, `malloc` 等）。在裸机环境下，我们必须声明：
 
-```
+```rust
 #![no_std]
 ```
 
@@ -20,9 +16,9 @@
 
 ### `std` vs `core` vs `alloc`
 
--   **`core`**：最基础的逻辑，不涉及系统调用，不涉及堆内存。
--   **`alloc`**：提供了堆内存分配相关的类型（如 `Vec`, `Box`, `String`），但需要你手动实现一个「堆分配器」。
--   **`std`**：完整的标准库，包含了 `core` 和 `alloc` 的内容，并增加了系统交互（I/O 等）。
+- `core` ：最基础的逻辑，不涉及系统调用，不涉及堆内存。
+- `alloc` ：提供了堆内存分配相关的类型（如 Vec , Box , String ），但需要你手动实现一个「堆分配器」。
+- `std` ：完整的标准库，包含了 core 和 alloc 的内容，并增加了系统交互（I/O 等）。
 
 ## 缺失的拼图：Panic 处理
 
@@ -30,7 +26,7 @@
 
 我们需要引入一个提供该功能的 crate（如 `panic-halt`），或者手动编写：
 
-```
+```rust
 use core::panic::PanicInfo;
 
 #[panic_handler]
@@ -48,7 +44,7 @@ fn panic(_info: &PanicInfo) -> ! {
 
 通常我们会使用 `cortex-m-rt` 等 crate 提供的 `#[entry]` 宏：
 
-```
+```rust
 #![no_std]
 #![no_main] // 告知编译器我们没有标准的 main 函数
 
@@ -67,7 +63,7 @@ fn main() -> ! {
 
 让我们把这些拼凑起来，看一个完整的「极简」Rust 裸机工程文件：
 
-```
+```rust
 #![no_std]
 #![no_main]
 
@@ -92,8 +88,8 @@ fn main() -> ! {
 
 在嵌入式开发中，内存非常宝贵（可能只有几十 KB），程序通常使用 **栈（Stack）** 或 **静态分配（Static）**。
 
--   如果你需要定长的缓冲区，使用数组：`let mut buffer = [0u8; 64];`
--   如果非要用 `Vec`，你需要显式地配置一个「堆分配器」（Allocator），并使用 `alloc` crate。
+- 如果你需要定长的缓冲区，使用数组： let mut buffer = [0u8; 64];
+- 如果非要用 Vec ，你需要显式地配置一个「堆分配器」（Allocator），并使用 alloc crate。
 
 # 练习题
 
