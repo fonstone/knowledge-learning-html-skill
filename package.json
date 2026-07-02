@@ -1,0 +1,13 @@
+{
+  "name": "rust-course",
+  "version": "1.0.0",
+  "description": "Rust 互动教程网站",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "build": "echo 'Build complete'"
+  },
+  "keywords": ["rust", "tutorial", "course"],
+  "author": "",
+  "license": "MIT"
+}

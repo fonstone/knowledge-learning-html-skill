@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="RUST 互动教程 — 零基础系统学习 Rust 语言">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦀</text></svg>">
+    <title>RUST 互动教程</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="page-bg" aria-hidden="true">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <header class="navbar">
+        <div class="navbar-inner">
+            <a href="#" class="logo" id="logo-link">
+                <span class="logo-rust">RUST</span> 互动教程
+            </a>
+            <nav class="nav-links">
+                <a href="#" class="nav-link" id="nav-home">首页</a>
+                <a href="#" class="nav-link" id="nav-tutorial">教程</a>
+            </nav>
+            <a href="#" class="nav-progress" id="nav-progress">
+                <span id="nav-progress-text">总进度：0%</span>
+                <span class="nav-progress-tip">100% 后可获得证书</span>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Confirm Dialog -->
+        <div id="confirm-dialog-overlay" class="cd-overlay" hidden aria-hidden="true">
+            <div class="cd-box" role="alertdialog" aria-modal="true" aria-labelledby="cd-message">
+                <p id="cd-message" class="cd-message"></p>
+                <p id="cd-hint" class="cd-hint">请输入 "<strong class="cd-required"></strong>" 来确认：</p>
+                <input type="text" class="cd-input" autocomplete="off" spellcheck="false">
+                <div class="cd-actions">
+                    <button type="button" class="btn-secondary cd-cancel">取消</button>
+                    <button type="button" class="btn-primary cd-ok" disabled>确认</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Home Page -->
+        <div id="home-page">
+            <section class="hero">
+                <div class="hero-bg" aria-hidden="true">
+                    <div class="orb orb-1"></div>
+                    <div class="orb orb-2"></div>
+                    <div class="orb orb-3"></div>
+                </div>
+                <div class="hero-inner">
+                    <div class="hero-badge">循序 · 互动 · 零基础</div>
+                    <h1 class="hero-title"><span class="accent">RUST</span> 互动教程</h1>
+                    <p class="hero-subtitle">像官方 Rust Book 一样系统讲解，加入在线代码执行、可编辑练习、章节测验等互动功能。从第一行代码开始，逐步掌握 Rust 语言。</p>
+                    <div class="hero-actions">
+                        <a href="#" class="btn-primary" id="start-btn">开始学习 →</a>
+                    </div>
+                    <div class="hero-author">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23CE412B'/></svg>" alt="雪云飞星" class="hero-avatar" width="18" height="18" loading="lazy">
+                        <span>作者：雪云飞星（付皓文）</span>
+                        <span class="ai-badge">
+                            <svg width="10" height="10" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M6 0L7.2 4.8L12 6L7.2 7.2L6 12L4.8 7.2L0 6L4.8 4.8Z"></path></svg>
+                            AI 协作
+                        </span>
+                </div>
+            </div>
+            </section>
+
+            <section class="outline" id="outline">
+                <div class="outline-inner">
+                    <div class="outline-header">
+                        <p class="section-label">课程目录</p>
+                        <div class="overall-progress" id="overall-progress">
+                            <div class="overall-progress-track">
+                                <div class="overall-progress-fill" id="overall-progress-fill" style="width: 0%"></div>
+                            </div>
+                            <div class="overall-progress-indicator" id="overall-progress-indicator" data-has-progress="false">
+                                <span class="overall-progress-pct" id="overall-progress-pct">0%</span>
+                                <button type="button" class="overall-reset-btn" id="reset-all-btn" aria-label="重置全部进度">↺ 重置全部进度</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="chapter-list"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Chapter Page -->
+        <div id="chapter-page" style="display: none;">
+            <div class="chapter-layout">
+                <aside class="sidebar" id="sidebar">
+                    <nav class="sidebar-nav" aria-label="课程目录" id="sidebar-content"></nav>
+                </aside>
+                <div class="chapter-body">
+                    <nav class="breadcrumb" id="breadcrumb">
+                        <a href="#" class="breadcrumb-link" id="bc-home">课程</a>
+                        <span class="breadcrumb-sep" aria-hidden="true">／</span>
+                        <a href="#" class="breadcrumb-link" id="bc-chapter"></a>
+                        <span class="breadcrumb-sep" aria-hidden="true">／</span>
+                        <span class="breadcrumb-current" id="bc-lesson"></span>
+                    </nav>
+                    <main class="chapter-main">
+                        <article class="prose" id="article-content">
+                            <h1 id="lesson-title"></h1>
+                            <div class="article-meta" id="lesson-meta"></div>
+                            <div class="section-progress" id="section-progress">
+                                <div class="sp-bar">
+                                    <button class="sp-arrow sp-arrow-left" aria-label="向左滚动" hidden>‹</button>
+                                    <div class="sp-scroll">
+                                        <div class="sp-tabs" role="tablist" aria-label="文章章节" id="sp-tabs"></div>
+                                    </div>
+                                    <button class="sp-arrow sp-arrow-right" aria-label="向右滚动" hidden>›</button>
+                                </div>
+                            </div>
+                            <div id="lesson-body"></div>
+                        </article>
+                        <div class="article-nav" id="article-nav">
+                            <div class="article-nav-prev" id="nav-prev-wrap">
+                                <a href="#" class="article-nav-link" id="nav-prev">
+                                    <span class="nav-label">← 上一节</span>
+                                    <span class="nav-title" id="nav-prev-title"></span>
+                                </a>
+                            </div>
+                            <div class="article-nav-next" id="nav-next-wrap">
+                                <a href="#" class="article-nav-link" id="nav-next">
+                                    <span class="nav-label">下一节 →</span>
+                                    <span class="nav-title" id="nav-next-title"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+                <aside class="toc-sidebar" id="toc-sidebar">
+                    <nav class="toc-nav" aria-label="本页目录">
+                        <div class="toc-title">目录</div>
+                        <ul class="toc-list" id="toc-list"></ul>
+                    </nav>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-left">
+                <span class="footer-brand"><span class="accent">RUST</span> 互动教程</span>
+            </div>
+            <div class="footer-center">
+                <span class="footer-meta">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23CE412B'/></svg>" alt="" class="footer-avatar" width="16" height="16" loading="lazy">
+                    雪云飞星（付皓文）
+                </span>
+            </div>
+            <div class="footer-right">
+                <span class="footer-copy">© 2026</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/md-parser.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
