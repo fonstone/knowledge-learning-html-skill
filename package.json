@@ -2,12 +2,16 @@
   "name": "rust-course",
   "version": "1.0.0",
   "description": "Rust 互动教程网站",
-  "main": "index.html",
+  "type": "module",
   "scripts": {
-    "dev": "python -m http.server 8000",
-    "build": "echo 'Build complete'"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
   "keywords": ["rust", "tutorial", "course"],
-  "author": "",
-  "license": "MIT"
+  "author": "雪云飞星",
+  "license": "MIT",
+  "dependencies": {
+    "astro": "^5.0.0"
+  }
 }
