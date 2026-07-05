@@ -1,0 +1,95 @@
+---
+chapterId: "13-smart-pointers"
+lessonId: "01-box"
+title: "Box<T>：堆内存分配"
+level: "进阶"
+duration: "20 分钟"
+tags: [Box, 堆分配, 递归类型, "cons list", 所有权]
+number: "13.1"
+chapterTitle: "智能指针"
+chapterNumber: "13"
+---
+<div id="article-content"> <h1 id="智能指针从-boxt-开始">智能指针从 <code>Box&lt;T&gt;</code> 开始</h1>
+<p>在 Rust 中，默认情况下所有值都存放在栈上。当值的大小在编译时已知，栈是高效且安全的选择。然而，在以下三种经典场景中，我们必须将数据搬到堆上：</p>
+<ol>
+<li><strong>类型大小编译时未知</strong>：比如递归数据结构，它的实际大小取决于运行时的数据量。</li>
+<li><strong>大量数据转移所有权</strong>：避免将 MB 级别的数据在栈上来回拷贝，而是只拷贝指针。</li>
+<li><strong>Trait 对象</strong>：希望持有”实现了某个 Trait 的任意类型”，而不关心具体类型。</li>
+</ol>
+<p><code>Box&lt;T&gt;</code> 是 Rust 标准库提供的最简单的智能指针。它在栈上存储一个指针，而将实际数据分配在堆上。除了分配位置不同，它的行为和普通引用几乎相同。</p>
+<h2 id="最简单的用法">最简单的用法</h2>
+<div class="code-runner" data-full-code="fn%20main()%20%7B%0A%20%20%20%20let%20b%20%3D%20Box%3A%3Anew(5)%3B%0A%20%20%20%20println!(%22b%20%3D%20%7B%7D%22%2C%20b)%3B%0A%20%20%20%20%2F%2F%20b%20%E7%A6%BB%E5%BC%80%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%97%B6%EF%BC%8C%E6%A0%88%E4%B8%8A%E7%9A%84%E6%8C%87%E9%92%88%E5%92%8C%E5%A0%86%E4%B8%8A%E7%9A%84%E6%95%B0%E6%8D%AE%E9%83%BD%E4%BC%9A%E8%A2%AB%E9%87%8A%E6%94%BE%0A%7D" data-mode="run"><pre><code class="language-rust">fn main() {
+    let b = Box::new(5);
+    println!("b = {}", b);
+    // b 离开作用域时，栈上的指针和堆上的数据都会被释放
+}</code></pre></div>
+<p>这个例子没有什么实际意义——把单个整数放在堆上没有必要。但它清晰地展示了 <code>Box&lt;T&gt;</code> 的基本语法：像使用栈上的值一样使用它，Rust 会在离开作用域时自动清理堆内存。</p>
+<h2 id="递归类型boxt-大显身手">递归类型：<code>Box&lt;T&gt;</code> 大显身手</h2>
+<p>递归类型是 <code>Box&lt;T&gt;</code> 最重要的使用场景之一。<strong>递归类型</strong>指的是类型定义中包含自身的类型。</p>
+<h3 id="问题无限大小的类型">问题：无限大小的类型</h3>
+<img alt="Box 指针示意图" src="/RustCourse/diagrams/box.svg" style="max-width:100%;margin:1rem 0;"/>
+<p>我们来尝试用 Rust 定义一个来自函数式编程的经典数据结构 —— cons list（一种简单的链表）：</p>
+<pre><code class="language-rust">// 这段代码无法编译！
+enum List {
+    Cons(i32, List),  // Cons 节点包含一个值和下一个节点，是一个具名元组
+    Nil,              // 表示列表终止
+}</code></pre>
+<p>如果你尝试编译上面的代码，编译器会给出如下错误：</p>
+<pre><code class="language-text">error[E0072]: recursive type `List` has infinite size
+ --&gt; src/main.rs:1:1
+  |
+1 | enum List {
+  | ^^^^^^^^^ recursive type has infinite size
+2 |     Cons(i32, List),
+  |               ---- recursive without indirection
+  |
+  = help: insert indirection (e.g., a `Box`, `Rc`, or `&amp;`) at some point
+    to make `List` representable</code></pre>
+<p>这个错误发生的原因很直观：Rust 在编译时需要知道每个类型需要多少内存。当编译器看到 <code>List</code> 时，它会去计算 <code>Cons(i32, List)</code> 的大小，而这又需要再次计算 <code>List</code> 的大小……这个计算永远无法终止。</p>
+<h3 id="理解编译器的尺寸计算">理解编译器的尺寸计算</h3>
+<p>对于普通的枚举，Rust 会选择其最大成员的大小。比如：</p>
+<pre><code class="language-rust">enum Message {
+    Quit,                       // 不占数据空间
+    Move { x: i32, y: i32 },   // 需要两个 i32
+    Write(String),              // 需要一个 String
+    ChangeColor(i32, i32, i32), // 需要三个 i32
+}</code></pre>
+<p>Rust 会取所有成员中最大的那个，为所有 <code>Message</code> 实例分配相同大小的内存。但递归类型让这个计算陷入死循环。</p>
+<h3 id="解决方案用指针打破递归">解决方案：用指针打破递归</h3>
+<p>编译器错误信息给了提示：在递归处加入”间接性” (indirection)。意思是不直接存储一个 <code>List</code> 值，而是存储一个<strong>指向</strong> <code>List</code> 的指针：</p>
+<div class="code-runner" data-full-code="%23%5Bderive(Debug)%5D%0Aenum%20List%20%7B%0A%20%20%20%20Cons(i32%2C%20Box%3CList%3E)%2C%20%20%2F%2F%20%E7%94%A8%20Box%20%E5%8C%85%E8%A3%B9%EF%BC%8C%E5%AD%98%E5%82%A8%E7%9A%84%E6%98%AF%E6%8C%87%E9%92%88%E8%80%8C%E9%9D%9E%E5%80%BC%0A%20%20%20%20Nil%2C%0A%7D%0A%0Ause%20List%3A%3A%7BCons%2C%20Nil%7D%3B%0A%0Afn%20main()%20%7B%0A%20%20%20%20let%20list%20%3D%20Cons(1%2C%0A%20%20%20%20%20%20%20%20Box%3A%3Anew(Cons(2%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20Box%3A%3Anew(Cons(3%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Box%3A%3Anew(Nil))))))%3B%0A%0A%20%20%20%20println!(%22%E9%93%BE%E8%A1%A8%3A%20%7B%3A%3F%7D%22%2C%20list)%3B%0A%7D" data-mode="run"><pre><code class="language-rust">#[derive(Debug)]
+enum List {
+    Cons(i32, Box&lt;List&gt;),  // 用 Box 包裹，存储的是指针而非值
+    Nil,
+}
+
+use List::{Cons, Nil};
+
+fn main() {
+    let list = Cons(1,
+        Box::new(Cons(2,
+            Box::new(Cons(3,
+                Box::new(Nil))))));
+
+    println!("链表: {:?}", list);
+}</code></pre></div>
+<p>现在 Rust 可以轻松计算出 <code>Cons</code> 成员的大小了：一个 <code>i32</code> 加上一个 <code>Box&lt;List&gt;</code> 指针（在 64 位系统上固定为 8 字节）。无论链表有多长，每个节点的内存布局都是固定且可知的。</p>
+<h2 id="boxt-的本质"><code>Box&lt;T&gt;</code> 的本质</h2>
+<p><code>Box&lt;T&gt;</code> 之所以称为”智能”指针，是因为它实现了两个关键 Trait：</p>
+<ul>
+<li><strong><code>Deref</code> Trait</strong>：使得 <code>Box&lt;T&gt;</code> 可以像引用一样被解引用（使用 <code>*</code> 运算符），以及享受解引用强制转换的便利。</li>
+<li><strong><code>Drop</code> Trait</strong>：当 <code>Box&lt;T&gt;</code> 离开作用域时，会自动释放堆上的内存，无需手动 <code>free</code>。</li>
+</ul>
+<p>这两个 Trait 正是下一篇文章要深入学习的核心内容。<code>Box&lt;T&gt;</code> 的其他功能除此以外，既没有额外的性能开销，也没有额外的运行时检查——它是 Rust 智能指针家族中最”干净”的成员。</p>
+<h1 id="练习题">练习题</h1>
+<h2 id="测验">测验</h2>
+<div class="quiz-choice" data-block-id="13-smart-pointers/01-box#1:0" data-kind="single" data-payload="%7B%22question%22%3A%22%E4%B8%BA%E4%BB%80%E4%B9%88%E7%9B%B4%E6%8E%A5%E5%AE%9A%E4%B9%89%20%60enum%20List%20%7B%20Cons(i32%2C%20List)%2C%20Nil%20%7D%60%20%E6%97%A0%E6%B3%95%E7%BC%96%E8%AF%91%EF%BC%9F%22%2C%22options%22%3A%5B%22%E5%9B%A0%E4%B8%BA%E7%BC%96%E8%AF%91%E5%99%A8%E5%9C%A8%E8%AE%A1%E7%AE%97%20List%20%E7%9A%84%E5%A4%A7%E5%B0%8F%E6%97%B6%E4%BC%9A%E9%99%B7%E5%85%A5%E6%97%A0%E9%99%90%E9%80%92%E5%BD%92%EF%BC%8C%E6%97%A0%E6%B3%95%E5%BE%97%E5%87%BA%E7%BB%93%E8%AE%BA%E3%80%82%22%2C%22%E5%9B%A0%E4%B8%BA%E6%9E%9A%E4%B8%BE%E4%B8%8D%E8%83%BD%E6%9C%89%E5%A4%9A%E4%B8%AA%E6%88%90%E5%91%98%E3%80%82%22%2C%22%E5%9B%A0%E4%B8%BA%20i32%20%E7%B1%BB%E5%9E%8B%E4%B8%8D%E8%83%BD%E6%94%BE%E5%9C%A8%E6%9E%9A%E4%B8%BE%E9%87%8C%E3%80%82%22%2C%22%E5%9B%A0%E4%B8%BA%E6%9E%9A%E4%B8%BE%E4%B8%8D%E6%94%AF%E6%8C%81%E9%80%92%E5%BD%92%E3%80%82%22%5D%2C%22correct%22%3A%5B0%5D%2C%22explanation%22%3A%22Rust%20%E9%9C%80%E8%A6%81%E5%9C%A8%E7%BC%96%E8%AF%91%E6%97%B6%E7%A1%AE%E5%AE%9A%E6%89%80%E6%9C%89%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%A4%A7%E5%B0%8F%EF%BC%8C%E9%80%92%E5%BD%92%E7%B1%BB%E5%9E%8B%E8%AE%A9%E8%BF%99%E4%B8%AA%E8%AE%A1%E7%AE%97%E6%B0%B8%E8%BF%9C%E6%97%A0%E6%B3%95%E7%BB%88%E6%AD%A2%E3%80%82%22%7D"><div class="quiz-placeholder">加载题目中…</div></div>
+<div class="quiz-choice" data-block-id="13-smart-pointers/01-box#1:1" data-kind="single" data-payload="%7B%22question%22%3A%22%60Box%3CT%3E%60%20%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E9%80%92%E5%BD%92%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%A4%A7%E5%B0%8F%E9%97%AE%E9%A2%98%EF%BC%9F%22%2C%22options%22%3A%5B%22%E5%AE%83%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%8E%8B%E7%BC%A9%E6%95%B0%E6%8D%AE%E4%BD%BF%E5%85%B6%E5%8F%98%E5%B0%8F%E3%80%82%22%2C%22%E5%AE%83%E5%B0%86%5C%22%E5%AD%98%E5%82%A8%E5%80%BC%E6%9C%AC%E8%BA%AB%5C%22%E8%BD%AC%E5%8F%98%E4%B8%BA%5C%22%E5%AD%98%E5%82%A8%E4%B8%80%E4%B8%AA%E5%9B%BA%E5%AE%9A%E5%A4%A7%E5%B0%8F%E7%9A%84%E6%8C%87%E9%92%88%5C%22%EF%BC%8C%E6%8C%87%E9%92%88%E5%A4%A7%E5%B0%8F%E5%9C%A8%E7%BC%96%E8%AF%91%E6%97%B6%E6%80%BB%E6%98%AF%E5%B7%B2%E7%9F%A5%E7%9A%84%E3%80%82%22%2C%22%E5%AE%83%E8%AE%A9%E7%B1%BB%E5%9E%8B%E5%8F%98%E6%88%90%E5%8A%A8%E6%80%81%E5%A4%A7%E5%B0%8F%E3%80%82%22%2C%22%E5%AE%83%E5%9C%A8%E8%BF%90%E8%A1%8C%E6%97%B6%E5%8A%A8%E6%80%81%E8%AE%A1%E7%AE%97%E5%A4%A7%E5%B0%8F%E3%80%82%22%5D%2C%22correct%22%3A%5B1%5D%2C%22explanation%22%3A%22%E6%97%A0%E8%AE%BA%E6%8C%87%E9%92%88%E6%8C%87%E5%90%91%E7%9A%84%E6%95%B0%E6%8D%AE%E6%9C%89%E5%A4%9A%E5%A4%A7%EF%BC%8C%E6%8C%87%E9%92%88%E6%9C%AC%E8%BA%AB%E7%9A%84%E5%A4%A7%E5%B0%8F%EF%BC%88%E5%A6%82%208%20%E5%AD%97%E8%8A%82%EF%BC%89%E5%9C%A8%E7%BC%96%E8%AF%91%E6%97%B6%E6%B0%B8%E8%BF%9C%E6%98%AF%E5%9B%BA%E5%AE%9A%E7%9A%84%E3%80%82%22%7D"><div class="quiz-placeholder">加载题目中…</div></div>
+<div class="quiz-choice" data-block-id="13-smart-pointers/01-box#1:2" data-kind="multi" data-payload="%7B%22question%22%3A%22%E4%BB%A5%E4%B8%8B%E5%93%AA%E4%BA%9B%E6%98%AF%E4%BD%BF%E7%94%A8%20%60Box%3CT%3E%60%20%E7%9A%84%E5%90%88%E7%90%86%E5%9C%BA%E6%99%AF%EF%BC%9F%22%2C%22options%22%3A%5B%22%E9%9C%80%E8%A6%81%E8%BD%AC%E7%A7%BB%E5%A4%A7%E9%87%8F%E6%95%B0%E6%8D%AE%E7%9A%84%E6%89%80%E6%9C%89%E6%9D%83%E8%80%8C%E4%B8%8D%E8%A7%A6%E5%8F%91%E6%98%82%E8%B4%B5%E7%9A%84%E6%95%B0%E6%8D%AE%E6%8B%B7%E8%B4%9D%E6%97%B6%E3%80%82%22%2C%22%E9%9C%80%E8%A6%81%E5%9C%A8%E7%BC%96%E8%AF%91%E6%97%B6%E5%A4%A7%E5%B0%8F%E6%9C%AA%E7%9F%A5%E7%9A%84%E9%80%92%E5%BD%92%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%AD%E3%80%82%22%2C%22%E5%B8%8C%E6%9C%9B%E6%8C%81%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AE%9E%E7%8E%B0%E4%BA%86%E7%89%B9%E5%AE%9A%20Trait%20%E7%9A%84%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B%EF%BC%88Trait%20%E5%AF%B9%E8%B1%A1%EF%BC%89%E6%97%B6%E3%80%82%22%2C%22%E9%9C%80%E8%A6%81%E5%9C%A8%E5%A4%9A%E4%B8%AA%E4%BD%8D%E7%BD%AE%E5%85%B1%E4%BA%AB%E5%90%8C%E4%B8%80%E6%95%B0%E6%8D%AE%E7%9A%84%E6%89%80%E6%9C%89%E6%9D%83%E6%97%B6%E3%80%82%22%5D%2C%22correct%22%3A%5B0%2C1%2C2%5D%2C%22explanation%22%3A%22%E5%A4%9A%E6%89%80%E6%9C%89%E6%9D%83%E9%9C%80%E8%A6%81%20Rc%3CT%3E%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%20Box%3CT%3E%E3%80%82Box%3CT%3E%20%E4%BB%8D%E7%84%B6%E6%98%AF%E5%8D%95%E4%B8%80%E6%89%80%E6%9C%89%E8%80%85%E3%80%82%22%7D"><div class="quiz-placeholder">加载题目中…</div></div>
+<div class="quiz-choice" data-block-id="13-smart-pointers/01-box#1:3" data-kind="single" data-payload="%7B%22question%22%3A%22%60Box%3CT%3E%60%20%E7%A6%BB%E5%BC%80%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%97%B6%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88%EF%BC%9F%22%2C%22options%22%3A%5B%22%E8%87%AA%E5%8A%A8%E9%87%8A%E6%94%BE%E6%A0%88%E4%B8%8A%E7%9A%84%E6%8C%87%E9%92%88%E5%92%8C%E5%A0%86%E4%B8%8A%E6%8C%87%E5%90%91%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%88%E9%80%9A%E8%BF%87%20Drop%20Trait%EF%BC%89%E3%80%82%22%2C%22%E4%BB%85%E9%87%8A%E6%94%BE%E6%A0%88%E4%B8%8A%E7%9A%84%E6%8C%87%E9%92%88%EF%BC%8C%E5%A0%86%E4%B8%8A%E7%9A%84%E6%95%B0%E6%8D%AE%E4%BF%9D%E7%95%99%E3%80%82%22%2C%22%E5%8F%91%E7%94%9F%20Panic%E3%80%82%22%2C%22%E4%BB%80%E4%B9%88%E9%83%BD%E4%B8%8D%E5%8F%91%E7%94%9F%EF%BC%8C%E9%9C%80%E8%A6%81%E6%89%8B%E5%8A%A8%E9%87%8A%E6%94%BE%E3%80%82%22%5D%2C%22correct%22%3A%5B0%5D%2C%22explanation%22%3A%22Box%3CT%3E%20%E5%AE%9E%E7%8E%B0%E4%BA%86%20Drop%20Trait%EF%BC%8C%E7%A6%BB%E5%BC%80%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%97%B6%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%B8%85%E7%90%86%E5%A0%86%E5%86%85%E5%AD%98%EF%BC%8C%E4%B8%8D%E9%9C%80%E8%A6%81%E6%89%8B%E5%8A%A8%20free%E3%80%82%22%7D"><div class="quiz-placeholder">加载题目中…</div></div>
+<pre><code class="language-rust">fn main() {
+    let x = Box::new(5);
+    let y = x;
+    println!("{}", x); // 使用 x
+}</code></pre>
+<div class="quiz-choice" data-block-id="13-smart-pointers/01-box#1:4" data-kind="single" data-payload="%7B%22question%22%3A%22%E4%BB%A5%E4%B8%8A%E4%BB%A3%E7%A0%81%E8%83%BD%E5%90%A6%E7%BC%96%E8%AF%91%EF%BC%9F%22%2C%22options%22%3A%5B%22%E4%B8%8D%E8%83%BD%E7%BC%96%E8%AF%91%EF%BC%8Cx%20%E7%9A%84%E6%89%80%E6%9C%89%E6%9D%83%E5%B7%B2%E7%A7%BB%E5%8A%A8%E7%BB%99%20y%EF%BC%8Cx%20%E4%B8%8D%E5%86%8D%E6%9C%89%E6%95%88%E3%80%82%22%2C%22%E4%B8%8D%E8%83%BD%E7%BC%96%E8%AF%91%EF%BC%8CBox%20%E4%B8%8D%E8%83%BD%E5%AD%98%E6%94%BE%E6%95%B4%E6%95%B0%E3%80%82%22%2C%22%E8%83%BD%E7%BC%96%E8%AF%91%EF%BC%8C%E6%95%B4%E6%95%B0%E5%AE%9E%E7%8E%B0%E4%BA%86%20Copy%E3%80%82%22%2C%22%E8%83%BD%E7%BC%96%E8%AF%91%EF%BC%8CBox%20%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%85%8B%E9%9A%86%E3%80%82%22%5D%2C%22correct%22%3A%5B0%5D%2C%22explanation%22%3A%22Box%3CT%3E%20%E4%B8%8D%E5%AE%9E%E7%8E%B0%20Copy%EF%BC%8C%E8%B5%8B%E5%80%BC%E6%93%8D%E4%BD%9C%E4%BC%9A%E7%A7%BB%E5%8A%A8%E6%89%80%E6%9C%89%E6%9D%83%E3%80%82x%20%E8%A2%AB%E7%A7%BB%E5%8A%A8%E7%BB%99%20y%20%E5%90%8E%E5%B0%B1%E5%A4%B1%E6%95%88%E4%BA%86%E3%80%82%22%7D"><div class="quiz-placeholder">加载题目中…</div></div> </div>
