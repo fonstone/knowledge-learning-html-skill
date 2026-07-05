@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap');
 
 :root {
     --color-bg: #0D0D0F;
@@ -1436,4 +1436,15 @@ main {
 
 @media (max-width: 1100px) {
     .toc-sidebar { display: none !important; }
+}
+/* ============================================================
+   Giscus Comments
+   ============================================================ */
+.article-comments {
+    margin-top: 2.5rem;
+    padding: 1.5rem 0 0;
+    border-top: 1px solid var(--color-border);
+}
+.article-comments .giscus {
+    min-height: 200px;
 }

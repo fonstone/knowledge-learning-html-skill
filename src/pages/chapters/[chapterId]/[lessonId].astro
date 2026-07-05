@@ -74,6 +74,25 @@ const { Content } = await entry.render();
     </article>
 
     <ArticleNav prevLesson={prevLesson} nextLesson={nextLesson} />
+
+    <!-- Giscus 评论区 -->
+    <div class="article-comments" aria-label="评论">
+      <script src="https://giscus.app/client.js"
+        data-repo="xyfx-fhw/RustCourse"
+        data-repo-id="R_kgDORCzWwg"
+        data-category="Comments"
+        data-category-id="DIC_kwDORCzWws4C8AJ3"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="transparent_dark"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+      </script>
+    </div>
   </main>
 
   <script>
