@@ -36,11 +36,17 @@ import { courseData } from '../lib/courseData';
 
   function updateProgress() {
     let total = 0, completed = 0;
+    const completions: Record<string, number> = {};
     for (const ch of courseData) {
+      let chDone = 0;
       for (const ls of ch.lessons) {
         total++;
-        if (localStorage.getItem(`rust-tutorial-completed-${ch.id}-${ls.id}`) === 'true') completed++;
+        if (localStorage.getItem(`rust-tutorial-completed-${ch.id}-${ls.id}`) === 'true') {
+          completed++;
+          chDone++;
+        }
       }
+      completions[ch.id] = chDone;
     }
     const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
     const fill = document.getElementById('overall-progress-fill');
@@ -49,6 +55,105 @@ import { courseData } from '../lib/courseData';
     if (fill) fill.style.width = pct + '%';
     if (pctEl) pctEl.textContent = pct + '%';
     if (indicator) indicator.setAttribute('data-has-progress', completed > 0 ? 'true' : 'false');
+
+    // Update chapter block progress dots
+    for (const ch of courseData) {
+      const block = document.getElementById(ch.id);
+      if (!block) continue;
+
+      const outlineItem = block.querySelector('.outline-item.chapter-item') as HTMLElement;
+      if (!outlineItem) continue;
+
+      const chDone = completions[ch.id] || 0;
+      if (chDone > 0) {
+        outlineItem.setAttribute('data-has-progress', 'true');
+      } else {
+        outlineItem.removeAttribute('data-has-progress');
+      }
+
+      // Add/update progress area with dot + reset button
+      let progressArea = outlineItem.querySelector('.item-progress-area') as HTMLElement;
+      if (!progressArea) {
+        progressArea = document.createElement('div');
+        progressArea.className = 'item-progress-area';
+        outlineItem.appendChild(progressArea);
+      }
+
+      if (chDone > 0) progressArea.setAttribute('data-has-progress', 'true');
+      else progressArea.removeAttribute('data-has-progress');
+
+      if (!progressArea.querySelector('.progress-dot')) {
+        const dot = document.createElement('span');
+        dot.className = 'progress-dot';
+        dot.innerHTML = ' ';
+        progressArea.appendChild(dot);
+      }
+
+      if (!progressArea.querySelector('.reset-btn')) {
+        const resetBtn = document.createElement('button');
+        resetBtn.className = 'reset-btn';
+        resetBtn.type = 'button';
+        resetBtn.textContent = '↺ 重置进度';
+        resetBtn.setAttribute('aria-label', '重置本章进度');
+        resetBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const overlay = document.getElementById('confirm-dialog-overlay');
+          if (!overlay) return;
+          overlay.hidden = false;
+          overlay.setAttribute('aria-hidden', 'false');
+          document.getElementById('cd-message')!.textContent = `确认重置"${ch.title}"的所有进度？`;
+          (document.querySelector('.cd-hint') as HTMLElement).style.display = 'none';
+          (document.querySelector('.cd-input') as HTMLElement).style.display = 'none';
+          const okBtn = document.querySelector('.cd-ok') as HTMLButtonElement;
+          okBtn.textContent = '重置';
+          okBtn.disabled = false;
+          okBtn.onclick = () => {
+            for (const ls of ch.lessons) {
+              localStorage.removeItem(`rust-tutorial-completed-${ch.id}-${ls.id}`);
+            }
+            overlay.hidden = true;
+            overlay.setAttribute('aria-hidden', 'true');
+            updateProgress();
+            window.dispatchEvent(new CustomEvent('progress-updated'));
+          };
+          (document.querySelector('.cd-cancel') as HTMLButtonElement).onclick = () => {
+            overlay.hidden = true;
+            overlay.setAttribute('aria-hidden', 'true');
+          };
+        });
+        progressArea.appendChild(resetBtn);
+      }
+
+      // Update article items progress
+      const articleItems = block.querySelectorAll('.outline-item.article-item');
+      articleItems.forEach((item, idx) => {
+        const ls = ch.lessons[idx + 1]; // skip first (chapter intro)
+        if (!ls) return;
+        const lsDone = localStorage.getItem(`rust-tutorial-completed-${ch.id}-${ls.id}`) === 'true';
+        if (lsDone) {
+          item.setAttribute('data-has-progress', 'true');
+        } else {
+          item.removeAttribute('data-has-progress');
+        }
+
+        let artProgress = item.querySelector('.item-progress-area') as HTMLElement;
+        if (!artProgress) {
+          artProgress = document.createElement('div');
+          artProgress.className = 'item-progress-area';
+          item.appendChild(artProgress);
+        }
+        artProgress.setAttribute('data-slug', `${ch.id}/${ls.id}`);
+        if (lsDone) artProgress.setAttribute('data-has-progress', 'true');
+        else artProgress.removeAttribute('data-has-progress');
+
+        if (!artProgress.querySelector('.progress-dot')) {
+          const dot = document.createElement('span');
+          dot.className = 'progress-dot';
+          dot.innerHTML = ' ';
+          artProgress.appendChild(dot);
+        }
+      });
+    }
   }
 
   const startBtn = document.getElementById('start-btn');
@@ -97,4 +202,5 @@ import { courseData } from '../lib/courseData';
   }
 
   updateProgress();
+  window.addEventListener('progress-updated', updateProgress);
 </script>

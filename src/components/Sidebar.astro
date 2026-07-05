@@ -7,15 +7,16 @@ interface Props {
 const { chapterId, lessonId } = Astro.props;
 ---
 
-<aside class="sidebar" id="sidebar">
+<aside class="sidebar" id="sidebar" data-chapter-id={chapterId} data-lesson-id={lessonId}>
   <nav class="sidebar-nav" aria-label="课程目录" id="sidebar-content"></nav>
 </aside>
 
 <script>
   import { courseData } from '../lib/courseData';
 
-  const currentChapterId = '{chapterId}' || null;
-  const currentLessonId = '{lessonId}' || null;
+  const sidebar = document.getElementById('sidebar')!;
+  const currentChapterId = sidebar.dataset.chapterId || null;
+  const currentLessonId = sidebar.dataset.lessonId || null;
   const expandedChapters: Set<string> = new Set(currentChapterId ? [currentChapterId] : []);
 
   function isLessonDone(chId: string, lsId: string): boolean {

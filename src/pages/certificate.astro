@@ -3,17 +3,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="证书">
-  <div style="display:flex;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:4rem 1rem;">
+  <div id="cert-content" style="display:flex;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:4rem 1rem;">
     <div style="max-width:500px;">
       <div style="font-size:4rem;margin-bottom:1rem;">🎓</div>
       <h1 style="font-size:2rem;color:var(--color-accent);margin-bottom:0.5rem;">恭喜完成全部课程！</h1>
-      <p style="color:var(--color-text-muted);margin-bottom:2rem;line-height:1.8;">
-        你已完成 RUST 互动教程的全部 133 节课程。<br/>
+      <p style="color:var(--color-text-muted);margin-bottom:2rem;line-height:1.8;font-size:1.05rem;">
+        你已完成 RUST 互动教程的全部 <span id="cert-total">133</span> 节课程。<br/>
         这是对 Rust 语言系统学习的一份见证。
       </p>
-      <a href="/RustCourse/" class="btn-primary" style="display:inline-block;padding:0.75rem 2rem;border-radius:6px;text-decoration:none;">
-        返回首页
-      </a>
+      <div id="cert-incomplete" style="display:none;margin-bottom:1.5rem;">
+        <p style="color:var(--color-warning);">当前进度：<strong id="cert-pct">0%</strong></p>
+        <p style="color:var(--color-text-muted);font-size:0.9rem;">完成全部课程后即可获得证书</p>
+      </div>
+      <div id="cert-actions">
+        <a href="/RustCourse/" class="btn-primary" style="display:inline-block;padding:0.75rem 2rem;border-radius:6px;text-decoration:none;">返回首页</a>
+      </div>
     </div>
   </div>
 </BaseLayout>
@@ -27,7 +31,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       if (localStorage.getItem(`rust-tutorial-completed-${ch.id}-${ls.id}`) === 'true') completed++;
     }
   }
+  const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+  document.getElementById('cert-total')!.textContent = String(total);
+  document.getElementById('cert-pct')!.textContent = pct + '%';
+
   if (completed < total) {
-    window.location.href = '/RustCourse/';
+    const incomplete = document.getElementById('cert-incomplete')!;
+    incomplete.style.display = 'block';
+    const title = document.querySelector('#cert-content h1') as HTMLElement;
+    if (title) title.textContent = '证书尚未解锁';
+    const certEmoji = document.querySelector('#cert-content div') as HTMLElement;
+    if (certEmoji) certEmoji.textContent = '📚';
+    const desc = document.querySelector('#cert-content p') as HTMLElement;
+    if (desc) desc.innerHTML = `你已完成 <strong>${completed}</strong> / <strong>${total}</strong> 节课程。<br/>继续学习，距离解锁证书还有 <strong>${total - completed}</strong> 节课程。`;
   }
 </script>

@@ -1,67 +1,73 @@
-# Knowledge Learning · HTML Skill
+# RUST 互动教程
 
-一个基于纯 HTML/CSS/JavaScript 构建的**知识学习 SPA**，展示前端工程化与交互设计能力。
+基于 Astro 5 构建的 Rust 语言系统学习教程网站，完整复刻 https://xyfx-fhw.github.io/RustCourse/。
 
-内容层承载 Rust 编程语言全栈教程（24 章 132 课），但架构本身是通用的——任意 Markdown 知识库换入即可使用。
+## 技术栈
 
-## 核心技能亮点
-
-| 技能点 | 实现方式 |
-|--------|----------|
-| **Hash 路由 SPA** | `hashchange` 事件驱动，无刷新导航 |
-| **Markdown 运行时渲染** | 自定义 `mdParse()` 解析器，支持代码块/表格/行内样式 |
-| **HTML 透传** | 内容块的 `<div>` 原始 HTML 不经解析直接插入 |
-| **进度持久化** | `localStorage`，key 格式 `rust-tutorial-completed-{ch}-{lesson}` |
-| **交互式测验** | `<quiz-choice>` 自定义元素 + `enhanceQuizzes()`，支持单选/多选 |
-| **折叠导航 + 进度条** | `expandedChapters` Set，逐章百分比进度 |
-| **暗色主题** | `#0D0D0F` 背景 + `#CE412B` 强调色，全站统一变量 |
-| **零依赖** | 无框架/无构建工具，纯原生三件套 |
-
-## 快速启动
-
-```bash
-# 方式一：Python
-python -m http.server 8000
-
-# 方式二：npm script
-npm run dev
-
-# 方式三：http-server
-npx http-server -p 8000
-```
-
-打开 `http://localhost:8000` 即可。
-
-> `fetch()` 加载 `.md` 文件，必须通过 HTTP 服务运行。
+- **Astro 5** — 静态站点生成（SSG）
+- **TypeScript** — 类型安全
+- **CSS** — 暗色主题设计系统（#0D0D0F / #CE412B）
 
 ## 项目结构
 
 ```
-├── index.html         # SPA 入口（导航栏、侧边栏、内容区、页脚）
-├── package.json
-├── css/
-│   └── style.css      # 暗色主题样式
-├── js/
-│   ├── data.js        # 课程元数据（courseData 数组）
-│   ├── main.js        # SPA 核心逻辑
-│   └── md-parser.js   # Markdown → HTML 转换器
-└── content/           # 132 个 .md 课程文件（/ 章节 / 课程）
+├── astro.config.mjs          # Astro 配置（base: /RustCourse）
+├── public/                   # 静态资源（favicon, images, diagrams）
+├── src/
+│   ├── content/lessons/      # 133 个课程 .md 文件（content collection）
+│   ├── pages/                # 页面路由
+│   │   ├── index.astro       # 首页（hero + 课程大纲 + 进度）
+│   │   ├── certificate.astro # 证书页（100% 进度解锁）
+│   │   └── chapters/[chapterId]/[lessonId].astro  # 课程详情页
+│   ├── layouts/
+│   │   └── BaseLayout.astro  # 全局布局（navbar, sidebar, TOC, footer）
+│   ├── components/           # UI 组件
+│   │   ├── Navbar.astro       # 顶部导航栏 + 进度条
+│   │   ├── Sidebar.astro     # 左侧章节目录（展开/折叠）
+│   │   ├── PageToc.astro     # 右侧页面目录（scroll-spy）
+│   │   ├── Breadcrumb.astro  # 面包屑导航
+│   │   ├── ArticleNav.astro  # 上一篇/下一篇
+│   │   ├── SectionProgress.astro  # 页面章节进度标签
+│   │   ├── HeroSection.astro # 首页 hero 区域
+│   │   ├── ChapterBlock.astro # 首页章节卡片
+│   │   ├── ConfirmDialog.astro   # 通用确认弹窗
+│   │   └── Footer.astro      # 页脚
+│   ├── lib/
+│   │   ├── courseData.ts     # 课程元数据（24 章 133 课）
+│   │   └── progress.ts       # localStorage 进度工具
+│   └── styles/
+│       └── global.css        # 全局样式
+└── scripts/                  # 开发工具脚本
 ```
 
-## 内容架构
+## 启动
 
+```bash
+npm install
+npm run dev      # 开发服务器 http://localhost:4321/RustCourse/
+npm run build    # 构建到 dist/
+npm run preview  # 预览构建结果
 ```
-.md 文件 → fetch() → mdParse() → innerHTML → #article-content
+
+## 功能
+
+- **133 节课程** — 24 章，完整 Rust 知识体系
+- **章节侧边栏** — 展开/折叠，自动高亮当前位置
+- **页面目录** — 自动生成 H1-H3 的 TOC，scroll-spy 激活
+- **进度追踪** — localStorage 持久化，首页进度条 + 绿色完成标记
+- **证书页面** — 100% 完成后解锁
+- **互动测验** — 单选/多选题，提交反馈，全部答对自动标记完成
+- **代码运行器** — 模拟编译输出
+- **暗色主题** — 纯 CSS 暗色设计，背景动画光晕
+
+## 部署 GitHub Pages
+
+```bash
+npm run build
+# 将 dist/ 目录部署到 GitHub Pages
+# base 已配置为 /RustCourse
 ```
 
-- 路由格式：`#chapter/{id}`（章首页） / `#chapters/{ch}/{lesson}`（课程）
-- 两种内容格式：纯 Markdown（ch01-08, ch17-23）+ HTML 透传块（ch09-16）
-- 测验通过后自动标记本节课完成
+## 作者
 
-## 参考站
-
-原始内容源：https://xyfx-fhw.github.io/RustCourse/
-
-## License
-
-MIT
+雪云飞星（付皓文）· AI 协作 · © 2026

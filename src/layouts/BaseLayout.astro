@@ -48,16 +48,16 @@ const {
   <Navbar />
 
   <main>
-    <ConfirmDialog client:load />
+    <ConfirmDialog />
 
     {
       showSidebar ? (
         <div class="chapter-layout">
-          <Sidebar chapterId={chapterId} lessonId={lessonId} client:load />
+          <Sidebar chapterId={chapterId} lessonId={lessonId} />
           <div class="chapter-body">
             <slot />
           </div>
-          {showToc && <PageToc client:load />}
+          {showToc && <PageToc />}
         </div>
       ) : (
         <slot />
