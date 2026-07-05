@@ -52,7 +52,7 @@ const { Content } = await entry.render();
   />
 
   <main class="chapter-main">
-    <article class="prose" id="article-content">
+    <article class="prose" id="article-content" data-chapter-id={chapterId} data-lesson-id={lessonId}>
       <h1 id="lesson-title">{title}</h1>
       <div class="article-meta">
         <span class={`meta-difficulty ${diffClass}`}> {level} </span>
@@ -76,11 +76,14 @@ const { Content } = await entry.render();
     <ArticleNav prevLesson={prevLesson} nextLesson={nextLesson} />
   </main>
 
-  <script define:vars={{ chId: chapterId, lsId: lessonId }}>
-    const key = `rust-tutorial-completed-${chId}-${lsId}`;
+  <script>
+    const article = document.getElementById('article-content');
+    const chapterId = article?.getAttribute('data-chapter-id') || '';
+    const lessonId = article?.getAttribute('data-lesson-id') || '';
+    const key = `rust-tutorial-completed-${chapterId}-${lessonId}`;
 
     // Mark complete button
-    (() => {
+    (function() {
       const btn = document.getElementById('ls-complete-btn');
       if (!btn) return;
       const isDone = localStorage.getItem(key) === 'true';
@@ -88,7 +91,7 @@ const { Content } = await entry.render();
         btn.classList.add('ls-is-done');
         btn.textContent = '✓ 已完成';
       }
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', function() {
         if (localStorage.getItem(key) === 'true') {
           localStorage.removeItem(key);
           btn.classList.remove('ls-is-done');
@@ -105,7 +108,7 @@ const { Content } = await entry.render();
     // Scroll-to-bottom auto complete
     if (localStorage.getItem(key) !== 'true') {
       let tracked = false;
-      const onScroll = () => {
+      const onScroll = function() {
         if (tracked) return;
         const body = document.getElementById('lesson-body');
         if (!body) return;
@@ -123,19 +126,22 @@ const { Content } = await entry.render();
     }
 
     // Set last visited
-    localStorage.setItem('rust-tutorial-last-visited', `chapters/${chId}/${lsId}`);
+    localStorage.setItem('rust-tutorial-last-visited', `chapters/${chapterId}/${lessonId}`);
   </script>
 
-  <script define:vars={{ chId: chapterId, lsId: lessonId }}>
-    const lessonKey = `rust-tutorial-completed-${chId}-${lsId}`;
+  <script>
+    (function() {
+      const article = document.getElementById('article-content');
+      const chId = article?.getAttribute('data-chapter-id') || '';
+      const lsId = article?.getAttribute('data-lesson-id') || '';
+      const lessonKey = `rust-tutorial-completed-${chId}-${lsId}`;
 
-    (() => {
       function enhanceQuizzes() {
-        document.querySelectorAll('.quiz-choice[data-payload]').forEach((quiz: Element) => {
+        document.querySelectorAll('.quiz-choice[data-payload]').forEach(function(quiz) {
           const raw = quiz.getAttribute('data-payload');
           if (!raw) return;
-          let data: any;
-          try { data = JSON.parse(decodeURIComponent(raw)); } catch { return; }
+          let data;
+          try { data = JSON.parse(decodeURIComponent(raw)); } catch(e) { return; }
           quiz.removeAttribute('data-payload');
 
           const isMulti = data.kind === 'multi' || (data.correct && data.correct.length > 1);
@@ -147,7 +153,7 @@ const { Content } = await entry.render();
 
           let html = '<div class="quiz-question">' + data.question + '</div>';
           html += '<div class="quiz-options">';
-          data.options.forEach((opt: string, oi: number) => {
+          data.options.forEach(function(opt, oi) {
             const isCorrect = data.correct && data.correct.indexOf(oi) >= 0;
             html += '<div class="quiz-option"' + (isCorrect ? ' data-correct' : '') + '>' +
               '<span class="quiz-opt-label">' + opt + '</span></div>';
@@ -163,44 +169,45 @@ const { Content } = await entry.render();
           const options = quiz.querySelectorAll('.quiz-option');
 
           function updateVisual() {
-            options.forEach(o => {
-              const inp = o.querySelector('input') as HTMLInputElement;
-              if (inp?.checked) o.classList.add('selected');
+            options.forEach(function(o) {
+              const inp = o.querySelector('input');
+              if (inp && inp.checked) o.classList.add('selected');
               else o.classList.remove('selected');
             });
           }
 
-          options.forEach((opt, oi) => {
+          options.forEach(function(opt) {
             const input = document.createElement('input');
             input.type = inputType;
             input.name = name;
-            input.value = String(oi);
-            input.id = name + '-' + oi;
+            input.value = '0';
             input.style.marginRight = '0.375rem';
             opt.insertBefore(input, opt.firstChild);
-            opt.addEventListener('click', (e) => {
-              if ((e.target as HTMLElement).tagName === 'INPUT') return;
+            opt.addEventListener('click', function(e) {
+              if (e.target.tagName === 'INPUT') return;
               if (inputType === 'checkbox') {
-                (opt.querySelector('input') as HTMLInputElement)!.checked = !(opt.querySelector('input') as HTMLInputElement)!.checked;
+                const inp = opt.querySelector('input');
+                if (inp) inp.checked = !inp.checked;
               } else {
-                options.forEach(o => { const i = o.querySelector('input') as HTMLInputElement; if (i) i.checked = false; });
-                (opt.querySelector('input') as HTMLInputElement)!.checked = true;
+                options.forEach(function(o) { const i = o.querySelector('input'); if (i) i.checked = false; });
+                const inp = opt.querySelector('input');
+                if (inp) inp.checked = true;
               }
               updateVisual();
             });
           });
           updateVisual();
 
-          const submitBtn = quiz.querySelector('.quiz-submit') as HTMLButtonElement;
+          const submitBtn = quiz.querySelector('.quiz-submit');
           if (!submitBtn) return;
-          submitBtn.addEventListener('click', () => {
+          submitBtn.addEventListener('click', function() {
             const checked = quiz.querySelectorAll('.quiz-option input:checked');
             if (checked.length === 0) return;
             let allCorrect = true;
-            quiz.querySelectorAll('.quiz-option').forEach(opt => {
-              const inp = opt.querySelector('input') as HTMLInputElement;
+            quiz.querySelectorAll('.quiz-option').forEach(function(opt) {
+              const inp = opt.querySelector('input');
               const isCorrect = opt.hasAttribute('data-correct');
-              if (isCorrect !== !!(inp?.checked)) allCorrect = false;
+              if (isCorrect !== !!(inp && inp.checked)) allCorrect = false;
             });
             const existing = quiz.querySelector('.quiz-feedback');
             if (existing) existing.remove();
@@ -209,7 +216,7 @@ const { Content } = await entry.render();
             if (allCorrect) {
               fb.classList.add('quiz-feedback-ok');
               fb.textContent = isMulti ? '✅ 全部答对！' : '✅ 回答正确！';
-              const expl = quiz.querySelector('.quiz-explanation') as HTMLElement;
+              const expl = quiz.querySelector('.quiz-explanation');
               if (expl) { expl.style.display = 'block'; expl.style.cssText = 'margin-top:0.5rem;padding:0.625rem 0.75rem;border:1px solid var(--color-border);border-radius:6px;background:var(--color-surface);font-size:0.8125rem;color:var(--color-text-muted);line-height:1.6;'; }
               checkAllDone();
             } else {
@@ -226,9 +233,9 @@ const { Content } = await entry.render();
       function checkAllDone() {
         const quizzes = document.querySelectorAll('.quiz-choice');
         let allDone = true;
-        for (const q of quizzes) {
-          const btn = q.querySelector('.quiz-submit');
-          if (btn && !(btn as HTMLButtonElement).disabled) { allDone = false; break; }
+        for (let i = 0; i < quizzes.length; i++) {
+          const btn = quizzes[i].querySelector('.quiz-submit');
+          if (btn && !btn.disabled) { allDone = false; break; }
         }
         if (allDone && quizzes.length > 0) {
           if (localStorage.getItem(lessonKey) !== 'true') {
@@ -241,7 +248,7 @@ const { Content } = await entry.render();
       }
 
       function enhanceCodeRunners() {
-        document.querySelectorAll('#lesson-body .code-runner').forEach((runner) => {
+        document.querySelectorAll('#lesson-body .code-runner').forEach(function(runner) {
           if (runner.querySelector('.code-runner-bar')) return;
           const bar = document.createElement('div');
           bar.className = 'code-runner-bar';
@@ -254,17 +261,17 @@ const { Content } = await entry.render();
           runBtn.type = 'button';
           runBtn.textContent = '▶ 运行';
           runBtn.style.cssText = 'margin-left:auto;padding:0.15rem 0.6rem;font-size:0.75rem;border-radius:4px;border:1px solid var(--color-border);background:transparent;color:var(--color-text-muted);cursor:pointer;';
-          runBtn.addEventListener('mouseenter', () => { runBtn.style.color = 'var(--color-accent)'; runBtn.style.borderColor = 'var(--color-accent)'; });
-          runBtn.addEventListener('mouseleave', () => { runBtn.style.color = 'var(--color-text-muted)'; runBtn.style.borderColor = 'var(--color-border)'; });
-          runBtn.addEventListener('click', () => {
+          runBtn.addEventListener('mouseenter', function() { runBtn.style.color = 'var(--color-accent)'; runBtn.style.borderColor = 'var(--color-accent)'; });
+          runBtn.addEventListener('mouseleave', function() { runBtn.style.color = 'var(--color-text-muted)'; runBtn.style.borderColor = 'var(--color-border)'; });
+          runBtn.addEventListener('click', function() {
             runBtn.textContent = '⏳ 编译中...';
             runBtn.disabled = true;
-            setTimeout(() => {
+            setTimeout(function() {
               const pre = runner.querySelector('pre');
-              const code = pre?.textContent?.trim() || '';
-              const outDiv = runner.nextElementSibling as HTMLElement;
-              if (outDiv?.classList?.contains('code-runner-output')) {
-                outDiv.textContent = '✓ 编译成功，输出如下：\n' + code.split('\n').map((l: string) => '  ' + l).join('\n');
+              const code = pre ? (pre.textContent || '').trim() : '';
+              const outDiv = runner.nextElementSibling;
+              if (outDiv && outDiv.classList.contains('code-runner-output')) {
+                outDiv.textContent = '✓ 编译成功，输出如下：\n' + code.split('\n').map(function(l) { return '  ' + l; }).join('\n');
                 outDiv.style.display = 'block';
               }
               runBtn.textContent = '✓ 已运行';
@@ -274,13 +281,13 @@ const { Content } = await entry.render();
           });
           bar.appendChild(runBtn);
           runner.insertBefore(bar, runner.firstChild);
-          const pre = runner.querySelector('pre') as HTMLElement;
+          const pre = runner.querySelector('pre');
           if (pre) pre.style.cssText = (pre.getAttribute('style') || '') + ';border-radius:0 0 6px 6px;margin-top:0;';
           const outDiv = document.createElement('div');
           outDiv.className = 'code-runner-output';
           outDiv.style.cssText = 'display:none;padding:0.75rem;border:1px solid var(--color-border);border-top:none;border-radius:0 0 6px 6px;background:var(--color-code-bg);font-family:var(--font-mono);font-size:0.8125rem;color:var(--color-code-text);white-space:pre-wrap;';
           outDiv.textContent = '输出已显示在上方，请参考教程中的说明。';
-          runner.parentNode!.insertBefore(outDiv, runner.nextSibling);
+          runner.parentNode.insertBefore(outDiv, runner.nextSibling);
         });
       }
 
