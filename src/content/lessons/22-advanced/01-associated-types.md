@@ -4,11 +4,12 @@ lessonId: "01-associated-types"
 title: "关联类型"
 level: "进阶"
 duration: "25 分钟"
-tags: [关联类型, "trait 关联类型", "Iterator::Item"]
+tags: ["关联类型", "trait 关联类型", "Iterator::Item"]
 number: "22.1"
 chapterTitle: "高级特性"
 chapterNumber: "22"
 ---
+
 <div id="article-content"> <h1 id="从问题出发">从问题出发</h1>
 <h2 id="需求输出类型随实现者变化">需求：输出类型随实现者变化</h2>
 <p>假设你在写三种”转换器”，它们都接受一个 <code>i32</code>，但输出不同：</p>

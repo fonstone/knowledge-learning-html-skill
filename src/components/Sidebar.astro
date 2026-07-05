@@ -1,0 +1,110 @@
+---
+interface Props {
+  chapterId?: string;
+  lessonId?: string;
+}
+
+const { chapterId, lessonId } = Astro.props;
+---
+
+<aside class="sidebar" id="sidebar">
+  <nav class="sidebar-nav" aria-label="课程目录" id="sidebar-content"></nav>
+</aside>
+
+<script>
+  import { courseData } from '../lib/courseData';
+
+  const currentChapterId = '{chapterId}' || null;
+  const currentLessonId = '{lessonId}' || null;
+  const expandedChapters: Set<string> = new Set(currentChapterId ? [currentChapterId] : []);
+
+  function isLessonDone(chId: string, lsId: string): boolean {
+    return localStorage.getItem(`rust-tutorial-completed-${chId}-${lsId}`) === 'true';
+  }
+
+  function renderSidebar() {
+    const container = document.getElementById('sidebar-content')!;
+    container.innerHTML = '';
+
+    for (const chapter of courseData) {
+      const chapterDiv = document.createElement('div');
+      chapterDiv.className = 'chapter-item';
+      chapterDiv.setAttribute('data-open', expandedChapters.has(chapter.id) ? 'true' : 'false');
+
+      const row = document.createElement('div');
+      row.className = 'chapter-row';
+
+      const link = document.createElement('a');
+      link.className = 'chapter-link' + (chapter.id === currentChapterId ? ' active' : '');
+      link.href = `/RustCourse/chapters/${chapter.id}/${chapter.lessons[0].id}`;
+
+      const num = document.createElement('span');
+      num.className = 'chapter-num';
+      const numVal = chapter.number;
+      if (numVal === '序') num.textContent = '序';
+      else if (/^\d+$/.test(numVal)) num.textContent = `第${parseInt(numVal, 10)}章`;
+      else num.textContent = numVal;
+      link.appendChild(num);
+      link.appendChild(document.createTextNode(' ' + chapter.title));
+      row.appendChild(link);
+
+      const hasToggle = chapter.lessons.length > 1;
+      if (hasToggle) {
+        const toggle = document.createElement('button');
+        toggle.className = 'chapter-toggle' + (expandedChapters.has(chapter.id) ? ' open' : '');
+        toggle.setAttribute('aria-label', expandedChapters.has(chapter.id) ? '折叠' : '展开');
+        toggle.setAttribute('aria-expanded', String(expandedChapters.has(chapter.id)));
+        toggle.innerHTML = '<span class="toggle-arrow">' + (expandedChapters.has(chapter.id) ? '▾' : '▸') + '</span>';
+        toggle.addEventListener('click', () => {
+          if (expandedChapters.has(chapter.id)) {
+            expandedChapters.delete(chapter.id);
+          } else {
+            expandedChapters.add(chapter.id);
+          }
+          renderSidebar();
+        });
+        row.appendChild(toggle);
+      }
+      chapterDiv.appendChild(row);
+
+      if (hasToggle) {
+        const list = document.createElement('ul');
+        list.className = 'article-list';
+        list.hidden = !expandedChapters.has(chapter.id);
+        list.setAttribute('aria-hidden', String(!expandedChapters.has(chapter.id)));
+
+        for (const lesson of chapter.lessons) {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.className = 'article-link';
+          if (chapter.id === currentChapterId && lesson.id === currentLessonId) {
+            a.classList.add('active');
+          }
+          a.href = `/RustCourse/chapters/${chapter.id}/${lesson.id}`;
+
+          const done = isLessonDone(chapter.id, lesson.id);
+          const icon = document.createElement('span');
+          icon.className = 'sd-status' + (done ? ' sd-done' : '');
+          icon.textContent = done ? '✓' : '○';
+          a.appendChild(icon);
+
+          const numSpan = document.createElement('span');
+          numSpan.className = 'article-num';
+          numSpan.textContent = lesson.number || chapter.number;
+          a.appendChild(numSpan);
+          a.appendChild(document.createTextNode(' ' + lesson.title));
+          li.appendChild(a);
+          list.appendChild(li);
+        }
+        chapterDiv.appendChild(list);
+      }
+      container.appendChild(chapterDiv);
+    }
+
+    const active = container.querySelector('.article-link.active') || container.querySelector('.chapter-link.active');
+    if (active) active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  renderSidebar();
+  window.addEventListener('progress-updated', renderSidebar);
+</script>

@@ -4,11 +4,12 @@ lessonId: "04-practice"
 title: "综合练习"
 level: "进阶"
 duration: "50 分钟"
-tags: [向量, 字符串, 哈希表, 综合应用, 所有权, 集合]
+tags: ["向量", "字符串", "哈希表", "综合应用", "所有权", "集合"]
 number: "5.4"
 chapterTitle: "标准库类型"
 chapterNumber: "05"
 ---
+
 <div id="article-content"> <h1 id="代码判断题">代码判断题</h1>
 <h2 id="题目-1向量与所有权">题目 1：向量与所有权</h2>
 <pre><code class="language-rust">fn main() {

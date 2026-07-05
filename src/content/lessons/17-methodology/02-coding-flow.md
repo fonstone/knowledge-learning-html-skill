@@ -4,11 +4,12 @@ lessonId: "02-coding-flow"
 title: "编码流程与 TDD"
 level: "进阶"
 duration: "25 分钟"
-tags: [TDD, 测试驱动开发, 编码流程, 重构]
+tags: ["TDD", "测试驱动开发", "编码流程", "重构"]
 number: "17.2"
 chapterTitle: "开发方法论"
 chapterNumber: "17"
 ---
+
 <div id="article-content"> <h1 id="编码流程">编码流程</h1>
 <p>架构设计确定了模块边界，接下来是具体的编码工作。Rust 有一套非常适合其类型系统的编码推进顺序：<strong>数据结构 → Trait 接口 → 函数签名 → 实现 → 重构</strong>。</p>
 <p>按照这个顺序写代码，可以让编译器成为你的引导者：先写类型，编译器帮你检查所有依赖这个类型的地方；再写接口，编译器帮你发现哪些实现还缺失。</p>

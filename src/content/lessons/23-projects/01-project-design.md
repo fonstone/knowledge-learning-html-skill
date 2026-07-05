@@ -4,11 +4,12 @@ lessonId: "01-project-design"
 title: "项目架构"
 level: "进阶"
 duration: "15 分钟"
-tags: [项目架构, workspace, "lib crate", "bin crate", 设计思路, 分层]
+tags: ["项目架构", "workspace", "lib crate", "bin crate", "设计思路", "分层"]
 number: "23.1"
 chapterTitle: "综合项目"
 chapterNumber: "23"
 ---
+
 <div id="article-content"> <h1 id="文件结构搭建">文件结构搭建</h1>
 <h2 id="用-workspace-管理两个-crate">用 Workspace 管理两个 crate</h2>
 <p><code>rtodo</code> 是一个命令行工具，虽然功能不复杂，出于教学目的，我们将工程做的尽量模块化，不把所有代码堆在一个文件里。真实的小型项目通常按<strong>职责</strong>拆分：</p>

@@ -4,11 +4,12 @@ lessonId: "03-lint"
 title: "代码质量：Lint、Clippy 与 rustfmt"
 level: "入门"
 duration: "25 分钟"
-tags: [Clippy, rustfmt, lint, 代码格式, 代码规范]
+tags: ["Clippy", "rustfmt", "lint", "代码格式", "代码规范"]
 number: "17.3"
 chapterTitle: "开发方法论"
 chapterNumber: "17"
 ---
+
 <div id="article-content"> <h1 id="lint-基础">Lint 基础</h1>
 <p>编译器会帮你检查代码能不能运行，而 <strong>lint</strong> 工具则会进一步检查代码<strong>写得好不好</strong>——即使编译通过，lint 也能发现潜在的 bug、低效写法或不符合惯例的代码。</p>
 <p>Rust 内置了两层 lint 系统：编译器自带的警告，以及功能更强大的 <strong>Clippy</strong> 工具。</p>

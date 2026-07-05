@@ -4,11 +4,12 @@ lessonId: "02-lifetime-annotations"
 title: "函数中的生命周期"
 level: "进阶"
 duration: "25 分钟"
-tags: ["lifetime annotation", 生命周期标注, 函数, "lifetime coercion", "'a: 'b"]
+tags: ["lifetime annotation", "生命周期标注", "函数", "lifetime coercion", "'a: 'b"]
 number: "11.2"
 chapterTitle: "生命周期"
 chapterNumber: "11"
 ---
+
 <div id="article-content"> <h1 id="函数中的标注">函数中的标注</h1>
 <h2 id="为什么函数需要手动标注">为什么函数需要手动标注</h2>
 <p>上一篇我们看到，两个变量之间的生命周期关系，编译器能自己推断。但函数呢？</p>

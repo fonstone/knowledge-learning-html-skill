@@ -4,11 +4,12 @@ lessonId: "01-box"
 title: "Box<T>：堆内存分配"
 level: "进阶"
 duration: "20 分钟"
-tags: [Box, 堆分配, 递归类型, "cons list", 所有权]
+tags: ["Box", "堆分配", "递归类型", "cons list", "所有权"]
 number: "13.1"
 chapterTitle: "智能指针"
 chapterNumber: "13"
 ---
+
 <div id="article-content"> <h1 id="智能指针从-boxt-开始">智能指针从 <code>Box&lt;T&gt;</code> 开始</h1>
 <p>在 Rust 中，默认情况下所有值都存放在栈上。当值的大小在编译时已知，栈是高效且安全的选择。然而，在以下三种经典场景中，我们必须将数据搬到堆上：</p>
 <ol>

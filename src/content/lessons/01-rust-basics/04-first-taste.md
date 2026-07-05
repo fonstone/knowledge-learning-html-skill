@@ -4,11 +4,12 @@ lessonId: "04-first-taste"
 title: "示例：今天是星期几？"
 level: "入门"
 duration: "10 分钟"
-tags: [初探第一个程序, 日期计算, 星期几]
+tags: ["初探第一个程序", "日期计算", "星期几"]
 number: "1.4"
 chapterTitle: "Rust 基础"
 chapterNumber: "01"
 ---
+
 <div id="article-content"> <h1 id="代码初体验">代码初体验</h1>
 <p>在正式学习语法之前，我们先来跑一个真正”有用”的程序，感受一下 Rust 代码长什么样。</p>
 <p><strong>你的目标很简单</strong>：输入一个日期（年/月/日），程序告诉你那天是星期几。</p>

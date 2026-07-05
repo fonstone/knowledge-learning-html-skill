@@ -4,11 +4,12 @@ lessonId: "02-channels"
 title: "消息传递"
 level: "进阶"
 duration: "20 分钟"
-tags: [通道, mpsc, 消息传递, 发送者, 接收者, 并发]
+tags: ["通道", "mpsc", "消息传递", "发送者", "接收者", "并发"]
 number: "14.2"
 chapterTitle: "并发编程"
 chapterNumber: "14"
 ---
+
 <div id="article-content"> <h1 id="通道线程间的单行道">通道：线程间的单行道</h1>
 <p>Go 语言有一句著名的口号：“<strong>不要通过共享内存来通信，而要通过通信来共享内存。</strong>”</p>
 <p>这句话描述了一种并发思路：与其让多个线程同时读写同一块内存（复杂、危险），不如给每个线程一个”收件箱”，线程之间传递消息，接收方从自己的收件箱里取数据。</p>

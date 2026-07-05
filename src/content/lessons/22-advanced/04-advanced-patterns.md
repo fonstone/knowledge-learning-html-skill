@@ -4,11 +4,12 @@ lessonId: "04-advanced-patterns"
 title: "模式匹配进阶"
 level: "进阶"
 duration: "25 分钟"
-tags: [高级模式匹配, "@ 绑定", 模式守卫, "ref 模式"]
+tags: ["高级模式匹配", "@ 绑定", "模式守卫", "ref 模式"]
 number: "22.4"
 chapterTitle: "高级特性"
 chapterNumber: "22"
 ---
+
 <div id="article-content"> <h1 id="绑定与守卫">绑定与守卫</h1>
 <h2 id="快速回顾基础模式">快速回顾：基础模式</h2>
 <p>你在前面章节已经见过基础的模式匹配：</p>

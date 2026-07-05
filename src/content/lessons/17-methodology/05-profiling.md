@@ -4,11 +4,12 @@ lessonId: "05-profiling"
 title: "性能分析与基准测试"
 level: "进阶"
 duration: "35 分钟"
-tags: [基准测试, 性能分析, flamegraph, criterion, perf]
+tags: ["基准测试", "性能分析", "flamegraph", "criterion", "perf"]
 number: "17.5"
 chapterTitle: "开发方法论"
 chapterNumber: "17"
 ---
+
 <div id="article-content"> <h1 id="基准测试">基准测试</h1>
 <p>“这段代码应该更快”——在没有测量之前，这只是猜测。性能优化必须从<strong>测量</strong>开始，测量要有<strong>可比较的基准</strong>。基准测试（Benchmark）就是对代码性能建立可复现、可量化的测量标准。</p>
 <h2 id="先测量再优化">先测量再优化</h2>

@@ -4,11 +4,12 @@ lessonId: "03-cbindgen"
 title: "暴露 Rust 给 C：cbindgen"
 level: "进阶"
 duration: "30 分钟"
-tags: [cbindgen, "Rust 暴露", "C 头文件生成"]
+tags: ["cbindgen", "Rust 暴露", "C 头文件生成"]
 number: "19.3"
 chapterTitle: "与 C 语言交互"
 chapterNumber: "19"
 ---
+
 <div id="article-content"> <h1 id="导出-rust-给-c">导出 Rust 给 C</h1>
 <p>有时我们需要编写一个极高性能的 Rust 库，然后让现有的 C、C++ 或 Python 代码调用它。这需要我们完成两件事：</p>
 <ol>

@@ -4,11 +4,12 @@ lessonId: "01-workspace"
 title: "工作空间"
 level: "入门"
 duration: "25 分钟"
-tags: [workspace, cargo, 多crate, monorepo, 共享依赖, "virtual workspace"]
+tags: ["workspace", "cargo", "多crate", "monorepo", "共享依赖", "virtual workspace"]
 number: "8.1"
 chapterTitle: "项目工程化"
 chapterNumber: "08"
 ---
+
 <div id="article-content"> <h1 id="工作空间基础">工作空间基础</h1>
 <h2 id="为什么需要工作空间">为什么需要工作空间</h2>
 <p>随着项目规模增大，单个 crate 会变得臃肿难以维护。更常见的情况是：一个项目自然分成了几个部分——核心库 + CLI 工具 + 集成测试 + 辅助工具库。</p>

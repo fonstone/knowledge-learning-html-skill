@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "并发编程"
 level: "入门"
 duration: "5 分钟"
-tags: [并发, 多线程, Arc, Mutex, Channels, 线程安全]
+tags: ["并发", "多线程", "Arc", "Mutex", "Channels", "线程安全"]
 number: ""
 chapterTitle: "并发编程"
 chapterNumber: "14"
 ---
+
 <div id="article-content"> <p>Rust 的设计目标之一是「无畏并发」（Fearless Concurrency）——通过所有权系统，Rust 在<strong>编译期</strong>就能消除绝大多数并发错误（如数据竞争），而不是把问题留到运行时。</p>
 <p>并发模型的核心选择只有两种：<strong>消息传递</strong>（线程之间发送数据，不共享内存）和<strong>共享状态</strong>（线程之间共享数据，用锁保护）。Rust 对这两种模式都提供了安全的实现，本章将分别讲解。</p>
 <h2 id="本章目录">本章目录</h2>

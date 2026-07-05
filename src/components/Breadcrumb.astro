@@ -1,0 +1,21 @@
+---
+import { courseData } from '../lib/courseData';
+
+interface Props {
+  chapterId: string;
+  lessonId: string;
+  chapterTitle: string;
+  lessonTitle: string;
+}
+
+const { chapterId, chapterTitle, lessonTitle } = Astro.props;
+const chLesson = courseData.find(c => c.id === chapterId)?.lessons[0];
+---
+
+<nav class="breadcrumb">
+  <a href="/RustCourse/" class="breadcrumb-link">课程</a>
+  <span class="breadcrumb-sep" aria-hidden="true">／</span>
+  <a href={`/RustCourse/chapters/${chapterId}/${chLesson?.id ?? '00-index'}`} class="breadcrumb-link">{chapterTitle}</a>
+  <span class="breadcrumb-sep" aria-hidden="true">／</span>
+  <span class="breadcrumb-current">{lessonTitle}</span>
+</nav>

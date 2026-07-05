@@ -1,0 +1,58 @@
+<aside class="toc-sidebar" id="toc-sidebar">
+  <nav class="toc-nav" aria-label="本页目录">
+    <div class="toc-title">目录</div>
+    <ul class="toc-list" id="toc-list"></ul>
+  </nav>
+</aside>
+
+<script>
+  function renderToc() {
+    const body = document.getElementById('lesson-body');
+    if (!body) return;
+    const headings = body.querySelectorAll('h1, h2, h3');
+    const list = document.getElementById('toc-list')!;
+    const sidebar = document.getElementById('toc-sidebar')!;
+    list.innerHTML = '';
+    if (headings.length < 2) {
+      sidebar.classList.remove('has-items');
+      return;
+    }
+    sidebar.classList.add('has-items');
+    headings.forEach((h, idx) => {
+      if (!h.id) h.id = 'toc-heading-' + idx;
+      const li = document.createElement('li');
+      li.className = 'toc-' + h.tagName.toLowerCase();
+      const a = document.createElement('a');
+      a.href = '#' + h.id;
+      a.className = 'toc-link';
+      a.textContent = h.textContent;
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', '#' + h.id);
+      });
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+  }
+
+  function updateTocActive() {
+    const links = document.querySelectorAll('#toc-list .toc-link');
+    if (!links.length) return;
+    const body = document.getElementById('lesson-body');
+    if (!body) return;
+    const headings = body.querySelectorAll('h1, h2, h3');
+    let activeIdx = headings.length - 1;
+    const scrollTop = window.scrollY + 120;
+    for (let i = 0; i < headings.length; i++) {
+      if (headings[i].getBoundingClientRect().top + window.scrollY > scrollTop) {
+        activeIdx = i - 1;
+        break;
+      }
+    }
+    links.forEach((link, i) => link.classList.toggle('is-active', i === activeIdx));
+  }
+
+  renderToc();
+  window.addEventListener('scroll', updateTocActive);
+</script>

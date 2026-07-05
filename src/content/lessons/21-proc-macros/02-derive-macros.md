@@ -4,11 +4,12 @@ lessonId: "02-derive-macros"
 title: "自定义 derive 宏"
 level: "进阶"
 duration: "35 分钟"
-tags: ["#[derive(...)]", "自定义 derive", proc-macro-derive]
+tags: ["#[derive(...)]", "自定义 derive", "proc-macro-derive"]
 number: "21.2"
 chapterTitle: "过程宏"
 chapterNumber: "21"
 ---
+
 <div id="article-content"> <h1 id="从需求出发">从需求出发</h1>
 <h2 id="一个需要手动重复的-trait">一个需要手动重复的 trait</h2>
 <p>假设你有一个日志 trait，要求每种类型都能描述自己的名字：</p>

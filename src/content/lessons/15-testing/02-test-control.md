@@ -4,11 +4,12 @@ lessonId: "02-test-control"
 title: "控制测试运行"
 level: "入门"
 duration: "15 分钟"
-tags: ["cargo test", 测试过滤, 并行测试, ignore, show-output, test-threads]
+tags: ["cargo test", "测试过滤", "并行测试", "ignore", "show-output", "test-threads"]
 number: "15.2"
 chapterTitle: "测试"
 chapterNumber: "15"
 ---
+
 <div id="article-content"> <h1 id="cargo-test-的参数体系">cargo test 的参数体系</h1>
 <p><code>cargo test</code> 的命令行参数分为<strong>两段</strong>，用 <code>--</code> 分隔：</p>
 <pre><code class="language-bash">cargo test [cargo 自身的参数] -- [传递给测试二进制的参数]</code></pre>

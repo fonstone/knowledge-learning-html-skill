@@ -4,11 +4,12 @@ lessonId: "02-dyn-trait"
 title: "dyn Trait：动态分发"
 level: "进阶"
 duration: "30 分钟"
-tags: ["dyn Trait", 动态分发, "trait 对象", vtable]
+tags: ["dyn Trait", "动态分发", "trait 对象", "vtable"]
 number: "22.2"
 chapterTitle: "高级特性"
 chapterNumber: "22"
 ---
+
 <div id="article-content"> <h1 id="为什么需要-dyn-trait">为什么需要 dyn Trait</h1>
 <h2 id="泛型搞不定的两个场景">泛型搞不定的两个场景</h2>
 <p>泛型和 <code>impl Trait</code> 是”编译期多态”——编译器在编译时就把每种具体类型展开成独立代码，运行时完全不需要判断类型。这很高效，但有两种情况它做不到。</p>

@@ -4,11 +4,12 @@ lessonId: "07-polish"
 title: "体验优化"
 level: "进阶"
 duration: "30 分钟"
-tags: [体验优化, 错误信息, format, 对齐, Display, crossterm, 彩色输出]
+tags: ["体验优化", "错误信息", "format", "对齐", "Display", "crossterm", "彩色输出"]
 number: "23.7"
 chapterTitle: "综合项目"
 chapterNumber: "23"
 ---
+
 <div id="article-content"> <h1 id="改善错误信息">改善错误信息</h1>
 <p>上一章的错误信息使用了固定字符串，比如：</p>
 <pre><code class="language-rust">.map_err(|_| "任务 ID 无效".to_string())?;</code></pre>

@@ -4,11 +4,12 @@ lessonId: "02-bindgen"
 title: "自动生成绑定：bindgen"
 level: "进阶"
 duration: "30 分钟"
-tags: [bindgen, "C 绑定生成", 自动绑定]
+tags: ["bindgen", "C 绑定生成", "自动绑定"]
 number: "19.2"
 chapterTitle: "与 C 语言交互"
 chapterNumber: "19"
 ---
+
 <div id="article-content"> <h1 id="自动化绑定">自动化绑定</h1>
 <p>手动为成百上千个 C 函数编写 <code>extern "C"</code> 声明不仅枯燥，而且极易出错。如果 C 语言库更新了头文件，手动维护这些绑定简直是噩梦。</p>
 <p><strong><code>bindgen</code></strong> 是 Rust 官方推荐的工具，它可以自动读取 C 头文件（<code>.h</code>），并生成对应的 Rust 原始绑定。</p>

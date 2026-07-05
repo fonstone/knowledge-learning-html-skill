@@ -4,11 +4,12 @@ lessonId: "01-panic"
 title: "panic! 与不可恢复错误"
 level: "入门"
 duration: "15 分钟"
-tags: [panic, 错误处理, backtrace, 不可恢复错误, "index out of bounds"]
+tags: ["panic", "错误处理", "backtrace", "不可恢复错误", "index out of bounds"]
 number: "9.1"
 chapterTitle: "错误处理"
 chapterNumber: "09"
 ---
+
 <div id="article-content"> <h1 id="错误的两种类型">错误的两种类型</h1>
 <p>所有程序都会遇到错误——文件不存在、用户输入了非法数据、网络连接超时。Rust 把这些情况分成截然不同的两类，并用不同的机制分别处理：</p>
 <img alt="error" src="/RustCourse/diagrams/error.svg" style="max-width:100%;margin:1rem 0;"/>

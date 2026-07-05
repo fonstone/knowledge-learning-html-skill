@@ -4,11 +4,12 @@ lessonId: "04-adaptors"
 title: "适配器"
 level: "进阶"
 duration: "40 分钟"
-tags: [消费适配器, 迭代器适配器, map, filter, collect, fold, zip, enumerate, Iterator]
+tags: ["消费适配器", "迭代器适配器", "map", "filter", "collect", "fold", "zip", "enumerate", "Iterator"]
 number: "12.4"
 chapterTitle: "闭包与迭代器"
 chapterNumber: "12"
 ---
+
 <div id="article-content"> <h1 id="两类适配器">两类适配器</h1>
 <p><code>Iterator</code> trait 上有几十个方法，它们分为截然不同的两类：</p>
 <table><thead><tr><th>类别</th><th>返回值</th><th>是否惰性</th><th>典型方法</th></tr></thead><tbody><tr><td><strong>迭代器适配器</strong></td><td>新的迭代器</td><td>是（不立即执行）</td><td><code>map</code>、<code>filter</code>、<code>zip</code>、<code>enumerate</code></td></tr><tr><td><strong>消费适配器</strong></td><td>最终结果值</td><td>否（立即执行并消耗）</td><td><code>sum</code>、<code>collect</code>、<code>fold</code>、<code>find</code></td></tr></tbody></table>

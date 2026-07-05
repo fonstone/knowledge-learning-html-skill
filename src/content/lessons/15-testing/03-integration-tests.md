@@ -4,11 +4,12 @@ lessonId: "03-integration-tests"
 title: "集成测试"
 level: "入门"
 duration: "15 分钟"
-tags: [集成测试, tests/, 共享模块, 测试组织]
+tags: ["集成测试", "tests/", "共享模块", "测试组织"]
 number: "15.3"
 chapterTitle: "测试"
 chapterNumber: "15"
 ---
+
 <div id="article-content"> <h1 id="两种测试的分工">两种测试的分工</h1>
 <p>Rust 项目通常有两类测试，它们的目标不同、放的地方也不同：</p>
 <table><thead><tr><th></th><th>单元测试</th><th>集成测试</th></tr></thead><tbody><tr><td><strong>放在哪里</strong></td><td>与源码同文件（<code>src/</code> 目录下）</td><td>独立的 <code>tests/</code> 目录</td></tr><tr><td><strong>测什么</strong></td><td>单个函数/模块的正确性，可以访问私有函数</td><td>多个模块协作的整体行为，只能访问公有 API</td></tr><tr><td><strong>需要 <code>#[cfg(test)]</code></strong></td><td>是（因为和源码在同一文件）</td><td>否（Cargo 自动识别 <code>tests/</code> 目录）</td></tr><tr><td><strong>典型用途</strong></td><td>验证内部实现细节</td><td>模拟真实用户调用库的方式</td></tr></tbody></table>

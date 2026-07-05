@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="证书">
+  <div style="display:flex;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:4rem 1rem;">
+    <div style="max-width:500px;">
+      <div style="font-size:4rem;margin-bottom:1rem;">🎓</div>
+      <h1 style="font-size:2rem;color:var(--color-accent);margin-bottom:0.5rem;">恭喜完成全部课程！</h1>
+      <p style="color:var(--color-text-muted);margin-bottom:2rem;line-height:1.8;">
+        你已完成 RUST 互动教程的全部 133 节课程。<br/>
+        这是对 Rust 语言系统学习的一份见证。
+      </p>
+      <a href="/RustCourse/" class="btn-primary" style="display:inline-block;padding:0.75rem 2rem;border-radius:6px;text-decoration:none;">
+        返回首页
+      </a>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { courseData } from '../lib/courseData';
+  let total = 0, completed = 0;
+  for (const ch of courseData) {
+    for (const ls of ch.lessons) {
+      total++;
+      if (localStorage.getItem(`rust-tutorial-completed-${ch.id}-${ls.id}`) === 'true') completed++;
+    }
+  }
+  if (completed < total) {
+    window.location.href = '/RustCourse/';
+  }
+</script>

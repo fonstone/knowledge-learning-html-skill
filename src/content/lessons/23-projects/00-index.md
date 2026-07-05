@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "综合项目"
 level: "入门"
 duration: "5 分钟"
-tags: [项目实战, CLI, Todo, 命令行, 文档, "Rust 综合"]
+tags: ["项目实战", "CLI", "Todo", "命令行", "文档", "Rust 综合"]
 number: ""
 chapterTitle: "综合项目"
 chapterNumber: "23"
 ---
+
 <div id="article-content"> <h2 id="构建一个命令行任务管理器">构建一个命令行任务管理器</h2>
 <p>本章构建一个真正实用的命令行工具：<strong><code>rtodo</code></strong> —— <strong>一个可以在终端里增删查改任务的 Todo 管理器</strong>。</p>
 <pre><code class="language-bash">$ rtodo add "写完 Rust 教程第三章"

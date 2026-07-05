@@ -4,11 +4,12 @@ lessonId: "01-ffi-basics"
 title: "FFI 基础"
 level: "进阶"
 duration: "25 分钟"
-tags: [FFI, "extern \"C\"", "C ABI", "C 函数调用"]
+tags: ["FFI", "extern \"C\"", "C ABI", "C 函数调用"]
 number: "19.1"
 chapterTitle: "与 C 语言交互"
 chapterNumber: "19"
 ---
+
 <div id="article-content"> <h1 id="基础概念">基础概念</h1>
 <p>Rust 的 <strong>FFI (Foreign Function Interface)</strong> 允许它调用其他语言（主要是 C）编写的函数，也允许其他语言调用 Rust。这对于复用现有的库或在现有 C 系统中引入 Rust 至关重要。</p>
 <h2 id="什么是-abi">什么是 ABI？</h2>

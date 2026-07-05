@@ -4,11 +4,12 @@ lessonId: "05-connecting"
 title: "接入 run 函数"
 level: "进阶"
 duration: "20 分钟"
-tags: [命令分发, run函数, execute, TDD, "cargo run"]
+tags: ["命令分发", "run函数", "execute", "TDD", "cargo run"]
 number: "23.5"
 chapterTitle: "综合项目"
 chapterNumber: "23"
 ---
+
 <div id="article-content"> <h1 id="提取-execute-函数">提取 execute 函数</h1>
 <p><code>run()</code> 目前的结构是：读参数 → 解析 → 执行。“执行”这一步涉及所有业务逻辑，也是最需要测试的部分。但 <code>run()</code> 本身直接调用 <code>std::env::args()</code>，测试时无法控制输入，不能直接测试。</p>
 <p>解决办法是把”执行”单独提取成一个函数：</p>

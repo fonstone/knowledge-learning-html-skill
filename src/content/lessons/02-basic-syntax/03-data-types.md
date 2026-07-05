@@ -4,11 +4,12 @@ lessonId: "03-data-types"
 title: "基础数据类型"
 level: "入门"
 duration: "30 分钟"
-tags: [整数类型, 浮点数, bool, char, 元组, 数组, 类型推断]
+tags: ["整数类型", "浮点数", "bool", "char", "元组", "数组", "类型推断"]
 number: "2.3"
 chapterTitle: "基础语法"
 chapterNumber: "02"
 ---
+
 <div id="article-content"> <h1 id="标量类型">标量类型</h1>
 <p>Rust 是<strong>静态类型</strong>语言——每个值在编译时就有确定的类型。不用担心，Rust 的类型推断能力很强，大多数时候你不需要手动写类型，但理解它们是写出正确代码的基础。</p>
 <h2 id="整数类型">整数类型</h2>

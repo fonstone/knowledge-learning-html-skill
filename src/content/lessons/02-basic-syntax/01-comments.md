@@ -4,11 +4,12 @@ lessonId: "01-comments"
 title: "注释"
 level: "入门"
 duration: "10 分钟"
-tags: [注释, 行注释, 块注释, 文档注释, ///, "//!"]
+tags: ["注释", "行注释", "块注释", "文档注释", "///", "//!"]
 number: "2.1"
 chapterTitle: "基础语法"
 chapterNumber: "02"
 ---
+
 <div id="article-content"> <h1 id="注释语法">注释语法</h1>
 <p>注释不参与程序运行，却是代码不可缺少的一部分。Rust 有四种注释形式，每种都有不同的用途和使用场景。</p>
 <h2 id="行注释">行注释 <code>//</code></h2>

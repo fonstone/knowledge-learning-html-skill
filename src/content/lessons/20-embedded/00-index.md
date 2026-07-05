@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "嵌入式 Rust"
 level: "入门"
 duration: "5 分钟"
-tags: [嵌入式, no_std, PAC, HAL, Embassy, 中断]
+tags: ["嵌入式", "no_std", "PAC", "HAL", "Embassy", "中断"]
 number: ""
 chapterTitle: "嵌入式 Rust"
 chapterNumber: "20"
 ---
+
 <div id="article-content"> <p>在这一章中，我们将离开操作系统的「舒适区」，直接在裸机（Bare-metal）硬件上编写 Rust 代码。嵌入式开发是 Rust 的核心战场之一——Rust 的内存安全性与硬件级的控制能力，解决了长久以来 C 语言嵌入式开发中内存安全隐患、并发竞争和难以跨平台抽象的痛点。</p>
 <p>Rust 嵌入式的核心优势：<strong>零成本抽象</strong>（高级语法，C 级机器码）、<strong>类型安全</strong>（将硬件状态编码进类型，编译期拦截非法操作）、<strong>强大生态</strong>（Embedded-HAL 标准，一份驱动跑在不同 MCU 上）。</p>
 <h2 id="本章目录">本章目录</h2>

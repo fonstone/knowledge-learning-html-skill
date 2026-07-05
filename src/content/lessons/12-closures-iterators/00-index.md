@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "闭包与迭代器"
 level: "入门"
 duration: "5 分钟"
-tags: [闭包, 迭代器, Fn, Iterator, map, filter, 零开销抽象]
+tags: ["闭包", "迭代器", "Fn", "Iterator", "map", "filter", "零开销抽象"]
 number: ""
 chapterTitle: "闭包与迭代器"
 chapterNumber: "12"
 ---
+
 <div id="article-content"> <p>闭包和迭代器是 Rust 函数式编程风格的两块基石，也是最常配合使用的一对特性。</p>
 <p><strong>闭包</strong>是可以捕获所在作用域变量的匿名函数——你可以把”一段行为”存进变量、传给函数、或从函数返回。它的三个 trait（<code>Fn</code>/<code>FnMut</code>/<code>FnOnce</code>）描述了闭包如何捕获以及能被调用几次。</p>
 <p><strong>迭代器</strong>是按需逐个产生值的惰性接口——整条变换链只有在”消费”时才真正执行，不产生任何中间集合。两类方法各司其职：迭代器适配器（<code>map</code>、<code>filter</code>）描述变换但不执行；消费适配器（<code>sum</code>、<code>collect</code>）触发执行并拿走结果。</p>

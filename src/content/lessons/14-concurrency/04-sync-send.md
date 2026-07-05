@@ -4,11 +4,12 @@ lessonId: "04-sync-send"
 title: "Send 与 Sync"
 level: "进阶"
 duration: "20 分钟"
-tags: [Send, Sync, 标记trait, 线程安全, Arc, Rc]
+tags: ["Send", "Sync", "标记trait", "线程安全", "Arc", "Rc"]
 number: "14.4"
 chapterTitle: "并发编程"
 chapterNumber: "14"
 ---
+
 <div id="article-content"> <h1 id="两个神奇的标记-trait">两个神奇的标记 Trait</h1>
 <p>前几节我们看到编译器拒绝了 <code>Rc&lt;T&gt;</code> 跨线程使用，接受了 <code>Arc&lt;T&gt;</code>。编译器是怎么知道谁能跨线程、谁不能的？答案就是两个内置于语言核心的标记 trait：<code>Send</code> 和 <code>Sync</code>。</p>
 <p>它们定义在 <code>std::marker</code> 中，没有任何方法，只是一个「标签」——打上这个标签，就等于向编译器声明：「这个类型在多线程场景下是安全的。」</p>

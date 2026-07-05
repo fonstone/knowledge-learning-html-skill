@@ -4,11 +4,12 @@ lessonId: "01-vectors"
 title: "Vec<T>——动态数组"
 level: "入门"
 duration: "35 分钟"
-tags: [向量, Vec, 动态数组, 所有权, 借用, 迭代]
+tags: ["向量", "Vec", "动态数组", "所有权", "借用", "迭代"]
 number: "5.1"
 chapterTitle: "标准库类型"
 chapterNumber: "05"
 ---
+
 <div id="article-content"> <h1 id="什么是向量vector">什么是向量（Vector）</h1>
 <p><strong>向量</strong>（Vector）是 Rust 标准库中最常用的<strong>动态数组</strong>类型，记作 <code>Vec&lt;T&gt;</code>。</p>
 <p>“动态”是什么意思呢？对比你前面学过的<strong>数组</strong>（<code>[T; n]</code>），数组的长度在编译时就确定了，是<strong>固定的</strong>：</p>

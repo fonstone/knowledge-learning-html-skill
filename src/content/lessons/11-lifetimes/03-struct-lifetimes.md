@@ -4,11 +4,12 @@ lessonId: "03-struct-lifetimes"
 title: "结构体中的生命周期"
 level: "进阶"
 duration: "30 分钟"
-tags: ["struct lifetime", 结构体生命周期, impl, 方法, "T: 'a", trait]
+tags: ["struct lifetime", "结构体生命周期", "impl", "方法", "T: 'a", "trait"]
 number: "11.3"
 chapterTitle: "生命周期"
 chapterNumber: "11"
 ---
+
 <div id="article-content"> <h1 id="含引用的结构体">含引用的结构体</h1>
 <h2 id="为什么结构体需要生命周期">为什么结构体需要生命周期</h2>
 <p>到目前为止，你见过的结构体字段都是有所有权的类型，比如 <code>String</code>、<code>Vec&lt;T&gt;</code>、<code>i32</code>。这些类型在结构体销毁时随之销毁，没有引用的问题。</p>

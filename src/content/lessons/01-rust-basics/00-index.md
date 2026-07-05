@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "Rust 基础"
 level: "入门"
 duration: "15 分钟"
-tags: [Rust简介, 内存安全, 零开销抽象, 系统编程, 并发]
+tags: ["Rust简介", "内存安全", "零开销抽象", "系统编程", "并发"]
 number: ""
 chapterTitle: "Rust 基础"
 chapterNumber: "01"
 ---
+
 <div id="article-content"> <h1 id="rust-是什么">Rust 是什么</h1>
 <p>你可能听说过 Rust 很难学，也可能听说过它是”程序员最爱的语言”，甚至两者都听说过。这两件事并不矛盾——Rust 确实有一定的学习曲线，但它试图解决的问题是真实存在且困扰编程世界数十年的老难题。</p>
 <p>学习 Rust 之前，先搞清楚它<strong>为什么存在</strong>，能帮你在遇到困难时不至于放弃。</p>

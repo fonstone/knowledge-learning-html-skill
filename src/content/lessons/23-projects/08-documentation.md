@@ -4,11 +4,12 @@ lessonId: "08-documentation"
 title: "生成文档"
 level: "进阶"
 duration: "20 分钟"
-tags: [文档, rustdoc, "cargo doc", 文档测试, "doc comments"]
+tags: ["文档", "rustdoc", "cargo doc", "文档测试", "doc comments"]
 number: "23.8"
 chapterTitle: "综合项目"
 chapterNumber: "23"
 ---
+
 <div id="article-content"> <h1 id="文档注释">文档注释</h1>
 <p>还记得哦文档注释吗？我们再回顾一下，Rust 有两种注释：</p>
 <ul>

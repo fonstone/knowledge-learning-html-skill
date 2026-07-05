@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "所有权系统"
 level: "入门"
 duration: "5 分钟"
-tags: [所有权, 栈, 堆, 移动, Copy, Clone, 所有权与函数]
+tags: ["所有权", "栈", "堆", "移动", "Copy", "Clone", "所有权与函数"]
 number: ""
 chapterTitle: "所有权系统"
 chapterNumber: "03"
 ---
+
 <div id="article-content"> <p>所有权是 Rust 最核心也最独特的特性——它让 Rust 在没有垃圾回收器的情况下保证内存安全。这不是一个孤立的概念，而是一套贯穿整个语言的规则体系，从变量赋值到函数调用，无处不在。</p>
 <p>理解所有权需要先理解 Rust 的内存模型。本章从栈与堆的区别出发，逐步展开所有权规则、引用与借用、切片等核心概念。</p>
 <h2 id="本章目录">本章目录</h2>

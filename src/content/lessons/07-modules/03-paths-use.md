@@ -4,11 +4,12 @@ lessonId: "03-paths-use"
 title: "路径与 use 关键字"
 level: "进阶"
 duration: "40 分钟"
-tags: [路径, 绝对路径, 相对路径, use, super, 重导出, "pub use"]
+tags: ["路径", "绝对路径", "相对路径", "use", "super", "重导出", "pub use"]
 number: "7.3"
 chapterTitle: "模块系统"
 chapterNumber: "07"
 ---
+
 <div id="article-content"> <h1 id="为什么需要路径和-use">为什么需要路径和 use</h1>
 <p>前面我们讲过，模块在模块树中<strong>只能被声明一次</strong>（声明权属于父模块），但<strong>可以从多处访问</strong>。当你需要在 <code>a.rs</code> 和 <code>b.rs</code> 中都使用模块 <code>c</code> 时，不能重复声明，而要通过<strong>路径</strong>来访问它。</p>
 <img alt="use" src="/RustCourse/diagrams/use.svg" style="max-width:100%;margin:1rem 0;"/>

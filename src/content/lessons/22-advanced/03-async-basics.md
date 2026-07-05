@@ -4,11 +4,12 @@ lessonId: "03-async-basics"
 title: "异步编程"
 level: "进阶"
 duration: "40 分钟"
-tags: [异步, async/await, Future, tokio, async-std]
+tags: ["异步", "async/await", "Future", "tokio", "async-std"]
 number: "22.3"
 chapterTitle: "高级特性"
 chapterNumber: "22"
 ---
+
 <div id="article-content"> <h1 id="为什么需要异步">为什么需要异步</h1>
 <h2 id="从一个网络服务器说起">从一个网络服务器说起</h2>
 <p>假设你在写一个简单的 Web 服务器，需要处理多个用户同时发来的请求：</p>

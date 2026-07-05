@@ -4,11 +4,12 @@ lessonId: "04-implementing"
 title: "实现 TodoList"
 level: "进阶"
 duration: "35 分钟"
-tags: [TDD, 测试驱动, impl, 迭代器, 命令分发, run函数]
+tags: ["TDD", "测试驱动", "impl", "迭代器", "命令分发", "run函数"]
 number: "23.4"
 chapterTitle: "综合项目"
 chapterNumber: "23"
 ---
+
 <div id="article-content"> <h1 id="先写测试">先写测试</h1>
 <p>上一章用 <code>todo!()</code> 把方法签名占好了，但具体行为还没有定义。TDD 的做法是：先写测试描述每个方法<strong>应该</strong>有什么行为，再写实现让测试通过。</p>
 <p>在 <code>rtodo-core/src/lib.rs</code> 末尾添加测试模块：</p>

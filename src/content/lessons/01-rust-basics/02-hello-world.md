@@ -4,11 +4,12 @@ lessonId: "02-hello-world"
 title: "Hello, World!"
 level: "入门"
 duration: "20 分钟"
-tags: ["Hello World", main函数, "println!", rustc编译, 预编译]
+tags: ["Hello World", "main函数", "println!", "rustc编译", "预编译"]
 number: "1.2"
 chapterTitle: "Rust 基础"
 chapterNumber: "01"
 ---
+
 <div id="article-content"> <h1 id="你的第一个-rust-程序">你的第一个 Rust 程序</h1>
 <p>按照程序员世界的传统，学习一门新语言的第一件事，就是让计算机说出 “Hello, world!”。这不只是仪式感——它能让你快速感受到这门语言最基本的节奏：写代码、编译、运行。</p>
 <h2 id="创建项目目录">创建项目目录</h2>

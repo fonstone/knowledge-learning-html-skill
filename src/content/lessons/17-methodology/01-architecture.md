@@ -4,11 +4,12 @@ lessonId: "01-architecture"
 title: "Rust 工程架构设计"
 level: "进阶"
 duration: "30 分钟"
-tags: [架构, 项目结构, 模块化, 分层架构]
+tags: ["架构", "项目结构", "模块化", "分层架构"]
 number: "17.1"
 chapterTitle: "开发方法论"
 chapterNumber: "17"
 ---
+
 <div id="article-content"> <h2 id="为什么-rust-工程需要提前规划">为什么 Rust 工程需要提前规划</h2>
 <p>写小脚本时，代码结构并不重要。但随着项目规模增长，“想到哪写到哪”会快速积累问题：</p>
 <ul>

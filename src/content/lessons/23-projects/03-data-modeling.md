@@ -4,11 +4,12 @@ lessonId: "03-data-modeling"
 title: "数据建模"
 level: "进阶"
 duration: "30 分钟"
-tags: [数据建模, 结构体, Vec, TDD, 方法签名, impl]
+tags: ["数据建模", "结构体", "Vec", "TDD", "方法签名", "impl"]
 number: "23.3"
 chapterTitle: "综合项目"
 chapterNumber: "23"
 ---
+
 <div id="article-content"> <h1 id="设计-todo-结构体">设计 Todo 结构体</h1>
 <p>一条任务需要存储哪些数据？从上一章的命令设计反推：</p>
 <ul>

@@ -4,11 +4,12 @@ lessonId: "05-control-flow"
 title: "控制流"
 level: "入门"
 duration: "30 分钟"
-tags: [if, else, loop, while, for, 控制流, 循环, 条件分支]
+tags: ["if", "else", "loop", "while", "for", "控制流", "循环", "条件分支"]
 number: "2.5"
 chapterTitle: "基础语法"
 chapterNumber: "02"
 ---
+
 <div id="article-content"> <h1 id="分支表达式">分支表达式</h1>
 <p>根据条件走不同的路，或者反复执行同一段代码——这就是<strong>控制流</strong>的本质。本文介绍 Rust 的 <code>if</code> 表达式和三种循环。</p>
 <p><code>if</code> 表达式让程序根据条件选择执行不同的代码块。</p>

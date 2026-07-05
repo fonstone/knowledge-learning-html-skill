@@ -4,11 +4,12 @@ lessonId: "04-match"
 title: "模式匹配与 match 表达式"
 level: "入门"
 duration: "30 分钟"
-tags: [match, 模式, 穷尽性, 绑定, 通配符]
+tags: ["match", "模式", "穷尽性", "绑定", "通配符"]
 number: "4.4"
 chapterTitle: "自定义数据类型"
 chapterNumber: "04"
 ---
+
 <div id="article-content"> <h1 id="match-表达式的威力">match 表达式的威力</h1>
 <p><code>match</code> 是 Rust 中最强大的控制流构造，它结合了 C 的 <code>switch</code> 和模式匹配的强大功能。（上一节你可能已经看到了如何使用，本篇文章我们将深入一些细节）</p>
 <p>基本思想：</p>

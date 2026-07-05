@@ -4,11 +4,12 @@ lessonId: "01-threads"
 title: "线程"
 level: "进阶"
 duration: "25 分钟"
-tags: [线程, "thread::spawn", JoinHandle, "move 闭包", 并发]
+tags: ["线程", "thread::spawn", "JoinHandle", "move 闭包", "并发"]
 number: "14.1"
 chapterTitle: "并发编程"
 chapterNumber: "14"
 ---
+
 <div id="article-content"> <h1 id="并发与线程">并发与线程</h1>
 <p>在大多数现代操作系统里，程序运行在一个<strong>进程</strong>（process）中，操作系统管理着多个进程。而进程内部，还可以拆分出多个同时运行的独立单元，叫做<strong>线程</strong>（thread）。</p>
 <p>把工作分给多个线程能提升性能，但也带来了新挑战：</p>

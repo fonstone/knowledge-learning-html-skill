@@ -4,11 +4,12 @@ lessonId: "01-unsafe"
 title: "unsafe 块与超能力"
 level: "进阶"
 duration: "20 分钟"
-tags: [unsafe, "unsafe 块", "unsafe 能力"]
+tags: ["unsafe", "unsafe 块", "unsafe 能力"]
 number: "18.1"
 chapterTitle: "不安全 Rust"
 chapterNumber: "18"
 ---
+
 <div id="article-content"> <h1 id="为什么需要-unsafe">为什么需要 unsafe</h1>
 <p>Rust 的安全保证来自编译器——借用检查器、类型系统、生命周期检查，它们在编译期拦截了绝大多数内存错误。但这套系统并非万能：有时候你写的代码<strong>确实是安全的</strong>，编译器却因为信息不足而无法证明。</p>
 <p>典型场景：</p>

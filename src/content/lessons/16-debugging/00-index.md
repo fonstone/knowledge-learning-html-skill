@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "调试"
 level: "入门"
 duration: "5 分钟"
-tags: [调试, "dbg!", 调试器, 日志, log, env_logger]
+tags: ["调试", "dbg!", "调试器", "日志", "log", "env_logger"]
 number: ""
 chapterTitle: "调试"
 chapterNumber: "16"
 ---
+
 <div id="article-content"> <p>程序出 bug 是家常便饭。新手的第一反应通常是疯狂插入 <code>println!</code>——这能解决问题，但 Rust 提供了更好的工具：<code>dbg!</code> 宏快速定位逻辑错误，IDE 调试器用于复杂 bug 的单步排查，结构化日志让长期运行的程序留下可过滤的诊断信息。</p>
 <blockquote>
 <p>调试能力是工程师的核心素养。掌握这些工具，遇到 bug 不再靠”感觉”，而是靠系统化排查。</p>

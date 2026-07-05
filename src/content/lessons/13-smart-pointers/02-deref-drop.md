@@ -4,11 +4,12 @@ lessonId: "02-deref-drop"
 title: "Deref 与 Drop：智能指针的两翼"
 level: "进阶"
 duration: "30 分钟"
-tags: [Deref, Drop, 解引用, 解引用强制转换, RAII, 析构]
+tags: ["Deref", "Drop", "解引用", "解引用强制转换", "RAII", "析构"]
 number: "13.2"
 chapterTitle: "智能指针"
 chapterNumber: "13"
 ---
+
 <div id="article-content"> <h1 id="理解-deref重载解引用运算符">理解 <code>Deref</code>：重载解引用运算符</h1>
 <p>解引用运算符 <code>*</code> 能够追踪引用所指向的值。对于普通引用，这是自然而然的行为：</p>
 <div class="code-runner" data-full-code="fn%20main()%20%7B%0A%20%20%20%20let%20x%20%3D%205%3B%0A%20%20%20%20let%20y%20%3D%20%26x%3B%20%20%20%20%20%20%20%2F%2F%20y%20%E6%98%AF%20x%20%E7%9A%84%E5%BC%95%E7%94%A8%0A%0A%20%20%20%20assert_eq!(5%2C%20x)%3B%0A%20%20%20%20assert_eq!(5%2C%20*y)%3B%20%2F%2F%20%E4%BD%BF%E7%94%A8%20*%20%E8%A7%A3%E5%BC%95%E7%94%A8%EF%BC%8C%E8%8E%B7%E5%8F%96%20y%20%E6%8C%87%E5%90%91%E7%9A%84%E5%80%BC%0A%20%20%20%20println!(%22x%20%3D%20%7B%7D%2C%20*y%20%3D%20%7B%7D%22%2C%20x%2C%20*y)%3B%0A%7D" data-mode="run"><pre><code class="language-rust">fn main() {

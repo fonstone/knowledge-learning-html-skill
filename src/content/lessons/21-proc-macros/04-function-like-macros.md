@@ -4,11 +4,12 @@ lessonId: "04-function-like-macros"
 title: "类函数宏"
 level: "进阶"
 duration: "30 分钟"
-tags: [函数宏, "macro!", proc-macro]
+tags: ["函数宏", "macro!", "proc-macro"]
 number: "21.4"
 chapterTitle: "过程宏"
 chapterNumber: "21"
 ---
+
 <div id="article-content"> <h1 id="类函数宏的形式">类函数宏的形式</h1>
 <h2 id="三种宏的外观对比">三种宏的外观对比</h2>
 <p>你现在认识了三种宏，它们看起来是：</p>

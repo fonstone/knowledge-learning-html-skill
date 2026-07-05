@@ -1,0 +1,58 @@
+<header class="navbar">
+  <div class="navbar-inner">
+    <a href="/RustCourse/" class="logo">
+      <span class="logo-rust">RUST</span> 互动教程
+    </a>
+    <nav class="nav-links">
+      <a href="/RustCourse/" class="nav-link" id="nav-home">首页</a>
+      <a href="/RustCourse/chapters/00-preface/00-index" class="nav-link" id="nav-tutorial">教程</a>
+    </nav>
+    <a href="/RustCourse/certificate" class="nav-progress" id="nav-progress">
+      <span id="nav-progress-text">总进度：0%</span>
+      <span class="nav-progress-tip">100% 后可获得证书</span>
+    </a>
+  </div>
+</header>
+
+<script>
+  import { courseData } from '../lib/courseData';
+
+  function updateNavProgress() {
+    let total = 0, completed = 0;
+    for (const ch of courseData) {
+      for (const ls of ch.lessons) {
+        total++;
+        if (localStorage.getItem(`rust-tutorial-completed-${ch.id}-${ls.id}`) === 'true') completed++;
+      }
+    }
+    const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+    const el = document.getElementById('nav-progress-text');
+    if (el) el.textContent = `总进度：${pct}%`;
+    const link = document.getElementById('nav-progress');
+    if (link) {
+      if (pct >= 100) {
+        link.classList.add('nav-progress--unlocked');
+        const tip = link.querySelector('.nav-progress-tip') as HTMLElement;
+        if (tip) tip.textContent = '🎓 证书已解锁';
+      }
+    }
+    const home = document.getElementById('nav-home');
+    const tutorial = document.getElementById('nav-tutorial');
+    if (window.location.pathname === '/RustCourse/' || window.location.pathname === '/RustCourse') {
+      home?.classList.add('active');
+      tutorial?.classList.remove('active');
+    } else {
+      home?.classList.remove('active');
+      tutorial?.classList.add('active');
+    }
+  }
+
+  const last = localStorage.getItem('rust-tutorial-last-visited');
+  if (last) {
+    const tutorial = document.getElementById('nav-tutorial');
+    if (tutorial) tutorial.setAttribute('href', `/RustCourse/${last}`);
+  }
+  updateNavProgress();
+  window.addEventListener('storage', updateNavProgress);
+  window.addEventListener('progress-updated', updateNavProgress);
+</script>

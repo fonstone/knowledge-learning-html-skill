@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "与 C 语言交互"
 level: "入门"
 duration: "5 分钟"
-tags: [FFI, "C 交互", bindgen, cbindgen, 混合编译]
+tags: ["FFI", "C 交互", "bindgen", "cbindgen", "混合编译"]
 number: ""
 chapterTitle: "与 C 语言交互"
 chapterNumber: "19"
 ---
+
 <div id="article-content"> <p>在系统编程的世界里，C 语言是通用的二进制语言。无论处理操作系统内核、数据库引擎还是图形驱动，都不可避免地需要与 C 代码打交道。</p>
 <p>Rust 的设计目标之一是<strong>零成本互操作性</strong>：你可以像调用 Rust 函数一样调用 C 函数；外部语言也可以像调用 C 函数一样调用 Rust；数据在两种语言之间传递时，通常不需要额外的拷贝开销。</p>
 <h2 id="本章目录">本章目录</h2>

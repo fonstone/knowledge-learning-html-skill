@@ -4,11 +4,12 @@ lessonId: "02-parsing"
 title: "解析命令行参数"
 level: "进阶"
 duration: "25 分钟"
-tags: [命令行参数, 枚举, 模式匹配, args, Result, lib.rs]
+tags: ["命令行参数", "枚举", "模式匹配", "args", "Result", "lib.rs"]
 number: "23.2"
 chapterTitle: "综合项目"
 chapterNumber: "23"
 ---
+
 <div id="article-content"> <h1 id="定义-command-枚举">定义 Command 枚举</h1>
 <p>在写任何代码之前，先想清楚用户怎么使用这个工具：</p>
 <pre><code class="language-bash">rtodo add "写代码"       # 第一个参数是命令名，第二个是内容

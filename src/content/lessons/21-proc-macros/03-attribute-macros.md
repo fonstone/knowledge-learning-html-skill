@@ -4,11 +4,12 @@ lessonId: "03-attribute-macros"
 title: "类属性宏"
 level: "进阶"
 duration: "30 分钟"
-tags: [属性宏, "#[attr]", proc-macro-attribute]
+tags: ["属性宏", "#[attr]", "proc-macro-attribute"]
 number: "21.3"
 chapterTitle: "过程宏"
 chapterNumber: "21"
 ---
+
 <div id="article-content"> <h1 id="属性宏的特点">属性宏的特点</h1>
 <h2 id="与-derive-宏的对比">与 derive 宏的对比</h2>
 <p>你已经学会了 derive 宏。现在来看<strong>类属性宏</strong>（Attribute Macro）——它比 derive 宏更灵活，也更强大。</p>

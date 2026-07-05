@@ -4,11 +4,12 @@ lessonId: "01-closures"
 title: "闭包语法与捕获"
 level: "进阶"
 duration: "20 分钟"
-tags: [closure, 闭包, 捕获, move, FnOnce, 捕获环境]
+tags: ["closure", "闭包", "捕获", "move", "FnOnce", "捕获环境"]
 number: "12.1"
 chapterTitle: "闭包与迭代器"
 chapterNumber: "12"
 ---
+
 <div id="article-content"> <h1 id="闭包语法">闭包语法</h1>
 <h2 id="什么是闭包">什么是闭包</h2>
 <p>闭包是一种可以<strong>像变量一样存储</strong>、<strong>像函数一样调用</strong>的代码块。和普通函数最大的区别是：闭包可以捕获它定义时所在作用域中的变量。</p>

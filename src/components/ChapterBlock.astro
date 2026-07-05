@@ -1,0 +1,50 @@
+---
+import type { Chapter } from '../lib/courseData';
+
+interface Props {
+  chapter: Chapter;
+}
+
+const { chapter } = Astro.props;
+---
+
+<div class="chapter-block" id={chapter.id}>
+  <div class="outline-item chapter-item">
+    <a class="outline-link" href={`/RustCourse/chapters/${chapter.id}/${chapter.lessons[0].id}`}>
+      <div class="item-main-row">
+        <span class="chapter-num-badge">{chapter.number}</span>
+        <span class="item-title">{chapter.title}</span>
+        <span class="item-difficulty" style={`color:${chapter.lessons[0].level === '入门' ? 'var(--color-success)' : chapter.lessons[0].level === '进阶' ? 'var(--color-warning)' : 'var(--color-error)'}`}> {chapter.lessons[0].level} </span>
+        <span class="item-time">⏱ {chapter.lessons[0].duration}</span>
+      </div>
+      <div class="item-sub-row">
+        <span class="item-desc">{chapter.description}</span>
+        {chapter.lessons.map(ls => (
+          <span class="item-kw">{ls.title}</span>
+        ))}
+      </div>
+    </a>
+  </div>
+
+  {chapter.lessons.length > 1 && (
+    <ul class="article-list">
+      {chapter.lessons.slice(1).map(lesson => (
+        <li class="outline-item article-item">
+          <a class="outline-link" href={`/RustCourse/chapters/${chapter.id}/${lesson.id}`}>
+            <div class="item-main-row">
+              <span class="article-num">{lesson.number || chapter.number}</span>
+              <span class="item-title">{lesson.title}</span>
+              <span class="item-difficulty" style={`color:${lesson.level === '入门' ? 'var(--color-success)' : lesson.level === '进阶' ? 'var(--color-warning)' : 'var(--color-error)'}`}> {lesson.level} </span>
+              <span class="item-time">⏱ {lesson.duration}</span>
+            </div>
+            <div class="item-sub-row">
+              {lesson.tags.map(tag => (
+                <span class="item-kw">{tag}</span>
+              ))}
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>

@@ -4,11 +4,12 @@ lessonId: "01-memory-and-move"
 title: "内存与数据流动"
 level: "入门"
 duration: "20 分钟"
-tags: [栈, 堆, 移动, Copy, Clone, 内存模型]
+tags: ["栈", "堆", "移动", "Copy", "Clone", "内存模型"]
 number: "3.1"
 chapterTitle: "所有权系统"
 chapterNumber: "03"
 ---
+
 <div id="article-content"> <h1 id="内存基础栈与堆">内存基础：栈与堆</h1>
 <p>Rust 中的所有权系统根本上是在管理数据在内存中的位置和生命周期。要理解所有权，必须先知道栈（Stack）和堆（Heap）的区别。</p>
 <h2 id="栈stack">栈（Stack）</h2>

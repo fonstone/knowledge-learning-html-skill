@@ -1,0 +1,27 @@
+---
+interface Props {
+  prevLesson: { chapterId: string; lessonId: string; title: string } | null;
+  nextLesson: { chapterId: string; lessonId: string; title: string } | null;
+}
+
+const { prevLesson, nextLesson } = Astro.props;
+---
+
+<nav class="article-nav">
+  <div class="article-nav-prev" style={`visibility: ${prevLesson ? 'visible' : 'hidden'}`}>
+    {prevLesson && (
+      <a href={`/RustCourse/chapters/${prevLesson.chapterId}/${prevLesson.lessonId}`} class="article-nav-link">
+        <span class="nav-label">← 上一节</span>
+        <span class="nav-title">{prevLesson.title}</span>
+      </a>
+    )}
+  </div>
+  <div class="article-nav-next" style={`visibility: ${nextLesson ? 'visible' : 'hidden'}`}>
+    {nextLesson && (
+      <a href={`/RustCourse/chapters/${nextLesson.chapterId}/${nextLesson.lessonId}`} class="article-nav-link">
+        <span class="nav-label">下一节 →</span>
+        <span class="nav-title">{nextLesson.title}</span>
+      </a>
+    )}
+  </div>
+</nav>

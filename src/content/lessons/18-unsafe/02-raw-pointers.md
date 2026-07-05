@@ -4,11 +4,12 @@ lessonId: "02-raw-pointers"
 title: "裸指针"
 level: "进阶"
 duration: "25 分钟"
-tags: ["*const T", "*mut T", 裸指针, 指针操作]
+tags: ["*const T", "*mut T", "裸指针", "指针操作"]
 number: "18.2"
 chapterTitle: "不安全 Rust"
 chapterNumber: "18"
 ---
+
 <div id="article-content"> <h1 id="裸指针基础">裸指针基础</h1>
 <p>裸指针（raw pointer）是 Rust 中最接近 C 指针的东西，它绕过了所有借用规则和生命周期检查。和引用相比，裸指针：</p>
 <ul>

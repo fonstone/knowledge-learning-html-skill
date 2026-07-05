@@ -4,11 +4,12 @@ lessonId: "04-lifetime-elision"
 title: "省略规则与 'static"
 level: "进阶"
 duration: "20 分钟"
-tags: ["lifetime elision", 生命周期省略, static, "'static", 省略规则]
+tags: ["lifetime elision", "生命周期省略", "static", "'static", "省略规则"]
 number: "11.4"
 chapterTitle: "生命周期"
 chapterNumber: "11"
 ---
+
 <div id="article-content"> <h1 id="省略规则">省略规则</h1>
 <h2 id="为什么大多数时候不需要标注">为什么大多数时候不需要标注</h2>
 <p>学完前两篇你可能有个疑问：既然每个引用都有生命周期，为什么很多函数没有写 <code>'a</code> 也能编译？比如：</p>

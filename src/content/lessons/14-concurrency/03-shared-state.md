@@ -4,11 +4,12 @@ lessonId: "03-shared-state"
 title: "共享状态"
 level: "进阶"
 duration: "30 分钟"
-tags: [Mutex, Arc, 共享状态, 互斥锁, 原子引用计数, 线程安全]
+tags: ["Mutex", "Arc", "共享状态", "互斥锁", "原子引用计数", "线程安全"]
 number: "14.3"
 chapterTitle: "并发编程"
 chapterNumber: "14"
 ---
+
 <div id="article-content"> <h1 id="mutext互斥锁">Mutex&lt;T&gt;：互斥锁</h1>
 <p>通道是「通过通信共享数据」，本节介绍另一种思路：<strong>让多个线程直接共享同一块数据，但每次只允许一个线程访问</strong>。</p>
 <p>这个机制叫<strong>互斥锁</strong>（Mutex，Mutual Exclusion）。你可以把它想象成公共厕所门上的锁：进去之前先锁门，出来后开锁，这样里面永远只有一个人。</p>

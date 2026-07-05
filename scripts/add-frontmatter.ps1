@@ -7,21 +7,16 @@ $destDir = Join-Path $base 'src\content\lessons'
 Remove-Item -Recurse -Force -LiteralPath $destDir -ErrorAction SilentlyContinue
 New-Item -ItemType Directory -Path $destDir -Force | Out-Null
 
-# Read data.js and extract the JSON array
 $dataContent = Get-Content -Raw -LiteralPath (Join-Path $base 'js\data.js') -Encoding UTF8
-$dataContent = $dataContent -replace '^const courseData = ', ''
-$dataContent = $dataContent -creplace ';\s*$', ''
 
-# Convert JS-like JSON to proper JSON (remove trailing commas in arrays)
-# The data.js file uses proper JSON inside the array, so we can parse it directly
-# But need to handle JS-style property names (they're already quoted in the source)
-try {
-    $chapters = $dataContent | ConvertFrom-Json
-} catch {
-    # If direct parsing fails, try more aggressive JS->JSON conversion
-    $dataContent = $dataContent -replace ',(\s*[}\]])', '$1'
-    $chapters = $dataContent | ConvertFrom-Json
-}
+# Use node to parse the JavaScript data properly  
+$json = & node -e @"
+const courseData = $dataContent;
+console.log(JSON.stringify(courseData));
+"@
+
+if ($LASTEXITCODE -ne 0) { throw "Node parse failed" }
+$chapters = $json | ConvertFrom-Json
 
 $count = 0
 foreach ($ch in $chapters) {
@@ -42,35 +37,39 @@ foreach ($ch in $chapters) {
             continue
         }
 
-        $body = Get-Content -Raw -LiteralPath $srcFile -Encoding UTF8
+        # Read the source file as raw bytes to preserve encoding
+        $bodyBytes = [System.IO.File]::ReadAllBytes($srcFile)
+        $body = [System.Text.Encoding]::UTF8.GetString($bodyBytes)
 
-        # Build tags array - quote if contains special chars
+        # Build tags array - quote every tag to be safe
         $tagParts = @()
         foreach ($t in $ls.tags) {
-            if ($t -match '[:#\[\]{}&*!|>''"%@`\s]') {
-                $tagParts += '"' + ($t -replace '"', '\"') + '"'
-            } else {
-                $tagParts += $t
-            }
+            $escaped = $t -replace '\\', '\\\\' -replace '"', '\"'
+            $tagParts += '"' + $escaped + '"'
         }
         $tagsStr = '[' + ($tagParts -join ', ') + ']'
 
-        # Build frontmatter
+        $titleEscaped = $ls.title -replace '"', '\"'
+        $levelEscaped = $ls.level -replace '"', '\"'
+        $durationEscaped = $ls.duration -replace '"', '\"'
+        $numberEscaped = $ls.number -replace '"', '\"'
+        $chTitleEscaped = $chTitle -replace '"', '\"'
+        $chNumEscaped = $chNum -replace '"', '\"'
+
         $fm = @"
 ---
 chapterId: "$chId"
 lessonId: "$lsId"
-title: "$($ls.title)"
-level: "$($ls.level)"
-duration: "$($ls.duration)"
+title: "$titleEscaped"
+level: "$levelEscaped"
+duration: "$durationEscaped"
 tags: $tagsStr
-number: "$($ls.number)"
-chapterTitle: "$chTitle"
-chapterNumber: "$chNum"
+number: "$numberEscaped"
+chapterTitle: "$chTitleEscaped"
+chapterNumber: "$chNumEscaped"
 ---
 
 "@
-        # Write with UTF8 no BOM
         $utf8NoBom = New-Object System.Text.UTF8Encoding $false
         [System.IO.File]::WriteAllText($destFile, $fm + $body, $utf8NoBom)
         $count++

@@ -4,11 +4,12 @@ lessonId: "03-hardware-abstraction"
 title: "硬件抽象：PAC 与 HAL"
 level: "进阶"
 duration: "30 分钟"
-tags: [PAC, HAL, svd2rust, embedded-hal]
+tags: ["PAC", "HAL", "svd2rust", "embedded-hal"]
 number: "20.3"
 chapterTitle: "嵌入式 Rust"
 chapterNumber: "20"
 ---
+
 <div id="article-content"> <h1 id="硬件抽象如何与芯片交谈">硬件抽象：如何与芯片交谈</h1>
 <p>在 C 语言中，操作硬件通常涉及到大量的宏（Macros）和指针强转（如 <code>*(uint32_t*)0x4001080C = 0x01</code>）。这种方式非常容易出错，且编译器无法提供任何保护。</p>
 <p>Rust 的嵌入式生态采用了一套三层模型，将硬件操作逐步抽象：</p>

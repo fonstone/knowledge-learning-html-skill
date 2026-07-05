@@ -4,11 +4,12 @@ lessonId: "01-no-std-basics"
 title: "裸机开发基础：no_std 环境"
 level: "进阶"
 duration: "25 分钟"
-tags: [no_std, 裸机, 嵌入式, "core crate", "alloc crate"]
+tags: ["no_std", "裸机", "嵌入式", "core crate", "alloc crate"]
 number: "20.1"
 chapterTitle: "嵌入式 Rust"
 chapterNumber: "20"
 ---
+
 <div id="article-content"> <h1 id="裸机开发基础">裸机开发基础</h1>
 <p>在传统的软件开发中，我们习惯于有操作系统（OS）的支持。操作系统为我们提供了文件系统、网络协议栈、内存管理（堆分配）以及标准库（<code>std</code>）。</p>
 <p>但在嵌入式裸机（Bare-metal）开发中，这些都不存在。我们的代码直接运行在处理器上。为了让 Rust 在这种环境下运行，我们必须移除对操作系统的依赖。</p>

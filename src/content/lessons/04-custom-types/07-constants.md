@@ -4,11 +4,12 @@ lessonId: "07-constants"
 title: "常量与静态变量"
 level: "入门"
 duration: "15 分钟"
-tags: [const, static, 常量, 编译期]
+tags: ["const", "static", "常量", "编译期"]
 number: "4.7"
 chapterTitle: "自定义数据类型"
 chapterNumber: "04"
 ---
+
 <div id="article-content"> <h1 id="const常量">const：常量</h1>
 <p><strong>常量</strong> 是那些在程序运行期间<strong>不能改变</strong>的值。与变量不同，常量必须始终是不可变的，且不能用 <code>mut</code> 修饰。</p>
 <h2 id="基本用法">基本用法</h2>

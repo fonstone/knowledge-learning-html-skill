@@ -4,11 +4,12 @@ lessonId: "04-when-to-panic"
 title: "何时 panic，何时 Result"
 level: "入门"
 duration: "20 分钟"
-tags: [panic, Result, 错误处理策略, 不变量, 类型系统, unwrap]
+tags: ["panic", "Result", "错误处理策略", "不变量", "类型系统", "unwrap"]
 number: "9.4"
 chapterTitle: "错误处理"
 chapterNumber: "09"
 ---
+
 <div id="article-content"> <h1 id="何时-panic何时-result">何时 panic，何时 Result</h1>
 <h2 id="核心原则">核心原则</h2>
 <p>学完 <code>panic!</code> 和 <code>Result</code>，你可能会问：<strong>这两种方式什么时候用哪个？</strong></p>

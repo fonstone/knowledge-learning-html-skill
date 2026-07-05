@@ -4,11 +4,12 @@ lessonId: "03-references-borrowing"
 title: "引用与借用"
 level: "进阶"
 duration: "40 分钟"
-tags: [引用, 借用, "&T", "&mut T", 可变引用, 悬垂引用, 借用检查器, NLL]
+tags: ["引用", "借用", "&T", "&mut T", "可变引用", "悬垂引用", "借用检查器", "NLL"]
 number: "3.3"
 chapterTitle: "所有权系统"
 chapterNumber: "03"
 ---
+
 <div id="article-content"> <h1 id="引用概述">引用概述</h1>
 <p>上一篇讲了所有权转移，但有个问题：每次函数调用都转移所有权会很麻烦。</p>
 <div class="code-runner" data-full-code="fn%20main()%20%7B%0A%20%20%20%20let%20s1%20%3D%20String%3A%3Afrom(%22hello%22)%3B%0A%20%20%20%20let%20(s2%2C%20len)%20%3D%20calculate_length(s1)%3B%20%2F%2F%20s1%20%E8%A2%AB%E8%BD%AC%E7%A7%BB%E8%BF%9B%E5%87%BD%E6%95%B0%0A%20%20%20%20println!(%22'%7B%7D'%20%E7%9A%84%E9%95%BF%E5%BA%A6%E6%98%AF%20%7B%7D%22%2C%20s2%2C%20len)%3B%0A%7D%0A%0Afn%20calculate_length(s%3A%20String)%20-%3E%20(String%2C%20usize)%20%7B%0A%20%20%20%20let%20length%20%3D%20s.len()%3B%0A%20%20%20%20(s%2C%20length)%20%2F%2F%20%E5%BF%85%E9%A1%BB%E6%8A%8A%20s%20%E4%B8%80%E8%B5%B7%E8%BF%94%E5%9B%9E%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%99%E9%87%8C%20%7D%20%E4%BC%9A%E5%B0%86%E5%85%B6%E9%94%80%E6%AF%81%EF%BC%8C%E8%B0%83%E7%94%A8%E8%80%85%EF%BC%88main%EF%BC%89%E5%86%8D%E4%B9%9F%E6%8B%BF%E4%B8%8D%E5%88%B0%E5%AE%83%0A%7D" data-mode="run"><pre><code class="language-rust">fn main() {

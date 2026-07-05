@@ -4,11 +4,12 @@ lessonId: "01-packages-crates"
 title: "Package 和 Crate"
 level: "入门"
 duration: "20 分钟"
-tags: [package, crate, cargo, 项目组织, 二进制, 库]
+tags: ["package", "crate", "cargo", "项目组织", "二进制", "库"]
 number: "7.1"
 chapterTitle: "模块系统"
 chapterNumber: "07"
 ---
+
 <div id="article-content"> <h1 id="package-和-crate">Package 和 Crate</h1>
 <h2 id="为什么需要-package-和-crate">为什么需要 Package 和 Crate</h2>
 <p>随着项目变大，代码会逐渐增多。Rust 提供了一套<strong>模块系统</strong>来帮助你组织代码，让功能清晰、可复用、易于维护。这个模块系统的基础就是 <strong>Package</strong>（包）和 <strong>Crate</strong>（箱）这两个概念。</p>

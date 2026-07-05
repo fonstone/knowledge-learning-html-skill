@@ -4,11 +4,12 @@ lessonId: "03-enums"
 title: "枚举"
 level: "入门"
 duration: "25 分钟"
-tags: [枚举, enum, 成员, 变体, 关联数据]
+tags: ["枚举", "enum", "成员", "变体", "关联数据"]
 number: "4.3"
 chapterTitle: "自定义数据类型"
 chapterNumber: "04"
 ---
+
 <div id="article-content"> <h1 id="什么是枚举">什么是枚举</h1>
 <p><strong>枚举</strong>（enum）允许你定义一个类型，其值<strong>只能是预先列举的几个成员之一</strong>。</p>
 <p>日常比喻：一个消息可能是”收到新邮件”、“收到推送通知”或”收到短信”，但同一时刻只能是其中一种。这正是枚举的用途。</p>

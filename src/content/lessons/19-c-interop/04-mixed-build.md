@@ -4,11 +4,12 @@ lessonId: "04-mixed-build"
 title: "静态混合编译：Rust 与 C 的深度链接"
 level: "进阶"
 duration: "35 分钟"
-tags: [混合编译, 静态链接, "cc crate", build.rs]
+tags: ["混合编译", "静态链接", "cc crate", "build.rs"]
 number: "19.4"
 chapterTitle: "与 C 语言交互"
 chapterNumber: "19"
 ---
+
 <div id="article-content"> <h1 id="静态混合编译">静态混合编译</h1>
 <p>在系统级编程中，<strong>静态链接 (Static Linking)</strong> 是最稳健的方案。它将所有依赖的代码在编译期直接拷贝到最终的可执行文件中，生成一个没有任何外部库依赖的二进制文件，这对于跨平台分发和嵌入式开发至关重要。</p>
 <p>本节我们将讨论两种典型的静态混合编译场景。</p>

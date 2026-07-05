@@ -4,11 +4,12 @@ lessonId: "01-what-are-lifetimes"
 title: "为什么需要生命周期"
 level: "进阶"
 duration: "15 分钟"
-tags: [lifetime, 生命周期, 悬垂引用, 借用检查器, "borrow checker"]
+tags: ["lifetime", "生命周期", "悬垂引用", "借用检查器", "borrow checker"]
 number: "11.1"
 chapterTitle: "生命周期"
 chapterNumber: "11"
 ---
+
 <div id="article-content"> <h1 id="悬垂引用问题">悬垂引用问题</h1>
 <p>你已经知道 Rust 有”借用”这个概念：可以不转移所有权、只拿一个引用。但引用有个潜在风险——如果被引用的数据已经销毁了，引用还在，就会指向无效内存，这叫<strong>悬垂引用</strong>（dangling reference）。</p>
 <p>C/C++ 程序员对这类 bug 再熟悉不过了：use-after-free、野指针……Rust 的目标是让这类错误<strong>在编译期就被发现</strong>，永远不到运行时。</p>

@@ -4,11 +4,12 @@ lessonId: "01-type-inference"
 title: "类型推导（类型推断）"
 level: "入门"
 duration: "20 分钟"
-tags: [类型推导, 类型推断, 类型标注, 编译器推理]
+tags: ["类型推导", "类型推断", "类型标注", "编译器推理"]
 number: "6.1"
 chapterTitle: "类型系统"
 chapterNumber: "06"
 ---
+
 <div id="article-content"> <h1 id="类型推导基础">类型推导基础</h1>
 <h2 id="为什么需要类型推导">为什么需要类型推导</h2>
 <p>在很多编程语言中，你需要为每一个变量显式标注类型：</p>

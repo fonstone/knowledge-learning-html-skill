@@ -4,11 +4,12 @@ lessonId: "03-trait-bounds"
 title: "Trait 约束与 impl Trait"
 level: "进阶"
 duration: "20 分钟"
-tags: ["trait 约束", bounds, "where 子句", "impl Trait", 多重约束]
+tags: ["trait 约束", "bounds", "where 子句", "impl Trait", "多重约束"]
 number: "10.3"
 chapterTitle: "泛型与 Trait"
 chapterNumber: "10"
 ---
+
 <div id="article-content"> <h1 id="trait-约束">Trait 约束</h1>
 <h2 id="不加约束的泛型什么都做不了">不加约束的泛型什么都做不了</h2>
 <p>学完 trait 的定义，再回头看泛型就清晰多了。考虑这个函数：</p>

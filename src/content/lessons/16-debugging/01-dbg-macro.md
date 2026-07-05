@@ -4,11 +4,12 @@ lessonId: "01-dbg-macro"
 title: "dbg! 宏：快速打印调试"
 level: "入门"
 duration: "15 分钟"
-tags: ["dbg!", 打印调试, 调试宏, stdout]
+tags: ["dbg!", "打印调试", "调试宏", "stdout"]
 number: "16.1"
 chapterTitle: "调试"
 chapterNumber: "16"
 ---
+
 <div id="article-content"> <h1 id="认识-dbg">认识 dbg!</h1>
 <p><code>dbg!</code> 是 Rust 标准库内置的调试宏。和 <code>println!</code> 比起来，它有两大优势：</p>
 <ol>

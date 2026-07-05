@@ -4,11 +4,12 @@ lessonId: "04-interrupts-concurrency"
 title: "中断与并发安全"
 level: "进阶"
 duration: "35 分钟"
-tags: [中断, interrupt, 临界区, RTIC, 并发安全]
+tags: ["中断", "interrupt", "临界区", "RTIC", "并发安全"]
 number: "20.4"
 chapterTitle: "嵌入式 Rust"
 chapterNumber: "20"
 ---
+
 <div id="article-content"> <h1 id="中断与并发安全">中断与并发安全</h1>
 <p>在嵌入式开发中，<strong>中断（Interrupt）</strong> 是处理异步事件的核心机制。当按键被按下、串口接收到数据或定时器到时，硬件会自动「中断」主程序的执行，跳转去运行一段特定的代码：<strong>中断服务程序（ISR, Interrupt Service Routine）</strong>。</p>
 <p>这引入了一个经典的并发难题：<strong>如何在 <code>main</code> 循环和 <code>ISR</code> 之间安全地共享数据？</strong></p>

@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "不安全 Rust"
 level: "入门"
 duration: "5 分钟"
-tags: [unsafe, 裸指针, "unsafe trait", 安全抽象, FFI]
+tags: ["unsafe", "裸指针", "unsafe trait", "安全抽象", "FFI"]
 number: ""
 chapterTitle: "不安全 Rust"
 chapterNumber: "18"
 ---
+
 <div id="article-content"> <p>Rust 的安全保证来自编译器——但有时候你写的代码确实是安全的，编译器却无法证明。<code>unsafe</code> 关键字是对编译器说：“这里我比你更了解情况，放行。”</p>
 <p><strong>重要：<code>unsafe</code> 不会关闭借用检查器</strong>，它只解锁了五种额外操作：解引用裸指针、调用 unsafe 函数、访问可变静态变量、实现 unsafe trait、访问 union 字段。安全责任由此从编译器转移到你。</p>
 <h2 id="本章目录">本章目录</h2>

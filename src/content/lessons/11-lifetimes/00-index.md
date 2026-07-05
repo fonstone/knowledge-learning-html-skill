@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "生命周期"
 level: "入门"
 duration: "5 分钟"
-tags: [生命周期, 借用检查器, 内存安全, 悬垂指针, 省略规则, "'static 生命周期"]
+tags: ["生命周期", "借用检查器", "内存安全", "悬垂指针", "省略规则", "'static 生命周期"]
 number: ""
 chapterTitle: "生命周期"
 chapterNumber: "11"
 ---
+
 <div id="article-content"> <p>生命周期是 Rust 最独特的特性之一——它让编译器能够在<strong>不需要垃圾回收器</strong>的情况下，保证所有引用永远不会成为悬垂指针。</p>
 <p>本章从”为什么需要生命周期”出发，逐步学习如何在函数、结构体中标注生命周期，再掌握省略规则（让你少写大量标注）和特殊的 <code>'static</code> 生命周期。</p>
 <h2 id="本章目录">本章目录</h2>

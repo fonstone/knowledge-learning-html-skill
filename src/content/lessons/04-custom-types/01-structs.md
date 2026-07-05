@@ -4,11 +4,12 @@ lessonId: "01-structs"
 title: "结构体"
 level: "入门"
 duration: "30 分钟"
-tags: [结构体, struct, 字段, 实例化, 元组结构体, 类单元结构体]
+tags: ["结构体", "struct", "字段", "实例化", "元组结构体", "类单元结构体"]
 number: "4.1"
 chapterTitle: "自定义数据类型"
 chapterNumber: "04"
 ---
+
 <div id="article-content"> <h1 id="什么是结构体">什么是结构体</h1>
 <p><strong>结构体</strong>（struct）是 Rust 中最常用的自定义类型，允许你将多个相关的数据组织在一起，并给每个数据片段起一个有意义的名字。</p>
 <p>想象你要存储一个矩形的尺寸。用普通变量，你可能这样写：</p>

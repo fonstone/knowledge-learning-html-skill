@@ -4,11 +4,12 @@ lessonId: "05-practice"
 title: "综合练习"
 level: "进阶"
 duration: "10 分钟"
-tags: [Iterator, 闭包, filter, map, collect, 综合练习]
+tags: ["Iterator", "闭包", "filter", "map", "collect", "综合练习"]
 number: "12.5"
 chapterTitle: "闭包与迭代器"
 chapterNumber: "12"
 ---
+
 <div id="article-content"> <h1 id="题目筛词并转换">题目：筛词并转换</h1>
 <p>给定一段英文句子，找出所有长度<strong>大于</strong> <code>min_len</code> 的单词，转成大写后收集为 <code>Vec&lt;String&gt;</code>。</p>
 <h2 id="参考实现for-循环版本">参考实现：for 循环版本</h2>

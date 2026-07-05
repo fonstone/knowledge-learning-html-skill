@@ -4,11 +4,12 @@ lessonId: "03-type-aliases"
 title: "类型别名（type）"
 level: "入门"
 duration: "10 分钟"
-tags: [类型别名, type, 别名, 可读性]
+tags: ["类型别名", "type", "别名", "可读性"]
 number: "6.3"
 chapterTitle: "类型系统"
 chapterNumber: "06"
 ---
+
 <div id="article-content"> <h1 id="类型别名基础">类型别名基础</h1>
 <h2 id="什么是类型别名">什么是类型别名</h2>
 <p><strong>类型别名</strong> 让你为现有类型起一个新的、更简洁或更具语义化的名字，使用 <code>type</code> 关键字：</p>

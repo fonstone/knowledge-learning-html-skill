@@ -4,11 +4,12 @@ lessonId: "02-fn-traits"
 title: "Fn trait 与闭包的高阶用法"
 level: "进阶"
 duration: "20 分钟"
-tags: [Fn, FnMut, FnOnce, 闭包参数, "impl Fn", 高阶函数]
+tags: ["Fn", "FnMut", "FnOnce", "闭包参数", "impl Fn", "高阶函数"]
 number: "12.2"
 chapterTitle: "闭包与迭代器"
 chapterNumber: "12"
 ---
+
 <div id="article-content"> <h1 id="fn--fnmut--fnonce">Fn / FnMut / FnOnce</h1>
 <h2 id="为什么有三个-trait">为什么有三个 trait</h2>
 <p>上一篇我们看到闭包可以通过三种方式捕获变量：不可变引用、可变引用、所有权转移。这三种方式对应了三个 trait，它们描述的是<strong>闭包能被怎样调用</strong>：</p>

@@ -4,11 +4,12 @@ lessonId: "02-struct-methods"
 title: "方法与关联函数"
 level: "入门"
 duration: "25 分钟"
-tags: [方法, impl, self, 关联函数, 接收者]
+tags: ["方法", "impl", "self", "关联函数", "接收者"]
 number: "4.2"
 chapterTitle: "自定义数据类型"
 chapterNumber: "04"
 ---
+
 <div id="article-content"> <h1 id="从函数到方法">从函数到方法</h1>
 <p>前面我们学过函数，也学过结构体。现在的问题是：如何让某个函数与某个结构体<strong>紧密关联</strong>？</p>
 <p>比如，计算矩形面积的逻辑本质上是<strong>矩形的行为</strong>，而不是一个独立的工具函数。用函数实现需要这样：</p>

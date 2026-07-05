@@ -4,11 +4,12 @@ lessonId: "08-practice"
 title: "综合练习"
 level: "进阶"
 duration: "35 分钟"
-tags: [结构体, 枚举, Option, match, 综合]
+tags: ["结构体", "枚举", "Option", "match", "综合"]
 number: "4.8"
 chapterTitle: "自定义数据类型"
 chapterNumber: "04"
 ---
+
 <div id="article-content"> <h1 id="代码判断题">代码判断题</h1>
 <h2 id="题目-1结构体与所有权">题目 1：结构体与所有权</h2>
 <pre><code class="language-rust">struct Person {

@@ -4,11 +4,12 @@ lessonId: "04-newtype-pattern"
 title: "Newtype 模式"
 level: "入门"
 duration: "10 分钟"
-tags: [newtype, 元组结构体, 类型安全, 类型包装]
+tags: ["newtype", "元组结构体", "类型安全", "类型包装"]
 number: "6.4"
 chapterTitle: "类型系统"
 chapterNumber: "06"
 ---
+
 <div id="article-content"> <h1 id="newtype-模式">Newtype 模式</h1>
 <h2 id="相同类型不同语义">相同类型，不同语义</h2>
 <p>考虑一个简单场景：你的程序需要处理距离，有时是米，有时是厘米。两者的底层值都是 <code>f64</code>，但混用会出大问题：</p>

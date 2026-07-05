@@ -4,11 +4,12 @@ lessonId: "03-hello-cargo"
 title: "使用 Cargo"
 level: "入门"
 duration: "20 分钟"
-tags: [Cargo, "cargo new", "cargo build", "cargo run", "cargo check", Cargo.toml]
+tags: ["Cargo", "cargo new", "cargo build", "cargo run", "cargo check", "Cargo.toml"]
 number: "1.3"
 chapterTitle: "Rust 基础"
 chapterNumber: "01"
 ---
+
 <div id="article-content"> <h1 id="cargo-rust-的项目管理神器">Cargo: Rust 的项目管理神器</h1>
 <p>用 <code>rustc</code> 直接编译文件，对一两个文件的小程序没问题。但真实项目往往有几十个源文件、十几个外部依赖——这时候手动调用 <code>rustc</code> 就变成了噩梦。<strong>Cargo</strong> 是 Rust 官方给出的答案，也是你日后每天都会用到的工具。</p>
 <h2 id="什么是-cargo">什么是 Cargo？</h2>

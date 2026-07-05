@@ -4,11 +4,12 @@ lessonId: "03-question-mark"
 title: "? 运算符"
 level: "入门"
 duration: "20 分钟"
-tags: ["? 运算符", 错误传播, From, Option, Result, 错误处理]
+tags: ["? 运算符", "错误传播", "From", "Option", "Result", "错误处理"]
 number: "9.3"
 chapterTitle: "错误处理"
 chapterNumber: "09"
 ---
+
 <div id="article-content"> <h1 id="-运算符">? 运算符</h1>
 <h2 id="问题传播错误太繁琐">问题：传播错误太繁琐</h2>
 <p>上一篇末尾，我们写了一个从文件读取用户名的函数：</p>

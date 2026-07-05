@@ -4,11 +4,12 @@ lessonId: "05-practice"
 title: "综合练习"
 level: "进阶"
 duration: "20 分钟"
-tags: [lifetime, 生命周期, 练习, 综合练习, 编程练习]
+tags: ["lifetime", "生命周期", "练习", "综合练习", "编程练习"]
 number: "11.5"
 chapterTitle: "生命周期"
 chapterNumber: "11"
 ---
+
 <div id="article-content"> <h1 id="综合练习">综合练习</h1>
 <p>本节通过一组难度递进的练习，综合检验你对生命周期的掌握。每道题都配有提示，遇到困难时可以先看提示再动手。</p>
 <h2 id="练习-1修复悬垂引用">练习 1：修复悬垂引用</h2>

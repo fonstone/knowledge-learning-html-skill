@@ -4,11 +4,12 @@ lessonId: "03-logging"
 title: "日志输出（log + env_logger）"
 level: "进阶"
 duration: "25 分钟"
-tags: [log, env_logger, 日志, 日志级别, tracing]
+tags: ["log", "env_logger", "日志", "日志级别", "tracing"]
 number: "16.3"
 chapterTitle: "调试"
 chapterNumber: "16"
 ---
+
 <div id="article-content"> <h1 id="为什么需要日志">为什么需要日志</h1>
 <h2 id="println-的局限">println! 的局限</h2>
 <p><code>dbg!</code> 和 <code>println!</code> 适合开发期的临时调试，但有几个明显的局限：</p>

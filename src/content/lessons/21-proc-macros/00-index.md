@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "过程宏"
 level: "入门"
 duration: "5 分钟"
-tags: [过程宏, "proc macro", derive, 属性宏, 函数宏, syn, quote]
+tags: ["过程宏", "proc macro", "derive", "属性宏", "函数宏", "syn", "quote"]
 number: ""
 chapterTitle: "过程宏"
 chapterNumber: "21"
 ---
+
 <div id="article-content"> <p>过程宏（Procedural Macros）是 Rust 元编程的高级形式。与基于模式匹配的声明宏不同，过程宏是<strong>真正的 Rust 程序</strong>——它接收编译器传入的 token 流，运行任意代码逻辑，输出新的 token 流让编译器继续编译。</p>
 <p>过程宏有三种形式：自定义 <code>derive</code> 宏（<code>#[derive(MyTrait)]</code>）、类属性宏（<code>#[my_attr]</code>）和类函数宏（<code>my_macro!(...)</code>）。它们共同的核心工具链是 <code>syn</code>（解析 token 流为 AST）和 <code>quote</code>（将 AST 转回代码）。</p>
 <h2 id="本章目录">本章目录</h2>

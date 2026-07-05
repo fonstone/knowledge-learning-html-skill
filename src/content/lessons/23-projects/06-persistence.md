@@ -4,11 +4,12 @@ lessonId: "06-persistence"
 title: "数据持久化"
 level: "进阶"
 duration: "30 分钟"
-tags: [持久化, serde_json, 文件读写, JSON, 错误处理, PathBuf]
+tags: ["持久化", "serde_json", "文件读写", "JSON", "错误处理", "PathBuf"]
 number: "23.6"
 chapterTitle: "综合项目"
 chapterNumber: "23"
 ---
+
 <div id="article-content"> <h1 id="让-todo-能转成-json">让 Todo 能转成 JSON</h1>
 <p>上一章的程序每次运行都从空列表开始，原因是任务只存在内存里，进程结束就消失了。要让数据保留，需要在程序退出前把列表写入文件，下次启动时再读回来。</p>
 <p>最直接的格式是 JSON，人类可读，也方便调试。一份持久化后的任务文件长这样：</p>

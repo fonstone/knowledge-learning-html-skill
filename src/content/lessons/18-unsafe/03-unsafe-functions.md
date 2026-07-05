@@ -9,6 +9,7 @@ number: "18.3"
 chapterTitle: "不安全 Rust"
 chapterNumber: "18"
 ---
+
 <div id="article-content"> <h1 id="unsafe-函数">unsafe 函数</h1>
 <h2 id="什么时候需要-unsafe-fn">什么时候需要 unsafe fn</h2>
 <p>当一个函数有<strong>调用者必须满足但编译器无法验证的前提条件</strong>时，就需要标注 <code>unsafe fn</code>。</p>

@@ -4,11 +4,12 @@ lessonId: "04-variables"
 title: "变量与可变性"
 level: "入门"
 duration: "25 分钟"
-tags: [let, mut, const, shadowing, 遮蔽, 作用域, 变量绑定]
+tags: ["let", "mut", "const", "shadowing", "遮蔽", "作用域", "变量绑定"]
 number: "2.4"
 chapterTitle: "基础语法"
 chapterNumber: "02"
 ---
+
 <div id="article-content"> <h1 id="声明与绑定">声明与绑定</h1>
 <p>Rust 的变量系统比大多数语言多了一个维度：<strong>可变性由你显式控制</strong>，而不是默认允许修改。</p>
 <p>Rust 用 <code>let</code> 关键字声明变量。“变量绑定”这个名字比”变量赋值”更准确——你是在把一个值<strong>绑定</strong>到一个名字上。</p>

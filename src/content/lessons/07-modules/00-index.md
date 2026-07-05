@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "模块系统"
 level: "入门"
 duration: "5 分钟"
-tags: [模块系统, package, crate, pub, use, 路径]
+tags: ["模块系统", "package", "crate", "pub", "use", "路径"]
 number: ""
 chapterTitle: "模块系统"
 chapterNumber: "07"
 ---
+
 <div id="article-content"> <p>当代码量增长，你需要一套机制来组织它——把相关的函数、类型和常量分组，控制哪些内容对外可见，避免命名冲突。这就是 Rust 的模块系统。</p>
 <p>理解模块系统，关键是搞清楚三个层级的关系：<strong>Package</strong>（一次 <code>cargo new</code>）、<strong>Crate</strong>（编译单元）和<strong>模块</strong>（代码组织单元），以及如何在它们之间导航和控制访问权限。</p>
 <h2 id="本章目录">本章目录</h2>

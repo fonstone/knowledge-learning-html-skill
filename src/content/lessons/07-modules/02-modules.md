@@ -4,11 +4,12 @@ lessonId: "02-modules"
 title: "模块与可见性"
 level: "进阶"
 duration: "35 分钟"
-tags: [模块, mod, pub, 可见性, 私有性, 模块树, 封装]
+tags: ["模块", "mod", "pub", "可见性", "私有性", "模块树", "封装"]
 number: "7.2"
 chapterTitle: "模块系统"
 chapterNumber: "07"
 ---
+
 <div id="article-content"> <h1 id="模块介绍">模块介绍</h1>
 <h2 id="为什么需要模块">为什么需要模块</h2>
 <p>随着代码增长，代码会变得杂乱无序。模块提供了一种<strong>组织和隐藏</strong>代码的方式：</p>

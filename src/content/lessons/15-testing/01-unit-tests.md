@@ -4,11 +4,12 @@ lessonId: "01-unit-tests"
 title: "编写单元测试"
 level: "入门"
 duration: "20 分钟"
-tags: [单元测试, "#[test]", "assert!", "assert_eq!", should_panic, "cargo test"]
+tags: ["单元测试", "#[test]", "assert!", "assert_eq!", "should_panic", "cargo test"]
 number: "15.1"
 chapterTitle: "测试"
 chapterNumber: "15"
 ---
+
 <div id="article-content"> <h1 id="测试函数的解剖">测试函数的解剖</h1>
 <p>在 Rust 里，一个测试就是一个带有 <code>#[test]</code> 属性的普通函数。当你运行 <code>cargo test</code> 时，Rust 会编译一个专门的测试执行程序，找到所有标注了 <code>#[test]</code> 的函数并逐一运行，最后汇报哪些通过、哪些失败。</p>
 <h2 id="第一个测试">第一个测试</h2>

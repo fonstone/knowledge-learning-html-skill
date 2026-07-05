@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import ChapterBlock from '../components/ChapterBlock.astro';
+import { courseData } from '../lib/courseData';
+---
+
+<BaseLayout title="首页">
+  <HeroSection />
+
+  <section class="outline" id="outline">
+    <div class="outline-inner">
+      <div class="outline-header">
+        <p class="section-label">课程目录</p>
+        <div class="overall-progress" id="overall-progress">
+          <div class="overall-progress-track">
+            <div class="overall-progress-fill" id="overall-progress-fill" style="width: 0%"></div>
+          </div>
+          <div class="overall-progress-indicator" id="overall-progress-indicator" data-has-progress="false">
+            <span class="overall-progress-pct" id="overall-progress-pct">0%</span>
+            <button type="button" class="overall-reset-btn" id="reset-all-btn" aria-label="重置全部进度">↺ 重置全部进度</button>
+          </div>
+        </div>
+      </div>
+      <div id="chapter-list">
+        {courseData.map(chapter => (
+          <ChapterBlock chapter={chapter} />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { courseData } from '../lib/courseData';
+
+  function updateProgress() {
+    let total = 0, completed = 0;
+    for (const ch of courseData) {
+      for (const ls of ch.lessons) {
+        total++;
+        if (localStorage.getItem(`rust-tutorial-completed-${ch.id}-${ls.id}`) === 'true') completed++;
+      }
+    }
+    const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+    const fill = document.getElementById('overall-progress-fill');
+    const pctEl = document.getElementById('overall-progress-pct');
+    const indicator = document.getElementById('overall-progress-indicator');
+    if (fill) fill.style.width = pct + '%';
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (indicator) indicator.setAttribute('data-has-progress', completed > 0 ? 'true' : 'false');
+  }
+
+  const startBtn = document.getElementById('start-btn');
+  if (startBtn) {
+    startBtn.addEventListener('click', (e) => {
+      const last = localStorage.getItem('rust-tutorial-last-visited');
+      if (last) {
+        e.preventDefault();
+        window.location.href = `/RustCourse/${last}`;
+      }
+    });
+  }
+
+  const resetBtn = document.getElementById('reset-all-btn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      const overlay = document.getElementById('confirm-dialog-overlay') as HTMLElement;
+      const okBtn = overlay?.querySelector('.cd-ok') as HTMLButtonElement;
+      const cancelBtn = overlay?.querySelector('.cd-cancel') as HTMLButtonElement;
+      const msgEl = document.getElementById('cd-message');
+      if (overlay && okBtn && cancelBtn && msgEl) {
+        msgEl.textContent = '确认重置全部学习进度？此操作不可恢复。';
+        okBtn.textContent = '重置全部';
+        okBtn.disabled = false;
+        (overlay.querySelector('.cd-hint') as HTMLElement).style.display = 'none';
+        (overlay.querySelector('.cd-input') as HTMLElement).style.display = 'none';
+        overlay.hidden = false;
+        overlay.setAttribute('aria-hidden', 'false');
+        okBtn.onclick = () => {
+          for (const ch of courseData) {
+            for (const ls of ch.lessons) {
+              localStorage.removeItem(`rust-tutorial-completed-${ch.id}-${ls.id}`);
+            }
+          }
+          updateProgress();
+          window.dispatchEvent(new CustomEvent('progress-updated'));
+          overlay.hidden = true;
+          overlay.setAttribute('aria-hidden', 'true');
+        };
+        cancelBtn.onclick = () => {
+          overlay.hidden = true;
+          overlay.setAttribute('aria-hidden', 'true');
+        };
+      }
+    });
+  }
+
+  updateProgress();
+</script>

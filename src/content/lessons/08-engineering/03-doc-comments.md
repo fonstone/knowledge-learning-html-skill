@@ -4,11 +4,12 @@ lessonId: "03-doc-comments"
 title: "文档注释与 doctest"
 level: "入门"
 duration: "20 分钟"
-tags: [文档注释, doctest, ///, "//!", "cargo doc", "cargo test"]
+tags: ["文档注释", "doctest", "///", "//!", "cargo doc", "cargo test"]
 number: "8.3"
 chapterTitle: "项目工程化"
 chapterNumber: "08"
 ---
+
 <div id="article-content"> <h1 id="文档注释">文档注释</h1>
 <p><strong>什么是文档注释？</strong> Rust 有一种特殊的注释叫”文档注释”，它不仅注解代码，还能用 <code>cargo doc</code> 生成漂亮的 HTML 文档。这对 Rust 生态特别重要。</p>
 <p><strong>为什么需要文档注释？</strong> 与 C/C++ 不同，Rust <strong>没有头文件</strong>。C 使用者看头文件（<code>.h</code>）来了解库的接口，但 Rust 库没有这个。所以 Rust 社区的约定是：<strong>库作者必须用文档注释详细说明每个 pub API 的用法、参数含义、返回值、可能的错误——使用者完全靠这些文档来理解如何使用库</strong>。这也是为什么 Rust 开源社区对文档质量有很高的要求。</p>

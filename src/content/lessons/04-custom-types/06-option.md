@@ -4,11 +4,12 @@ lessonId: "06-option"
 title: "Option<T> 枚举"
 level: "入门"
 duration: "20 分钟"
-tags: [Option, Some, None, null, 可选值]
+tags: ["Option", "Some", "None", "null", "可选值"]
 number: "4.6"
 chapterTitle: "自定义数据类型"
 chapterNumber: "04"
 ---
+
 <div id="article-content"> <h1 id="为什么-rust-没有-null">为什么 Rust 没有 null</h1>
 <p>很多编程语言（Java、C、JavaScript）都有 <code>null</code> 值，表示”没有值”。这听起来合理，但 Tony Hoare（<code>null</code> 的发明者）后来称之为 <strong>“十亿美元的错误”</strong>，因为 <code>null</code> 导致的 bug 无穷无尽：</p>
 <ul>

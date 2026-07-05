@@ -4,11 +4,12 @@ lessonId: "02-strings"
 title: "String 与 &str——Rust 的两种字符串"
 level: "入门"
 duration: "35 分钟"
-tags: [字符串, String, "&str", 字符串切片, 所有权, UTF-8, 字符编码]
+tags: ["字符串", "String", "&str", "字符串切片", "所有权", "UTF-8", "字符编码"]
 number: "5.2"
 chapterTitle: "标准库类型"
 chapterNumber: "05"
 ---
+
 <div id="article-content"> <h1 id="字符串基础">字符串基础</h1>
 <h2 id="为什么-rust-有两种字符串类型">为什么 Rust 有两种字符串类型</h2>
 <p>这是初学者最常困惑的地方。<strong>Rust 不是有一种字符串类型，而是有两种：<code>String</code> 和 <code>&amp;str</code></strong>。</p>

@@ -4,11 +4,12 @@ lessonId: "02-traits"
 title: "Trait：定义共享行为"
 level: "进阶"
 duration: "35 分钟"
-tags: [trait, "impl for", derive, 运算符重载, "父 trait", 孤儿规则]
+tags: ["trait", "impl for", "derive", "运算符重载", "父 trait", "孤儿规则"]
 number: "10.2"
 chapterTitle: "泛型与 Trait"
 chapterNumber: "10"
 ---
+
 <div id="article-content"> <h1 id="定义与实现">定义与实现</h1>
 <h2 id="什么是-trait">什么是 Trait</h2>
 <p>想象你在招聘网站写了一条岗位要求：</p>

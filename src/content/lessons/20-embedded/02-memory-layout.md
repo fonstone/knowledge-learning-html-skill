@@ -4,11 +4,12 @@ lessonId: "02-memory-layout"
 title: "内存布局与链接脚本"
 level: "进阶"
 duration: "30 分钟"
-tags: [内存布局, 链接脚本, linker.x, 内存映射]
+tags: ["内存布局", "链接脚本", "linker.x", "内存映射"]
 number: "20.2"
 chapterTitle: "嵌入式 Rust"
 chapterNumber: "20"
 ---
+
 <div id="article-content"> <h1 id="内存布局与链接脚本">内存布局与链接脚本</h1>
 <p>在嵌入式开发中，你必须比在 PC 开发时更清楚代码和数据被放在了哪里。嵌入式芯片的存储空间通常是由不连续的地址块组成的。</p>
 <h2 id="1-嵌入式内存映射">1. 嵌入式内存映射</h2>

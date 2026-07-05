@@ -4,11 +4,12 @@ lessonId: "05-if-let"
 title: "if let 与 while let"
 level: "入门"
 duration: "20 分钟"
-tags: ["if let", "while let", 语法糖, 简洁]
+tags: ["if let", "while let", "语法糖", "简洁"]
 number: "4.5"
 chapterTitle: "自定义数据类型"
 chapterNumber: "04"
 ---
+
 <div id="article-content"> <h1 id="if-letmatch-的简洁写法">if let：match 的简洁写法</h1>
 <p>有时候，你用 <code>match</code> 只想处理<strong>一个特定的情况</strong>，其他情况都无需特殊处理。这时 <code>if let</code> 提供了更简洁的语法。</p>
 <h2 id="match-vs-if-let">match vs if let</h2>

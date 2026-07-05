@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "开发方法论"
 level: "入门"
 duration: "5 分钟"
-tags: [架构设计, TDD, Clippy, rustfmt, CI/CD, 性能分析]
+tags: ["架构设计", "TDD", "Clippy", "rustfmt", "CI/CD", "性能分析"]
 number: ""
 chapterTitle: "开发方法论"
 chapterNumber: "17"
 ---
+
 <div id="article-content"> <p>写出能编译的 Rust 代码只是第一步。在真实的工程项目里，你还需要回答：代码应该怎么组织、编码时先写什么、怎么保证多人协作时代码风格一致、如何自动检查代码质量、如何找出性能瓶颈。</p>
 <p>这一章以一个<strong>从零到上线的大工程</strong>为背景，按生命周期顺序讲解 Rust 工程化的核心方法论。</p>
 <img alt=" 方法论" src="/RustCourse/diagrams/method.svg" style="max-width:100%;margin:1rem 0;"/>

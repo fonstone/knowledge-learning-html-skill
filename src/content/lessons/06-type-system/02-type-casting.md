@@ -4,11 +4,12 @@ lessonId: "02-type-casting"
 title: "类型铸造（as 关键字）"
 level: "入门"
 duration: "20 分钟"
-tags: [类型转换, 类型铸造, as, 转换规则, 溢出]
+tags: ["类型转换", "类型铸造", "as", "转换规则", "溢出"]
 number: "6.2"
 chapterTitle: "类型系统"
 chapterNumber: "06"
 ---
+
 <div id="article-content"> <h1 id="类型铸造基础">类型铸造基础</h1>
 <h2 id="为什么需要类型铸造">为什么需要类型铸造</h2>
 <p>不同类型的数据之间有时需要互相转换。例如：</p>

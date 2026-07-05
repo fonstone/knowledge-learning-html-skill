@@ -4,11 +4,12 @@ lessonId: "04-slices"
 title: "切片"
 level: "进阶"
 duration: "35 分钟"
-tags: [切片, slice, "&str", "&[T]", 字符串切片, 数组切片, range]
+tags: ["切片", "slice", "&str", "&[T]", "字符串切片", "数组切片", "range"]
 number: "3.4"
 chapterTitle: "所有权系统"
 chapterNumber: "03"
 ---
+
 <div id="article-content"> <h1 id="字符串切片">字符串切片</h1>
 <p><strong>切片</strong>（slice）是对集合中一段<strong>连续元素序列</strong>的引用，它不拥有所有权。切片用一种让编译器帮你检查边界安全性的方式，取代了手动管理索引。</p>
 <img alt="切片的原理" src="/RustCourse/diagrams/slice_string.svg" style="max-width:100%;margin:1rem 0;"/>

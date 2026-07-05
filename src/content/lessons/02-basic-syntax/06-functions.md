@@ -4,11 +4,12 @@ lessonId: "06-functions"
 title: "函数"
 level: "入门"
 duration: "20 分钟"
-tags: [fn, 函数, 参数, 返回值, 语句, 表达式, snake_case]
+tags: ["fn", "函数", "参数", "返回值", "语句", "表达式", "snake_case"]
 number: "2.6"
 chapterTitle: "基础语法"
 chapterNumber: "02"
 ---
+
 <div id="article-content"> <h1 id="函数基础">函数基础</h1>
 <p>函数是组织代码的基本单位。本文介绍 Rust 函数的定义方式、参数规则，以及一个新手最容易踩的坑——语句与表达式的区别。</p>
 <p>Rust 中函数无处不在，你已经认识了最重要的一个：<code>main</code>。</p>

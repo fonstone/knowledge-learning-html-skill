@@ -4,11 +4,12 @@ lessonId: "03-hashmaps"
 title: "HashMap<K, V>——键值对集合"
 level: "入门"
 duration: "40 分钟"
-tags: [哈希表, HashMap, 键值对, 字典, 所有权, "entry API", 迭代]
+tags: ["哈希表", "HashMap", "键值对", "字典", "所有权", "entry API", "迭代"]
 number: "5.3"
 chapterTitle: "标准库类型"
 chapterNumber: "05"
 ---
+
 <div id="article-content"> <h1 id="什么是-hashmap">什么是 HashMap</h1>
 <p><strong>HashMap&lt;K, V&gt;</strong> 是 Rust 标准库中最常用的<strong>键值对</strong>（key-value pair）集合类型。与向量 <code>Vec&lt;T&gt;</code> 和字符串 <code>String</code> 不同，HashMap 不按位置存储数据，而是通过<strong>键</strong>来查找对应的<strong>值</strong>。</p>
 <p>想象一个现实场景：你要建一本电话簿。向量不太适合，因为你需要通过<strong>姓名</strong>（而不是位置）来查找电话号码。</p>

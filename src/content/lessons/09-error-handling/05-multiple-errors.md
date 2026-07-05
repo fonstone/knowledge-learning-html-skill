@@ -4,11 +4,12 @@ lessonId: "05-multiple-errors"
 title: "多种错误来源与遍历 Result"
 level: "入门"
 duration: "20 分钟"
-tags: ["Box<dyn Error>", 多种错误, filter_map, collect, partition, 遍历Result]
+tags: ["Box<dyn Error>", "多种错误", "filter_map", "collect", "partition", "遍历Result"]
 number: "9.5"
 chapterTitle: "错误处理"
 chapterNumber: "09"
 ---
+
 <div id="article-content"> <h1 id="多种错误来源">多种错误来源</h1>
 <h2 id="遇到了什么问题">遇到了什么问题</h2>
 <p>前几篇都用 <code>io::Error</code> 或 <code>ParseIntError</code> 这样的<strong>单一错误类型</strong>。但现实中一个函数经常遇到<strong>多种错误来源</strong>。比如——读取文件并解析里面的数字：</p>

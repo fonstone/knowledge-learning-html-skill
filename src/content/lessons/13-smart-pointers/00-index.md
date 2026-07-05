@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "智能指针"
 level: "入门"
 duration: "5 分钟"
-tags: [智能指针, Box, Rc, RefCell, Deref, Drop, 所有权, 堆内存]
+tags: ["智能指针", "Box", "Rc", "RefCell", "Deref", "Drop", "所有权", "堆内存"]
 number: ""
 chapterTitle: "智能指针"
 chapterNumber: "13"
 ---
+
 <div id="article-content"> <p>指针（Pointer）是一个包含内存地址的变量。而<strong>智能指针（Smart Pointers）<strong>是一类特殊的结构体，它们不仅表现得像指针，还拥有额外的元数据和功能——通常</strong>拥有</strong>它们所指向的数据，而不只是借用。</p>
 <p>不同的智能指针解决不同的问题，选用时参考下表：</p>
 <table><thead><tr><th>场景</th><th>推荐类型</th></tr></thead><tbody><tr><td>将数据分配到堆上，或定义递归类型</td><td><code>Box&lt;T&gt;</code></td></tr><tr><td>单线程下多处共享同一份只读数据</td><td><code>Rc&lt;T&gt;</code></td></tr><tr><td>需要在”不可变”的外壳下修改内部数据</td><td><code>RefCell&lt;T&gt;</code></td></tr><tr><td>单线程下多处共享且需要修改数据</td><td><code>Rc&lt;RefCell&lt;T&gt;&gt;</code></td></tr><tr><td>多线程下共享数据</td><td><code>Arc&lt;T&gt;</code> / <code>Arc&lt;Mutex&lt;T&gt;&gt;</code></td></tr></tbody></table>

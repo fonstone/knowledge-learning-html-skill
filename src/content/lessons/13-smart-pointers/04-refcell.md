@@ -4,11 +4,12 @@ lessonId: "04-refcell"
 title: "RefCell<T> 与内部可变性"
 level: "进阶"
 duration: "25 分钟"
-tags: [RefCell, 内部可变性, 运行时借用检查, "Rc<RefCell<T>>"]
+tags: ["RefCell", "内部可变性", "运行时借用检查", "Rc<RefCell<T>>"]
 number: "13.4"
 chapterTitle: "智能指针"
 chapterNumber: "13"
 ---
+
 <div id="article-content"> <h1 id="什么是内部可变性">什么是内部可变性？</h1>
 <p>Rust 的借用规则很明确：当你拥有一个不可变引用 <code>&amp;T</code> 时，你不能同时拥有可变引用 <code>&amp;mut T</code>。这条规则防止了数据竞争，是内存安全的核心保障。</p>
 <p>然而，在某些合理的设计场景中，这条规则会成为阻碍。<strong>内部可变性</strong> (Interior Mutability) 是一种设计模式，它允许你即使在持有不可变引用时，也能修改数据内部的值。</p>

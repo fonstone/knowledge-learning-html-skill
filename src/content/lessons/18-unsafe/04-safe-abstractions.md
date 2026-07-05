@@ -4,11 +4,12 @@ lessonId: "04-safe-abstractions"
 title: "安全抽象"
 level: "进阶"
 duration: "30 分钟"
-tags: [安全抽象, "封装 unsafe", "API 设计"]
+tags: ["安全抽象", "封装 unsafe", "API 设计"]
 number: "18.4"
 chapterTitle: "不安全 Rust"
 chapterNumber: "18"
 ---
+
 <div id="article-content"> <h2 id="出发点">出发点</h2>
 <p><code>Vec</code>、<code>String</code>、<code>Arc</code> 内部全都用了 unsafe——但你作为使用者从来不需要写 <code>unsafe</code> 就能用它们。这不是魔法，而是一种设计模式：<strong>unsafe 实现，safe 接口</strong>。</p>
 <p>目标很简单：把 unsafe 的复杂性关在函数内部，让调用方看到的只是普通的安全函数。</p>

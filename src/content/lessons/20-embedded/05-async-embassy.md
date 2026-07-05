@@ -4,11 +4,12 @@ lessonId: "05-async-embassy"
 title: "异步嵌入式：Embassy 框架"
 level: "进阶"
 duration: "40 分钟"
-tags: [Embassy, 异步, async/await, 嵌入式异步]
+tags: ["Embassy", "异步", "async/await", "嵌入式异步"]
 number: "20.5"
 chapterTitle: "嵌入式 Rust"
 chapterNumber: "20"
 ---
+
 <div id="article-content"> <h1 id="异步嵌入式embassy-框架">异步嵌入式：Embassy 框架</h1>
 <p>在传统的嵌入式开发中，我们通常只有两种选择：</p>
 <ol>

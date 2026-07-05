@@ -4,11 +4,12 @@ lessonId: "05-practice"
 title: "综合练习"
 level: "进阶"
 duration: "30 分钟"
-tags: [所有权, 移动, 借用, 引用, 切片, Copy, Clone]
+tags: ["所有权", "移动", "借用", "引用", "切片", "Copy", "Clone"]
 number: "3.5"
 chapterTitle: "所有权系统"
 chapterNumber: "03"
 ---
+
 <div id="article-content"> <h1 id="所有权与移动">所有权与移动</h1>
 <h2 id="赋值后的-string">赋值后的 String</h2>
 <pre><code class="language-rust">fn main() {

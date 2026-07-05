@@ -4,11 +4,12 @@ lessonId: "03-iterators"
 title: "迭代器基础"
 level: "进阶"
 duration: "40 分钟"
-tags: [迭代器, Iterator, next, iter, into_iter, 惰性求值, 自定义迭代器]
+tags: ["迭代器", "Iterator", "next", "iter", "into_iter", "惰性求值", "自定义迭代器"]
 number: "12.3"
 chapterTitle: "闭包与迭代器"
 chapterNumber: "12"
 ---
+
 <div id="article-content"> <h1 id="迭代器是什么">迭代器是什么</h1>
 <p>迭代器（iterator）是一种<strong>按需逐个产生值</strong>的机制。你可以把它想象成一条传送带：上面放着待处理的货物，但传送带只有在你喊”下一个”时才会动一格——这就是 Rust 迭代器的核心特征：<strong>惰性求值</strong>（lazy evaluation）。</p>
 <h2 id="惰性求值不问不动">惰性求值：不问不动</h2>

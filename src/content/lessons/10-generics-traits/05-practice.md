@@ -4,11 +4,12 @@ lessonId: "05-practice"
 title: "综合练习"
 level: "进阶"
 duration: "10 分钟"
-tags: [泛型, 练习, 综合]
+tags: ["泛型", "练习", "综合"]
 number: "10.5"
 chapterTitle: "泛型与 Trait"
 chapterNumber: "10"
 ---
+
 <div id="article-content"> <h1 id="综合判断题">综合判断题</h1>
 <h2 id="泛型语法测验">泛型语法测验</h2>
 <div class="quiz-choice" data-block-id="10-generics-traits/05-practice#0:0" data-kind="single" data-payload="%7B%22question%22%3A%22%E4%B8%8B%E9%9D%A2%E5%93%AA%E4%B8%AA%E5%87%BD%E6%95%B0%E7%AD%BE%E5%90%8D%E8%83%BD%E6%AD%A3%E7%A1%AE%E7%BC%96%E8%AF%91%EF%BC%9F%22%2C%22options%22%3A%5B%22fn%20first%3CT%3A%20Clone%3E(list%3A%20%26%5BT%5D)%20-%3E%20T%20%7B%20list%5B0%5D.clone()%20%7D%22%2C%22fn%20first%3CT%3E(list%3A%20%26%5BT%5D)%20-%3E%20T%20%7B%20list%5B0%5D%20%7D%22%2C%22fn%20first%3CT%3E(list%3A%20Vec%3CT%3E)%20-%3E%20%26T%20%7B%20%26list%5B0%5D%20%7D%22%2C%22fn%20first(list%3A%20%26%5BT%5D)%20-%3E%20%26T%20%7B%20%26list%5B0%5D%20%7D%22%5D%2C%22correct%22%3A%5B0%5D%2C%22explanation%22%3A%22%E7%AC%AC%E4%BA%8C%E9%A1%B9%EF%BC%9A%E6%8A%8A%20T%20%E4%BB%8E%E5%BC%95%E7%94%A8%E4%B8%AD%E7%A7%BB%E5%87%BA%E9%9C%80%E8%A6%81%20Copy%20%E6%88%96%20Clone%EF%BC%8C%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%20list%5B0%5D%E3%80%82%E7%AC%AC%E4%B8%80%E9%A1%B9%E6%AD%A3%E7%A1%AE%EF%BC%9A%E5%8A%A0%E4%BA%86%20Clone%20%E7%BA%A6%E6%9D%9F%E5%90%8E%E5%8F%AF%E4%BB%A5%20.clone()%E3%80%82%E7%AC%AC%E5%9B%9B%E9%A1%B9%EF%BC%9AT%20%E6%9C%AA%E5%A3%B0%E6%98%8E%E3%80%82%E7%AC%AC%E4%B8%89%E9%A1%B9%EF%BC%9A%E8%BF%94%E5%9B%9E%E5%AF%B9%E5%B1%80%E9%83%A8%20Vec%20%E7%9A%84%E5%BC%95%E7%94%A8%EF%BC%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E9%94%99%E8%AF%AF%E3%80%82%22%7D"><div class="quiz-placeholder">加载题目中…</div></div>

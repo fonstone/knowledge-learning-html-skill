@@ -4,11 +4,12 @@ lessonId: "06-toolchain-debug"
 title: "实战演练：简易内核实验"
 level: "进阶"
 duration: "50 分钟"
-tags: [内核, 实战, 裸机编程, 完整项目]
+tags: ["内核", "实战", "裸机编程", "完整项目"]
 number: "20.6"
 chapterTitle: "嵌入式 Rust"
 chapterNumber: "20"
 ---
+
 <div id="article-content"> <p>掌握了嵌入式基础后，理解底层逻辑的最佳方式是观察它们如何协作。我们推荐通过一个<strong>教学性质</strong>的实验项目来串联所学知识。</p>
 <h2 id="推荐实验从零编写简易-rtos">推荐实验：从零编写简易 RTOS</h2>
 <p>这是一个手把手的<strong>教学实验项目</strong>： 🔗 <a href="https://xyfx-fhw.github.io/RustRTOS/">从零构建 RUST 简易操作系统</a>。</p>

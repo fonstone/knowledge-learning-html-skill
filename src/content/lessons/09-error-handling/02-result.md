@@ -4,11 +4,12 @@ lessonId: "02-result"
 title: "Result<T, E>"
 level: "入门"
 duration: "20 分钟"
-tags: [Result, Ok, Err, unwrap, expect, 错误处理, match, 错误传播]
+tags: ["Result", "Ok", "Err", "unwrap", "expect", "错误处理", "match", "错误传播"]
 number: "9.2"
 chapterTitle: "错误处理"
 chapterNumber: "09"
 ---
+
 <div id="article-content"> <h1 id="resultt-e">Result&lt;T, E&gt;</h1>
 <h2 id="为什么需要-result">为什么需要 Result</h2>
 <p>上一篇讲了 <code>panic!</code>，用于”不应该发生”的错误。但现实中大多数错误都是<strong>可以预料的、可以处理的</strong>：</p>

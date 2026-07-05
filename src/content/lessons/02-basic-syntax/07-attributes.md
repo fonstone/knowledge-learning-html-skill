@@ -4,11 +4,12 @@ lessonId: "07-attributes"
 title: "属性"
 level: "进阶"
 duration: "35 分钟"
-tags: [属性, attribute, cfg, dead_code, allow, 条件编译, derive]
+tags: ["属性", "attribute", "cfg", "dead_code", "allow", "条件编译", "derive"]
 number: "2.7"
 chapterTitle: "基础语法"
 chapterNumber: "02"
 ---
+
 <div id="article-content"> <h1 id="属性基础">属性基础</h1>
 <p>属性（attribute）是 Rust 中为代码附加<strong>元数据</strong>的机制。元数据就是<strong>对代码的附加信息和标签</strong>——比如”这个函数是测试函数”、“这段代码只在 Windows 平台编译”、“忽略这个未使用的变量的警告”。属性用 <code>#[...]</code> 的语法写在代码前面。编译器读取这些标签，并根据标签改变编译行为。</p>
 <h2 id="什么是属性">什么是属性</h2>

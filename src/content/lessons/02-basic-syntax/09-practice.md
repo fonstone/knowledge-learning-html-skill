@@ -4,11 +4,12 @@ lessonId: "09-practice"
 title: "综合练习"
 level: "进阶"
 duration: "30 分钟"
-tags: [练习, 算法, 斐波那契, 质数, 递归, 排序, 函数]
+tags: ["练习", "算法", "斐波那契", "质数", "递归", "排序", "函数"]
 number: "2.9"
 chapterTitle: "基础语法"
 chapterNumber: "02"
 ---
+
 <div id="article-content"> <h2 id="练习一斐波那契数列">练习一：斐波那契数列</h2>
 <p>斐波那契数列从 0 和 1 开始，后续每项等于前两项之和：0, 1, 1, 2, 3, 5, 8, …</p>
 <p>打印数列的<strong>前 10 项</strong>，每行一个数字。</p>

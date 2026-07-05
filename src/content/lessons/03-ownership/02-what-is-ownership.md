@@ -4,11 +4,12 @@ lessonId: "02-what-is-ownership"
 title: "什么是所有权"
 level: "进阶"
 duration: "30 分钟"
-tags: [所有权, 作用域, String, drop, 可变性, "let mut", 遮蔽]
+tags: ["所有权", "作用域", "String", "drop", "可变性", "let mut", "遮蔽"]
 number: "3.2"
 chapterTitle: "所有权系统"
 chapterNumber: "03"
 ---
+
 <div id="article-content"> <h1 id="核心思想">核心思想</h1>
 <h2 id="什么是所有权系统">什么是所有权系统</h2>
 <p><strong>所有权系统</strong>是 Rust 用来管理内存的核心机制。它的基本思想很简单：<strong>每个值都有一个所有者负责它的生命周期</strong>。</p>

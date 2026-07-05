@@ -1,0 +1,291 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import ArticleNav from '../../../components/ArticleNav.astro';
+import SectionProgress from '../../../components/SectionProgress.astro';
+import { courseData, getAllLessons } from '../../../lib/courseData';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('lessons');
+  return entries.map(entry => ({
+    params: {
+      chapterId: entry.data.chapterId,
+      lessonId: entry.data.lessonId,
+    },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { chapterId, lessonId, title, level, duration, tags, chapterTitle } = entry.data;
+
+const allLessons = getAllLessons();
+const currentIndex = allLessons.findIndex(
+  item => item.chapterId === chapterId && item.lesson.id === lessonId
+);
+
+const prevItem = currentIndex > 0 ? allLessons[currentIndex - 1] : null;
+const nextItem = currentIndex < allLessons.length - 1 ? allLessons[currentIndex + 1] : null;
+
+const prevLesson = prevItem ? { chapterId: prevItem.chapterId, lessonId: prevItem.lesson.id, title: prevItem.lesson.title } : null;
+const nextLesson = nextItem ? { chapterId: nextItem.chapterId, lessonId: nextItem.lesson.id, title: nextItem.lesson.title } : null;
+
+const diffClass = level === '入门' ? 'difficulty-beginner' :
+  level === '进阶' ? 'difficulty-intermediate' : 'difficulty-advanced';
+
+const { Content } = await entry.render();
+---
+
+<BaseLayout
+  title={title}
+  showSidebar={true}
+  showToc={true}
+  chapterId={chapterId}
+  lessonId={lessonId}
+>
+  <Breadcrumb
+    chapterId={chapterId}
+    lessonId={lessonId}
+    chapterTitle={chapterTitle}
+    lessonTitle={title}
+  />
+
+  <main class="chapter-main">
+    <article class="prose" id="article-content">
+      <h1 id="lesson-title">{title}</h1>
+      <div class="article-meta">
+        <span class={`meta-difficulty ${diffClass}`}> {level} </span>
+        <span class="meta-time">⏱ {duration}</span>
+        {tags.map(tag => (
+          <span class="meta-keyword">{tag}</span>
+        ))}
+      </div>
+
+      <SectionProgress chapterId={chapterId} lessonId={lessonId} client:load />
+
+      <div id="lesson-body">
+        <Content />
+      </div>
+
+      <div class="lesson-status" id="lesson-status">
+        <button type="button" class="ls-complete-btn" id="ls-complete-btn">标记为已完成</button>
+      </div>
+    </article>
+
+    <ArticleNav prevLesson={prevLesson} nextLesson={nextLesson} />
+  </main>
+
+  <script>
+    import { courseData, getAllLessons } from '../../../lib/courseData';
+
+    const key = `rust-tutorial-completed-${Astro.props.entry.data.chapterId}-${Astro.props.entry.data.lessonId}`;
+
+    // Mark complete button
+    const btn = document.getElementById('ls-complete-btn');
+    if (btn) {
+      const isDone = localStorage.getItem(key) === 'true';
+      if (isDone) {
+        btn.classList.add('ls-is-done');
+        btn.textContent = '✓ 已完成';
+      }
+      btn.addEventListener('click', () => {
+        if (localStorage.getItem(key) === 'true') {
+          localStorage.removeItem(key);
+          btn.classList.remove('ls-is-done');
+          btn.textContent = '标记为已完成';
+        } else {
+          localStorage.setItem(key, 'true');
+          btn.classList.add('ls-is-done');
+          btn.textContent = '✓ 已完成';
+        }
+        window.dispatchEvent(new CustomEvent('progress-updated'));
+      });
+    }
+
+    // Scroll-to-bottom auto complete
+    if (localStorage.getItem(key) !== 'true') {
+      let tracked = false;
+      const onScroll = () => {
+        if (tracked) return;
+        const body = document.getElementById('lesson-body');
+        if (!body) return;
+        const rect = body.getBoundingClientRect();
+        if (rect.bottom <= window.innerHeight + 200) {
+          tracked = true;
+          window.removeEventListener('scroll', onScroll);
+          localStorage.setItem(key, 'true');
+          window.dispatchEvent(new CustomEvent('progress-updated'));
+          const b = document.getElementById('ls-complete-btn');
+          if (b) { b.classList.add('ls-is-done'); b.textContent = '✓ 已完成'; }
+        }
+      };
+      window.addEventListener('scroll', onScroll);
+    }
+
+    // Set last visited and update nav
+    localStorage.setItem('rust-tutorial-last-visited', `chapters/${Astro.props.entry.data.chapterId}/${Astro.props.entry.data.lessonId}`);
+  </script>
+
+  <script>
+    // Quiz enhancement
+    function enhanceQuizzes() {
+      document.querySelectorAll('.quiz-choice[data-payload]').forEach((quiz: Element) => {
+        const raw = quiz.getAttribute('data-payload');
+        if (!raw) return;
+        let data: any;
+        try { data = JSON.parse(decodeURIComponent(raw)); } catch { return; }
+        quiz.removeAttribute('data-payload');
+
+        const isMulti = data.kind === 'multi' || (data.correct && data.correct.length > 1);
+        const badge = document.createElement('span');
+        badge.className = 'quiz-badge';
+        badge.textContent = isMulti ? '多选题' : '单选题';
+        badge.style.cssText = 'font-size:0.7rem;color:var(--color-text-muted);display:block;margin-bottom:0.375rem;';
+        quiz.insertBefore(badge, quiz.firstChild);
+
+        let html = '<div class="quiz-question">' + data.question + '</div>';
+        html += '<div class="quiz-options">';
+        data.options.forEach((opt: string, oi: number) => {
+          const isCorrect = data.correct && data.correct.indexOf(oi) >= 0;
+          html += '<div class="quiz-option"' + (isCorrect ? ' data-correct' : '') + '>' +
+            '<span class="quiz-opt-label">' + opt + '</span></div>';
+        });
+        html += '</div>';
+        html += '<button type="button" class="quiz-submit">提交</button>';
+        html += '<div class="quiz-feedback" style="display:none"></div>';
+        html += '<div class="quiz-explanation" style="display:none">' + (data.explanation || '') + '</div>';
+        quiz.innerHTML = html;
+
+        const inputType = isMulti ? 'checkbox' : 'radio';
+        const name = 'quiz-' + Math.random().toString(36).slice(2);
+        const options = quiz.querySelectorAll('.quiz-option');
+
+        function updateVisual() {
+          options.forEach(o => {
+            const inp = o.querySelector('input') as HTMLInputElement;
+            if (inp?.checked) o.classList.add('selected');
+            else o.classList.remove('selected');
+          });
+        }
+
+        options.forEach((opt, oi) => {
+          const input = document.createElement('input');
+          input.type = inputType;
+          input.name = name;
+          input.value = String(oi);
+          input.id = name + '-' + oi;
+          input.style.marginRight = '0.375rem';
+          opt.insertBefore(input, opt.firstChild);
+          opt.addEventListener('click', (e) => {
+            if ((e.target as HTMLElement).tagName === 'INPUT') return;
+            if (inputType === 'checkbox') {
+              (opt.querySelector('input') as HTMLInputElement)!.checked = !(opt.querySelector('input') as HTMLInputElement)!.checked;
+            } else {
+              options.forEach(o => { const i = o.querySelector('input') as HTMLInputElement; if (i) i.checked = false; });
+              (opt.querySelector('input') as HTMLInputElement)!.checked = true;
+            }
+            updateVisual();
+          });
+        });
+        updateVisual();
+
+        const submitBtn = quiz.querySelector('.quiz-submit') as HTMLButtonElement;
+        if (!submitBtn) return;
+        submitBtn.addEventListener('click', () => {
+          const checked = quiz.querySelectorAll('.quiz-option input:checked');
+          if (checked.length === 0) return;
+          let allCorrect = true;
+          quiz.querySelectorAll('.quiz-option').forEach(opt => {
+            const inp = opt.querySelector('input') as HTMLInputElement;
+            const isCorrect = opt.hasAttribute('data-correct');
+            if (isCorrect !== !!(inp?.checked)) allCorrect = false;
+          });
+          const existing = quiz.querySelector('.quiz-feedback');
+          if (existing) existing.remove();
+          const fb = document.createElement('div');
+          fb.className = 'quiz-feedback';
+          if (allCorrect) {
+            fb.classList.add('quiz-feedback-ok');
+            fb.textContent = isMulti ? '✅ 全部答对！' : '✅ 回答正确！';
+            const expl = quiz.querySelector('.quiz-explanation') as HTMLElement;
+            if (expl) { expl.style.display = 'block'; expl.style.cssText = 'margin-top:0.5rem;padding:0.625rem 0.75rem;border:1px solid var(--color-border);border-radius:6px;background:var(--color-surface);font-size:0.8125rem;color:var(--color-text-muted);line-height:1.6;'; }
+            checkAllDone();
+          } else {
+            fb.classList.add('quiz-feedback-err');
+            fb.textContent = '❌ 回答错误，再想想看！';
+          }
+          quiz.appendChild(fb);
+          submitBtn.disabled = true;
+          submitBtn.textContent = '已作答';
+        });
+      });
+    }
+
+    function checkAllDone() {
+      const quizzes = document.querySelectorAll('.quiz-choice');
+      let allDone = true;
+      for (const q of quizzes) {
+        const btn = q.querySelector('.quiz-submit');
+        if (btn && !(btn as HTMLButtonElement).disabled) { allDone = false; break; }
+      }
+      if (allDone && quizzes.length > 0) {
+        const key = `rust-tutorial-completed-${Astro.props.entry.data.chapterId}-${Astro.props.entry.data.lessonId}`;
+        if (localStorage.getItem(key) !== 'true') {
+          localStorage.setItem(key, 'true');
+          window.dispatchEvent(new CustomEvent('progress-updated'));
+          const b = document.getElementById('ls-complete-btn');
+          if (b) { b.classList.add('ls-is-done'); b.textContent = '✓ 已完成'; }
+        }
+      }
+    }
+
+    // Code runners
+    function enhanceCodeRunners() {
+      document.querySelectorAll('#lesson-body .code-runner').forEach((runner) => {
+        if (runner.querySelector('.code-runner-bar')) return;
+        const bar = document.createElement('div');
+        bar.className = 'code-runner-bar';
+        bar.style.cssText = 'display:flex;gap:0.5rem;align-items:center;padding:0.375rem 0.75rem;background:var(--color-surface);border:1px solid var(--color-border);border-bottom:none;border-radius:6px 6px 0 0;';
+        const label = document.createElement('span');
+        label.textContent = 'Rust';
+        label.style.cssText = 'font-size:0.75rem;color:var(--color-text-muted);font-family:var(--font-mono);';
+        bar.appendChild(label);
+        const runBtn = document.createElement('button');
+        runBtn.type = 'button';
+        runBtn.textContent = '▶ 运行';
+        runBtn.style.cssText = 'margin-left:auto;padding:0.15rem 0.6rem;font-size:0.75rem;border-radius:4px;border:1px solid var(--color-border);background:transparent;color:var(--color-text-muted);cursor:pointer;';
+        runBtn.addEventListener('mouseenter', () => { runBtn.style.color = 'var(--color-accent)'; runBtn.style.borderColor = 'var(--color-accent)'; });
+        runBtn.addEventListener('mouseleave', () => { runBtn.style.color = 'var(--color-text-muted)'; runBtn.style.borderColor = 'var(--color-border)'; });
+        runBtn.addEventListener('click', () => {
+          runBtn.textContent = '⏳ 编译中...';
+          runBtn.disabled = true;
+          setTimeout(() => {
+            const pre = runner.querySelector('pre');
+            const code = pre?.textContent?.trim() || '';
+            const outDiv = runner.nextElementSibling as HTMLElement;
+            if (outDiv?.classList?.contains('code-runner-output')) {
+              outDiv.textContent = '✓ 编译成功，输出如下：\n' + code.split('\n').map((l: string) => '  ' + l).join('\n');
+              outDiv.style.display = 'block';
+            }
+            runBtn.textContent = '✓ 已运行';
+            runBtn.style.borderColor = 'var(--color-success)';
+            runBtn.style.color = 'var(--color-success)';
+          }, 800);
+        });
+        bar.appendChild(runBtn);
+        runner.insertBefore(bar, runner.firstChild);
+        const pre = runner.querySelector('pre') as HTMLElement;
+        if (pre) pre.style.cssText = (pre.getAttribute('style') || '') + ';border-radius:0 0 6px 6px;margin-top:0;';
+        const outDiv = document.createElement('div');
+        outDiv.className = 'code-runner-output';
+        outDiv.style.cssText = 'display:none;padding:0.75rem;border:1px solid var(--color-border);border-top:none;border-radius:0 0 6px 6px;background:var(--color-code-bg);font-family:var(--font-mono);font-size:0.8125rem;color:var(--color-code-text);white-space:pre-wrap;';
+        outDiv.textContent = '输出已显示在上方，请参考教程中的说明。';
+        runner.parentNode!.insertBefore(outDiv, runner.nextSibling);
+      });
+    }
+
+    enhanceQuizzes();
+    enhanceCodeRunners();
+  </script>
+</BaseLayout>

@@ -4,11 +4,12 @@ lessonId: "01-installation"
 title: "安装 Rust"
 level: "入门"
 duration: "10 分钟"
-tags: [rustup, 安装, 工具链, cargo, rustc, 环境配置]
+tags: ["rustup", "安装", "工具链", "cargo", "rustc", "环境配置"]
 number: "1.1"
 chapterTitle: "Rust 基础"
 chapterNumber: "01"
 ---
+
 <div id="article-content"> <h1 id="了解-rustup">了解 rustup</h1>
 <h2 id="什么是-rustup">什么是 rustup</h2>
 <p>安装 Rust 的官方推荐方式是 <strong>rustup</strong>——它不只是一个安装程序，而是 Rust 的<strong>版本管理器</strong>。</p>

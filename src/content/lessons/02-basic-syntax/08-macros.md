@@ -4,11 +4,12 @@ lessonId: "08-macros"
 title: "声明宏"
 level: "进阶"
 duration: "50 分钟"
-tags: ["macro_rules!", 声明宏, 元变量, 重复模式, 宏卫生性, macro_export, 元编程]
+tags: ["macro_rules!", "声明宏", "元变量", "重复模式", "宏卫生性", "macro_export", "元编程"]
 number: "2.8"
 chapterTitle: "基础语法"
 chapterNumber: "02"
 ---
+
 <div id="article-content"> <h1 id="宏的基础">宏的基础</h1>
 <h2 id="什么是宏">什么是宏</h2>
 <p>你已经频繁使用过<code>println!</code>宏了。是时候看清楚它背后的机制，并学会编写自己的宏了。</p>

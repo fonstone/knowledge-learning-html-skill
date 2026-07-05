@@ -4,11 +4,12 @@ lessonId: "01-generics-syntax"
 title: "泛型语法基础"
 level: "入门"
 duration: "20 分钟"
-tags: [泛型, generics, 类型参数, 单态化, monomorphization]
+tags: ["泛型", "generics", "类型参数", "单态化", "monomorphization"]
 number: "10.1"
 chapterTitle: "泛型与 Trait"
 chapterNumber: "10"
 ---
+
 <div id="article-content"> <h1 id="用泛型抽象类型">用泛型抽象类型</h1>
 <h2 id="为什么需要泛型">为什么需要泛型</h2>
 <p>假设你要写一个函数，找出整数列表中最大的值：</p>

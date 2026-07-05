@@ -4,11 +4,12 @@ lessonId: "02-build-scripts"
 title: "构建脚本 build.rs"
 level: "进阶"
 duration: "35 分钟"
-tags: [build.rs, 构建脚本, 代码生成, 原生库, OUT_DIR, cargo指令]
+tags: ["build.rs", "构建脚本", "代码生成", "原生库", "OUT_DIR", "cargo指令"]
 number: "8.2"
 chapterTitle: "项目工程化"
 chapterNumber: "08"
 ---
+
 <div id="article-content"> <h1 id="什么是构建脚本">什么是构建脚本</h1>
 <p>编译 Rust 项目时，Cargo 通常只是调用 <code>rustc</code> 把 <code>.rs</code> 文件编译成二进制。但有时候，<strong>编译之前</strong>需要做一些准备工作：</p>
 <h2 id="代码生成">代码生成</h2>

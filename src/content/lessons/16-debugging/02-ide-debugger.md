@@ -4,11 +4,12 @@ lessonId: "02-ide-debugger"
 title: "IDE 调试器（rust-analyzer）"
 level: "进阶"
 duration: "30 分钟"
-tags: [IDE, 调试器, rust-analyzer, 断点, 调试]
+tags: ["IDE", "调试器", "rust-analyzer", "断点", "调试"]
 number: "16.2"
 chapterTitle: "调试"
 chapterNumber: "16"
 ---
+
 <div id="article-content"> <h1 id="配置调试环境">配置调试环境</h1>
 <p><code>dbg!</code> 适合快速排查，但当 bug 涉及复杂的状态变化、循环迭代或多函数调用时，<strong>图形化调试器</strong>会更有效率。你可以暂停程序在任意行，逐步观察每个变量的状态，而不需要插入任何代码。</p>
 <h2 id="需要安装什么">需要安装什么</h2>

@@ -4,11 +4,12 @@ lessonId: "04-conversion-traits"
 title: "转换 Trait"
 level: "进阶"
 duration: "30 分钟"
-tags: [转换trait, From, Into, TryFrom, TryInto, 类型转换]
+tags: ["转换trait", "From", "Into", "TryFrom", "TryInto", "类型转换"]
 number: "10.4"
 chapterTitle: "泛型与 Trait"
 chapterNumber: "10"
 ---
+
 <div id="article-content"> <h1 id="转换-trait-系统">转换 Trait 系统</h1>
 <h2 id="为什么需要转换-trait">为什么需要转换 Trait</h2>
 <p>前面在”类型系统”章节学过，Rust 不提供<strong>隐式类型转换</strong>。但有时我们需要将一个类型<strong>安全地、优雅地</strong>转换为另一个类型。</p>

@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "自定义数据类型"
 level: "入门"
 duration: "5 分钟"
-tags: [结构体, 枚举, Option, 模式匹配, 类型系统]
+tags: ["结构体", "枚举", "Option", "模式匹配", "类型系统"]
 number: ""
 chapterTitle: "自定义数据类型"
 chapterNumber: "04"
 ---
+
 <div id="article-content"> <p>你已经学过 Rust 的基本类型（整数、浮点、布尔、字符串等）。现在是时候创建自己的类型了。</p>
 <p>结构体用于将相关数据组织在一起，枚举表达”多选一”的语义，<code>match</code> 则是处理枚举值的利器——这三者结合，构成了 Rust 描述复杂问题域的核心工具。<code>Option&lt;T&gt;</code> 是 Rust 处理”值可能不存在”问题的答案，用来彻底替代其他语言中的 <code>null</code>。</p>
 <h2 id="本章目录">本章目录</h2>

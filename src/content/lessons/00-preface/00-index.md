@@ -4,11 +4,12 @@ lessonId: "00-index"
 title: "前言"
 level: "入门"
 duration: "5 分钟"
-tags: [前言, 教程简介, 学习方法]
+tags: ["前言", "教程简介", "学习方法"]
 number: ""
 chapterTitle: "前言"
 chapterNumber: "序"
 ---
+
 <div id="article-content"> <h1 id="教程介绍">教程介绍</h1>
 <p>大家好，我是博主雪云飞星。我在汽车嵌入式行业做了多年 AUTOSAR 和系统架构相关的工作。在这个领域，C 语言长期统治着一切——实时操作系统、底层驱动、车控业务软件，无不用 C 写成。它足够快，足够直接，但它也足够危险：一个野指针、一次越界访问，都可能在量产车辆上酿成故障。</p>
 <p>第一次接触 Rust 时，我的感受是：<strong>这正是我一直在等的东西。</strong></p>

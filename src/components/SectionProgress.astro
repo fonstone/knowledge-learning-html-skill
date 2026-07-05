@@ -1,0 +1,51 @@
+---
+interface Props {
+  chapterId: string;
+  lessonId: string;
+}
+
+const { chapterId, lessonId } = Astro.props;
+---
+
+<div class="section-progress" id="section-progress" style="display:none">
+  <div class="sp-bar">
+    <button class="sp-arrow sp-arrow-left" aria-label="向左滚动" hidden>‹</button>
+    <div class="sp-scroll">
+      <div class="sp-tabs" role="tablist" aria-label="文章章节" id="sp-tabs"></div>
+    </div>
+    <button class="sp-arrow sp-arrow-right" aria-label="向右滚动" hidden>›</button>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const sp = document.getElementById('section-progress')!;
+    const tabsContainer = document.getElementById('sp-tabs')!;
+    const body = document.getElementById('lesson-body');
+    if (!body) return;
+
+    setTimeout(() => {
+      const sections = body.querySelectorAll('h1, h2');
+      if (sections.length <= 1) {
+        sp.style.display = 'none';
+        return;
+      }
+
+      sp.style.display = 'block';
+      sections.forEach((h, idx) => {
+        const tab = document.createElement('button');
+        tab.className = 'sp-tab' + (idx === 0 ? ' active' : '');
+        tab.setAttribute('data-tab-idx', String(idx));
+        tab.setAttribute('data-section-title', h.textContent || '');
+        tab.type = 'button';
+        tab.innerHTML = '<span class="sp-dot"></span><span class="sp-label">' + h.textContent + '</span>';
+        tab.addEventListener('click', () => {
+          tabsContainer.querySelectorAll('.sp-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        tabsContainer.appendChild(tab);
+      });
+    }, 200);
+  })();
+</script>

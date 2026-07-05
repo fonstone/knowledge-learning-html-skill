@@ -4,11 +4,12 @@ lessonId: "02-formatted-output"
 title: "格式化输出"
 level: "入门"
 duration: "20 分钟"
-tags: ["println!", "format!", 格式化, "{:?}", Debug, "#[derive(Debug)]", 格式规范]
+tags: ["println!", "format!", "格式化", "{:?}", "Debug", "#[derive(Debug)]", "格式规范"]
 number: "2.2"
 chapterTitle: "基础语法"
 chapterNumber: "02"
 ---
+
 <div id="article-content"> <h1 id="基础输出">基础输出</h1>
 <p><code>println!</code> 是你写下的第一行 Rust 代码就用到的工具，但它的能力远不止打印一句话。Rust 的格式化系统统一处理所有打印相关的操作，并且格式字符串的正确性在<strong>编译时</strong>就能检查——拼写错一个占位符，直接报编译错误，不会等到运行时才发现。</p>
 <h2 id="五个打印宏">五个打印宏</h2>
