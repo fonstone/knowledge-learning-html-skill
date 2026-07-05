@@ -2,47 +2,391 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="证书">
-  <div id="cert-content" style="display:flex;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:4rem 1rem;">
-    <div style="max-width:500px;">
-      <div style="font-size:4rem;margin-bottom:1rem;">🎓</div>
-      <h1 style="font-size:2rem;color:var(--color-accent);margin-bottom:0.5rem;">恭喜完成全部课程！</h1>
-      <p style="color:var(--color-text-muted);margin-bottom:2rem;line-height:1.8;font-size:1.05rem;">
-        你已完成 RUST 互动教程的全部 <span id="cert-total">133</span> 节课程。<br/>
-        这是对 Rust 语言系统学习的一份见证。
-      </p>
-      <div id="cert-incomplete" style="display:none;margin-bottom:1.5rem;">
-        <p style="color:var(--color-warning);">当前进度：<strong id="cert-pct">0%</strong></p>
-        <p style="color:var(--color-text-muted);font-size:0.9rem;">完成全部课程后即可获得证书</p>
+<BaseLayout title="学习证书">
+  <div class="cert-page">
+    <!-- State 1: Locked -->
+    <div class="state state-locked" style="display:none">
+      <div class="lock-icon">🔒</div>
+      <h1>证书尚未解锁</h1>
+      <p class="desc">你当前完成了 <strong class="pct-text">0%</strong>，完成 <strong>100%</strong> 的课程内容后可领取证书。</p>
+      <div class="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+        <span class="progress-label pct-text">0%</span>
       </div>
-      <div id="cert-actions">
-        <a href="/RustCourse/" class="btn-primary" style="display:inline-block;padding:0.75rem 2rem;border-radius:6px;text-decoration:none;">返回首页</a>
+      <a href="/RustCourse/chapters" class="btn-secondary">← 继续学习</a>
+    </div>
+
+    <!-- State 2: Name form -->
+    <div class="state state-name-form" style="display:none">
+      <div class="congrats-icon">🎉</div>
+      <h1>恭喜完成学习！</h1>
+      <p class="desc">请输入你的姓名，将显示在证书上：</p>
+      <form class="name-form" id="nameForm">
+        <input type="text" id="nameInput" class="name-input" placeholder="你的姓名" maxlength="40" autocomplete="name">
+        <button type="submit" class="btn-primary">领取证书</button>
+      </form>
+      <p class="form-error" id="formError" style="display:none">请输入有效的姓名。</p>
+    </div>
+
+    <!-- State 3: Certificate -->
+    <div class="state state-certificate" style="display:none">
+      <div class="cert-card" id="certCard">
+        <div class="cert-top-bar"></div>
+        <div class="cert-inner">
+          <div class="cert-header">
+            <div class="cert-title">RUST 互动教程</div>
+            <div class="cert-subtitle">学 习 证 书</div>
+          </div>
+          <div class="cert-divider-wrap">
+            <span class="cert-divider-line"></span>
+            <span class="cert-divider-diamond">◆</span>
+            <span class="cert-divider-line"></span>
+          </div>
+          <div class="cert-body">
+            <p class="cert-label">兹 证 明</p>
+            <p class="cert-name" id="certName">——</p>
+            <p class="cert-completion">已完成《RUST互动教程》（本课程）<span class="cert-pct" id="certPct">0%</span> 的学习内容，<br>并通过了所有的测验</p>
+            <p class="cert-date" id="certDate">——</p>
+          </div>
+          <div class="cert-footer-row">
+            <div class="cert-sig">
+              <span class="cert-sig-line"></span>
+              <span class="cert-sig-label">作者 · 雪云飞星</span>
+              <span class="cert-no" id="certNo">No. ——</span>
+            </div>
+            <div class="cert-stamp">
+              <span class="cert-stamp-check">✓</span>
+              <span>认 证</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="cert-actions">
+        <button class="btn-secondary" id="renameBtn">重新填写姓名</button>
       </div>
     </div>
   </div>
 </BaseLayout>
 
+<style is:global>
+  .cert-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+    text-align: center;
+  }
+  .cert-page h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0.75rem 0 0.5rem;
+    color: var(--color-text);
+  }
+  .cert-page .desc {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0 0 1.25rem;
+  }
+
+  /* Locked state */
+  .lock-icon { font-size: 3.5rem; margin-bottom: 0.5rem; }
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: 360px;
+    margin: 0 auto 1.5rem;
+  }
+  .progress-track {
+    flex: 1;
+    height: 8px;
+    background: var(--color-border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--color-accent);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+  }
+  .progress-label {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    min-width: 3em;
+  }
+
+  /* Name form */
+  .congrats-icon { font-size: 3.5rem; margin-bottom: 0.5rem; }
+  .name-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 360px;
+    margin: 0 auto 0.5rem;
+  }
+  .name-input {
+    flex: 1;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 0.95rem;
+    font-family: var(--font-body);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .name-input:focus { border-color: var(--color-accent); }
+  .form-error {
+    color: var(--color-error);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+
+  /* Certificate card */
+  .cert-card {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #1a1a20;
+    border: 2px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+  }
+  .cert-top-bar {
+    height: 6px;
+    background: var(--color-accent);
+  }
+  .cert-inner {
+    padding: 2.5rem 2rem 2rem;
+  }
+  .cert-header {
+    margin-bottom: 1.25rem;
+  }
+  .cert-title {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-sans);
+  }
+  .cert-subtitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    letter-spacing: 0.5em;
+    font-family: var(--font-sans);
+  }
+  .cert-divider-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1.25rem 0;
+  }
+  .cert-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+  }
+  .cert-divider-diamond {
+    color: var(--color-accent);
+    font-size: 0.8rem;
+  }
+  .cert-body {
+    margin: 1.5rem 0;
+  }
+  .cert-label {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.3em;
+    margin: 0 0 1rem;
+  }
+  .cert-name {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 1rem;
+    min-height: 1.5em;
+  }
+  .cert-completion {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    margin: 0 0 1rem;
+  }
+  .cert-date {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  .cert-footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .cert-sig {
+    text-align: left;
+  }
+  .cert-sig-line {
+    display: block;
+    width: 120px;
+    height: 1px;
+    background: var(--color-text-muted);
+    margin-bottom: 0.35rem;
+  }
+  .cert-sig-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+  .cert-no {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    display: block;
+    margin-top: 0.25rem;
+    font-family: var(--font-mono);
+  }
+  .cert-stamp {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--color-success);
+    border-radius: 6px;
+    color: var(--color-success);
+    font-size: 0.75rem;
+    font-weight: 700;
+    justify-content: center;
+    transform: rotate(-8deg);
+  }
+  .cert-stamp-check {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+  .cert-actions {
+    margin-top: 1.5rem;
+  }
+  .cert-actions .btn-secondary {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .cert-actions .btn-secondary:hover {
+    color: var(--color-text);
+    border-color: var(--color-text-muted);
+  }
+  .btn-secondary {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .btn-secondary:hover {
+    color: var(--color-text);
+    border-color: var(--color-text-muted);
+  }
+</style>
+
 <script>
-  import { courseData } from '../lib/courseData';
-  let total = 0, completed = 0;
-  for (const ch of courseData) {
-    for (const ls of ch.lessons) {
-      total++;
-      if (localStorage.getItem(`rust-tutorial-completed-${ch.id}-${ls.id}`) === 'true') completed++;
+  const STORAGE_KEY = 'rust-tutorial-cert';
+  const TOTAL = 133;
+
+  function getProgress() {
+    // Count completed lessons from localStorage
+    let done = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('rust-tutorial-completed-') && localStorage.getItem(key) === 'true') {
+        done++;
+      }
+    }
+    const pct = Math.round(done / TOTAL * 100);
+    return { done, total: TOTAL, pct };
+  }
+
+  function getCert() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch { return null; }
+  }
+  function saveName(name: string) {
+    const existing = getCert() || {};
+    if (!existing.earnedAt) existing.earnedAt = new Date().toISOString();
+    if (!existing.certNo) {
+      const d = new Date(existing.earnedAt);
+      const ymd = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;
+      const suffix = String(d.getTime() % 100000).padStart(5, '0');
+      existing.certNo = `RUST-${ymd}-${suffix}`;
+    }
+    existing.name = name;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(existing));
+  }
+
+  function formatDate(iso: string) {
+    const d = new Date(iso);
+    return `${d.getFullYear()}年${String(d.getMonth()+1).padStart(2,'0')}月${String(d.getDate()).padStart(2,'0')}日`;
+  }
+
+  function render() {
+    const { pct } = getProgress();
+    const cert = getCert();
+
+    document.querySelectorAll('.state').forEach((el: any) => el.style.display = 'none');
+
+    if (pct < 100) {
+      const el = document.querySelector('.state-locked') as HTMLElement;
+      el.style.display = 'block';
+      (el.querySelector('.progress-fill') as HTMLElement).style.width = pct + '%';
+      el.querySelectorAll('.pct-text').forEach(s => s.textContent = pct + '%');
+    } else if (!cert || !cert.name) {
+      document.querySelector('.state-name-form')!.querySelectorAll('style').forEach(() => {});
+      (document.querySelector('.state-name-form') as HTMLElement).style.display = 'block';
+    } else {
+      const el = document.querySelector('.state-certificate') as HTMLElement;
+      el.style.display = 'block';
+      (document.getElementById('certName') as HTMLElement).textContent = cert.name;
+      (document.getElementById('certPct') as HTMLElement).textContent = pct + '%';
+      document.getElementById('certDate')!.textContent = cert.earnedAt ? formatDate(cert.earnedAt) : '——';
+      document.getElementById('certNo')!.textContent = 'No. ' + (cert.certNo || '——');
     }
   }
-  const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
-  document.getElementById('cert-total')!.textContent = String(total);
-  document.getElementById('cert-pct')!.textContent = pct + '%';
 
-  if (completed < total) {
-    const incomplete = document.getElementById('cert-incomplete')!;
-    incomplete.style.display = 'block';
-    const title = document.querySelector('#cert-content h1') as HTMLElement;
-    if (title) title.textContent = '证书尚未解锁';
-    const certEmoji = document.querySelector('#cert-content div') as HTMLElement;
-    if (certEmoji) certEmoji.textContent = '📚';
-    const desc = document.querySelector('#cert-content p') as HTMLElement;
-    if (desc) desc.innerHTML = `你已完成 <strong>${completed}</strong> / <strong>${total}</strong> 节课程。<br/>继续学习，距离解锁证书还有 <strong>${total - completed}</strong> 节课程。`;
-  }
+  document.getElementById('nameForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = (document.getElementById('nameInput') as HTMLInputElement).value.trim();
+    if (!name) {
+      (document.getElementById('formError') as HTMLElement).style.display = 'block';
+      return;
+    }
+    (document.getElementById('formError') as HTMLElement).style.display = 'none';
+    saveName(name);
+    render();
+  });
+
+  document.getElementById('nameInput')?.addEventListener('input', function() {
+    (document.getElementById('formError') as HTMLElement).style.display = 'none';
+  });
+
+  document.getElementById('renameBtn')?.addEventListener('click', function() {
+    localStorage.removeItem(STORAGE_KEY);
+    (document.getElementById('nameInput') as HTMLInputElement).value = '';
+    render();
+  });
+
+  render();
 </script>
