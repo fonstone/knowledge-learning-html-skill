@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <script>
+    (function() {
+      const last = localStorage.getItem('rust-tutorial-last-visited');
+      if (last) {
+        location.href = '/RustCourse/' + last;
+      } else {
+        location.href = '/RustCourse/chapters/00-preface/00-index';
+      }
+    })();
+  </script>
+</head>
+<body></body>
+</html>

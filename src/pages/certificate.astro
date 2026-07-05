@@ -13,7 +13,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
         <span class="progress-label pct-text">0%</span>
       </div>
-      <a href="/RustCourse/chapters" class="btn-secondary">← 继续学习</a>
+      <a href="/RustCourse/chapters/00-preface/00-index" class="btn-secondary" id="continueBtn">← 继续学习</a>
     </div>
 
     <!-- State 2: Name form -->
@@ -389,4 +389,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   });
 
   render();
+
+  // Fix continue button to go to last visited lesson
+  const continueBtn = document.getElementById('continueBtn');
+  if (continueBtn) {
+    const last = localStorage.getItem('rust-tutorial-last-visited');
+    if (last) {
+      continueBtn.setAttribute('href', `/RustCourse/${last}`);
+    }
+  }
 </script>
